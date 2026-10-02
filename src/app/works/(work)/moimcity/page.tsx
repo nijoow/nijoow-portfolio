@@ -1,6 +1,5 @@
 import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
-import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
 import WorkCarousel from '../../_container/WorkCarousel';
 import {
@@ -30,13 +29,6 @@ const MoimcityPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          취향 기반 소셜 모임 플랫폼
-        </CustomList.MainListItem>
-      </CustomList>
-
       <PartSubTitle title="기술 스택" />
       <TechStack
         stacks={[
@@ -48,7 +40,7 @@ const MoimcityPage = () => {
         ]}
       />
 
-      <PartSubTitle title="주요 작업과 결과" />
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>
@@ -76,42 +68,27 @@ const MoimcityPage = () => {
       <PartSubTitle title="문제 해결" />
 
       <CustomList>
-        <CustomList.MainListItem>
-          <strong className="font-bold">
-            여러 프리랜서를 거치며 발생한 컨벤션 불일치 및 코드 중복
-          </strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: 다수의 개발자가 참여하며 코딩 컨벤션이 무너지고, 중복 파일과
-            사용되지 않는 익스포트가 산재하여 유지보수가 어려운 상태
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">
+            중복 코드와 서로 다른 작성 규칙
+          </h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            여러 개발자가 참여하면서 코딩 컨벤션이 달라지고 중복 파일과 사용하지
+            않는 익스포트가 쌓여 유지보수가 어려워졌습니다. Knip으로 미사용
+            파일·익스포트·의존성을 찾아 정리했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: <strong className="font-bold">Knip</strong> 라이브러리
-            도입을 통한 프로젝트 내 미사용 파일, 익스포트, 의존성을 정리
-          </p>
-        </CustomList.SubListItem>
+        </li>
 
-        <CustomList.MainListItem>
-          <strong className="font-bold">
-            키보드 활성 시 하단 공백 발생 문제
-          </strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: 모바일 웹뷰 앱 환경에서 키보드가 나타날 때, 하단에 불필요한
-            여백이 생기는 현상
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">
+            키보드가 올라올 때 생기는 하단 여백
+          </h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            모바일 웹뷰에서 키보드가 나타나면 화면 하단에 불필요한 여백이
+            생겼습니다. 뷰포트 단위를 dvh로 바꾸고 레이아웃의 height와 overflow
+            설정을 조정했습니다.
           </p>
-        </CustomList.SubListItem>
-
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 뷰포트 단위를 dvh로 변경하고, 전반적인 레이아웃을 구성하는
-            height 및 overflow 속성 최적화
-          </p>
-        </CustomList.SubListItem>
+        </li>
       </CustomList>
 
       <div className="my-3" />

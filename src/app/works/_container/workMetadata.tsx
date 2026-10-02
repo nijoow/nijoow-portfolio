@@ -1,4 +1,4 @@
-import { PERSON_ID, SITE_NAME, SITE_URL } from '@/lib/site';
+import { PERSON_ID, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from '@/lib/site';
 import type { Metadata } from 'next';
 import { getWork, type Work } from '@/features/works/data/worksData';
 
@@ -20,7 +20,13 @@ export function createWorkMetadata(
   }
 
   const canonicalPath = `/works/${work.pageName}`;
-  const imageUrl = work.imgSrc ? `/images/works/${work.imgSrc}` : undefined;
+  const image =
+    work.disclosure !== 'limited' && work.imgSrc
+      ? {
+          url: `/images/works/${work.imgSrc}`,
+          alt: `${work.name} 작업 미리보기`,
+        }
+      : SITE_OG_IMAGE;
   const description = work.description ?? FALLBACK_DESCRIPTION;
   const isIndexable = work.status !== 'draft';
 
@@ -37,15 +43,13 @@ export function createWorkMetadata(
       url: canonicalPath,
       title: work.name,
       description,
-      ...(imageUrl
-        ? { images: [{ url: imageUrl, alt: `${work.name} 작업 미리보기` }] }
-        : {}),
+      images: [image],
     },
     twitter: {
-      card: imageUrl ? 'summary_large_image' : 'summary',
+      card: 'summary_large_image',
       title: work.name,
       description,
-      ...(imageUrl ? { images: [imageUrl] } : {}),
+      images: [image.url],
     },
   };
 

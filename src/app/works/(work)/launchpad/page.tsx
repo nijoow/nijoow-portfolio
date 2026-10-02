@@ -24,18 +24,11 @@ const LaunchpadPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          전자 악기 런치패드 토이 프로젝트
-        </CustomList.MainListItem>
-      </CustomList>
-
       <PartSubTitle title="기술 스택" />
 
       <TechStack stacks={['Next.js', 'TypeScript', 'Tailwind CSS']} />
 
-      <PartSubTitle title="주요 기능" />
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>
@@ -49,21 +42,14 @@ const LaunchpadPage = () => {
       <PartSubTitle title="문제 해결" />
 
       <CustomList>
-        <CustomList.MainListItem>
-          <strong className="font-bold">연속 클릭 시 사운드 중첩 문제</strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: onClick 이벤트를 통해 사운드를 재생할 때, 빠른 속도로 연속
-            클릭 시 사운드가 끊기지 않고 부자연스럽게 중첩되는 현상
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">연속 클릭 시 사운드 중첩 문제</h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            onClick으로 사운드를 재생하면 빠르게 연속 클릭할 때 소리가 끊기지
+            않고 겹쳤습니다. 마우스를 누를 때와 뗄 때의 이벤트를 분리하고 모바일
+            Touch 이벤트도 별도로 처리해 재생 시점을 제어했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 마우스를 누를 때와 뗄 때의 이벤트를 분리하고, 모바일 환경을
-            위해 Touch 이벤트를 개별 처리하여 사운드 재생 시점 제어
-          </p>
-        </CustomList.SubListItem>
+        </li>
       </CustomList>
 
       <div className="my-3" />

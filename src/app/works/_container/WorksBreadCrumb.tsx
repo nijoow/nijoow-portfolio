@@ -1,5 +1,4 @@
 import Eyebrow from '@/components/ui/Eyebrow';
-import { ProjectDisclosureChip } from '@/features/works/components/LimitedProject';
 import { ProjectTypeChip } from '@/features/works/components/ProjectTypeChip';
 import type { Work } from '@/features/works/data/worksData';
 import { ChevronRight } from 'lucide-react';
@@ -10,9 +9,19 @@ interface WorksBreadCrumbProps {
   slug: string;
 }
 
+function DisclosureNotice({ work }: { work: Work | undefined }) {
+  if (work?.disclosure !== 'limited') return null;
+
+  return (
+    <p className="text-ink-muted mt-1 text-sm">
+      보안상 화면과 내부 자료는 공개하지 않습니다.
+    </p>
+  );
+}
+
 function WorksBreadCrumb({ work, slug }: WorksBreadCrumbProps) {
   return (
-    <div className="mb-6 flex w-full flex-col gap-1.5">
+    <div className="frosted-glass mb-6 flex w-full flex-col gap-1.5 rounded-3xl border p-5 sm:p-7">
       <Eyebrow className="flex items-center gap-1">
         <Link
           href="/works"
@@ -52,13 +61,13 @@ function WorksBreadCrumb({ work, slug }: WorksBreadCrumbProps) {
           ) : null}
         </dl>
       ) : null}
+      <DisclosureNotice work={work} />
       {work ? (
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           <ProjectTypeChip
             projectType={work.projectType}
             isFreelance={work.isFreelance}
           />
-          {work.disclosure === 'limited' ? <ProjectDisclosureChip /> : null}
           {work.tags.map((tag) => (
             <span
               key={tag}
@@ -69,7 +78,6 @@ function WorksBreadCrumb({ work, slug }: WorksBreadCrumbProps) {
           ))}
         </div>
       ) : null}
-      <div className="from-brand-muted/45 mt-4 h-px w-full bg-linear-to-r to-transparent" />
     </div>
   );
 }

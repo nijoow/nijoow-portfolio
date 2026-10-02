@@ -24,12 +24,9 @@ const CatchTheCandyPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          졸업전시회 팀 인터랙티브아트 (p5.js ver.)
-        </CustomList.MainListItem>
-      </CustomList>
+      <p className="text-ink-muted mt-4 text-sm leading-relaxed break-keep">
+        졸업전시회 팀 인터랙티브아트 (p5.js ver.)
+      </p>
 
       <PartSubTitle title="콘셉트" />
 
@@ -52,7 +49,7 @@ const CatchTheCandyPage = () => {
         <li>3) 타이머가 끝나고 게임이 종료되면 결과를 확인</li>
       </CustomList>
 
-      <PartSubTitle title="기술 스택 및 사용 도구" />
+      <PartSubTitle title="기술 스택과 도구" />
 
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-1.5">

@@ -1,6 +1,5 @@
 import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
-import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
 import WorkCarousel from '../../_container/WorkCarousel';
 import {
@@ -29,19 +28,15 @@ const CusmeticPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-
-      <CustomList>
-        <CustomList.MainListItem>
-          피부타입 진단 설문 및 화장품 매칭률 서비스
-        </CustomList.MainListItem>
-      </CustomList>
+      <p className="text-ink-muted mt-4 text-sm leading-relaxed break-keep">
+        피부타입 설문과 화장품 매칭률을 제공하는 서비스입니다.
+      </p>
 
       <PartSubTitle title="기술 스택" />
 
       <TechStack stacks={['Next.js', 'TypeScript', 'Recoil', 'Tailwind CSS']} />
 
-      <PartSubTitle title="주요 작업과 결과" />
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>
@@ -80,37 +75,17 @@ const CusmeticPage = () => {
       <PartSubTitle title="문제 해결" />
 
       <CustomList>
-        <CustomList.MainListItem>
-          <strong className="font-bold">서버 컴포넌트 데이터 캐싱 문제</strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: fetch 함수에 no-store 옵션을 적용했음에도 클라이언트 Router
-            Cache로 인해 약 30초간 새로운 데이터를 불러오지 못하는 현상
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">
+            서버 컴포넌트 데이터 캐싱 문제
+          </h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            fetch 함수에 no-store 옵션을 적용했지만 클라이언트 Router Cache
+            때문에 새 데이터를 약 30초 동안 불러오지 못했습니다. 페이지 진입 시
+            router.refresh()를 호출해 클라이언트 캐시를 무효화하고 최신 데이터를
+            보여주도록 했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 페이지 진입 시 router.refresh()를 호출하여 클라이언트 측
-            캐시를 강제로 무효화함으로써 최신 데이터 보장
-          </p>
-        </CustomList.SubListItem>
-
-        <CustomList.MainListItem>
-          <strong className="font-bold">Next/Image 로딩 성능 저하</strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: layout=&apos;fill&apos; 사용 시 너무 많은 srcSet이 생성되어
-            이미지 로딩 속도가 느려지는 문제 발생
-          </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: next.config.js에서 imageSizes 및 deviceSizes를 최적화하여
-            불필요한 이미지 생성을 방지
-          </p>
-        </CustomList.SubListItem>
+        </li>
       </CustomList>
       <div className="my-3" />
     </>

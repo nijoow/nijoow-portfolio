@@ -1,6 +1,5 @@
 import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
-import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
 import WorkCarousel from '../../_container/WorkCarousel';
 import {
@@ -26,12 +25,6 @@ const AtopDmsPage = () => {
         ]}
       />
       <div className="my-3" />
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          기업 맞춤형 데이터 관리 시스템 SaaS
-        </CustomList.MainListItem>
-      </CustomList>
 
       <PartSubTitle title="기술 스택" />
 
@@ -45,7 +38,7 @@ const AtopDmsPage = () => {
         ]}
       />
 
-      <PartSubTitle title="주요 작업과 결과" />
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>

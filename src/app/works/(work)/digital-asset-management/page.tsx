@@ -1,10 +1,5 @@
-import {
-  LimitedProjectCover,
-  LimitedProjectNotice,
-} from '@/features/works/components/LimitedProject';
 import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
-import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
 import {
   createWorkMetadata,
@@ -19,18 +14,6 @@ export default function DigitalAssetManagementPage() {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <LimitedProjectCover className="aspect-video w-full rounded-2xl border border-white/10 shadow-md" />
-
-      <div className="my-3" />
-      <LimitedProjectNotice />
-
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          디지털 자산의 등록·검색·분류·메타데이터·버전·권한 등을 관리하는 웹
-          애플리케이션 고도화
-        </CustomList.MainListItem>
-      </CustomList>
 
       <PartSubTitle title="기술 스택" />
       <TechStack
@@ -44,20 +27,8 @@ export default function DigitalAssetManagementPage() {
         ]}
       />
 
-      <PartSubTitle title="담당 영역" />
-      <CustomList>
-        <CustomList.MainListItem>
-          주요 자산 관리 기능의 신규 환경 이관 및 변경 개발
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          서버 상태와 화면 상태의 관리 범위 분리
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          폼 구조와 공통 목록 UI 개선 및 코드베이스 정리
-        </CustomList.MainListItem>
-      </CustomList>
+      <PartSubTitle title="주요 작업" />
 
-      <PartSubTitle title="주요 작업 및 문제 해결" />
       <CustomList>
         <CustomList.MainListItem>
           기존 솔루션을 신규 환경으로 이관하고 자산
@@ -78,8 +49,6 @@ export default function DigitalAssetManagementPage() {
           규모를 약 20% 축소
         </CustomList.MainListItem>
       </CustomList>
-
-      <div className="my-3" />
     </>
   );
 }

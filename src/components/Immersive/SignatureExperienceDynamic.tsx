@@ -1,12 +1,30 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import SignaturePlaceholder from './SignaturePlaceholder';
+import {
+  detectSignatureQuality,
+  type SignatureQuality,
+} from './signatureQuality';
 
 const SignatureExperience = dynamic(() => import('./SignatureExperience'), {
   ssr: false,
-  loading: () => (
-    <div className="relative mb-10 h-[240px] w-full overflow-hidden rounded-3xl border border-white/10 bg-black sm:h-[400px]" />
-  ),
+  loading: SignaturePlaceholder,
 });
 
-export default SignatureExperience;
+export default function SignatureExperienceDynamic() {
+  const [quality, setQuality] = useState<SignatureQuality | null>(null);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setQuality(detectSignatureQuality());
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  if (quality === null || quality === 'fallback')
+    return <SignaturePlaceholder />;
+
+  return <SignatureExperience quality={quality} />;
+}

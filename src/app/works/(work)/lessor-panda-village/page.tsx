@@ -24,20 +24,7 @@ const LessorPandaVillagePage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          레서판다와 함께 평화로운 마을에서 다른 유저들과 소통하는 3D 인터랙티브
-          웹 애플리케이션
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          Google Antigravity·Claude·Codex를 3D 로직 설계·구현·리뷰를 위한 페어
-          프로그래밍 도구로 함께 활용하고, 실시간 동기화 기능을 직접 검증하며
-          개발
-        </CustomList.MainListItem>
-      </CustomList>
-
-      <PartSubTitle title="기술 스택 및 사용 도구" />
+      <PartSubTitle title="기술 스택과 도구" />
 
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-1.5">
@@ -72,7 +59,12 @@ const LessorPandaVillagePage = () => {
           <TechStack stacks={['Tailwind CSS 4', 'Framer Motion']} />
         </div>
       </div>
-      <PartSubTitle title="주요 기능" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        Google Antigravity·Claude·Codex를 3D 로직 설계·구현·리뷰에 활용했습니다.
+        실시간 동기화 기능은 직접 검증했습니다.
+      </p>
+
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>
@@ -102,75 +94,34 @@ const LessorPandaVillagePage = () => {
       <PartSubTitle title="문제 해결" />
 
       <CustomList>
-        <CustomList.MainListItem>
-          <strong className="font-bold">경관 3D 에셋 렌더링 비용</strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: 메시 압축만으로는 GPU가 처리하는 삼각형 수가 줄지 않아 집·고목
-            경관 에셋의 렌더링 비용이 그대로 남는 문제
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">하이드레이션(Hydration) 에러</h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            랜덤 파티클의 배치가 서버와 클라이언트에서 달라 하이드레이션 오류가
+            발생했습니다. 3D 씬을 dynamic import와 ssr: false로 분리하고
+            파티클은 클라이언트에서 초기화했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 분리된 정점을 결합한 뒤 오차 범위를 제한해 단순화하고, 월드
-            bbox를 비교해 배치·충돌 기준을 검증하여 두 에셋의 삼각형 수를 각각
-            885,380→46,067, 349,791→22,127로 약 94% 축소하고 모델 용량을
-            9.1MB에서 3.2MB로 감소
-          </p>
-        </CustomList.SubListItem>
+        </li>
 
-        <CustomList.MainListItem>
-          <strong className="font-bold">하이드레이션(Hydration) 에러</strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: 랜덤 파티클 배치 시 서버와 클라이언트의 렌더링 결과가
-            불일치하여 발생하는 하이드레이션 오류
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">캐릭터를 따라 움직이는 닉네임</h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            Html 컴포넌트로 표시한 닉네임이 움직이는 캐릭터의 위치를 제대로
+            따라가지 못했습니다. 3D 씬 안의 Text 컴포넌트로 바꿔 닉네임의 3D
+            좌표를 캐릭터와 동기화했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 3D 씬을 dynamic import와 ssr: false로 분리하고 랜덤 파티클을
-            클라이언트에서 초기화하도록 구성
-          </p>
-        </CustomList.SubListItem>
+        </li>
 
-        <CustomList.MainListItem>
-          <strong className="font-bold">
-            캐릭터 위 닉네임 위치 동기화 문제
-          </strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: Html 컴포넌트로 구현된 닉네임이 캐릭터의 움직임을 따라가지
-            못하고 고정되지 않는 현상
-          </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: Html 대신 3D 씬 내부에 포함되는 Text 컴포넌트를 사용하여
-            정확한 3D 좌표 동기화 구현
-          </p>
-        </CustomList.SubListItem>
-
-        <CustomList.MainListItem>
-          <strong className="font-bold">
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">
             실시간 멀티플레이어 동기화 최적화
-          </strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: Supabase Realtime 통신 시 과도한 업데이트로 인한 네트워크 부하
-            및 리렌더링 성능 저하
+          </h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            Supabase Realtime의 잦은 업데이트로 네트워크 부하와 리렌더링이
+            늘어났습니다. 위치 정보를 useRef로 관리하고 전송 주기를 100ms로
+            제한해 위치 업데이트 트래픽을 제어했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 위치 정보를 useRef로 관리해 불필요한 리렌더링을 줄이고, 전송
-            주기를 100ms로 제한해 위치 업데이트 트래픽을 제어
-          </p>
-        </CustomList.SubListItem>
+        </li>
       </CustomList>
       <div className="my-3" />
 

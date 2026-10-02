@@ -28,16 +28,8 @@ const Fromis9StickersPage = () => {
 
       <CustomList>
         <CustomList.MainListItem>
-          프로미스나인 팬들을 위한 스티커 꾸미기 웹사이트
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
           좋아하는 멤버의 사진을 다양한 스티커로 꾸미고 이미지로 저장할 수 있는
           기능을 제공
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          Google Antigravity·Claude·Codex를 기획·디자인·구현 검토를 위한 페어
-          프로그래밍 도구로 함께 활용하고, UX/UI와 프론트엔드 개발 전 과정을
-          직접 진행
         </CustomList.MainListItem>
       </CustomList>
       <PartSubTitle title="기술 스택" />
@@ -45,7 +37,12 @@ const Fromis9StickersPage = () => {
         stacks={['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion']}
       />
 
-      <PartSubTitle title="주요 기능" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        Google Antigravity·Claude·Codex를 기획·디자인·구현 검토에 활용했습니다.
+        UX/UI와 프론트엔드 개발은 직접 진행했습니다.
+      </p>
+
+      <PartSubTitle title="주요 작업" />
       <CustomList>
         <CustomList.MainListItem>
           스티커 커스텀: 스티커 추가·삭제, 회전, 크기 조절

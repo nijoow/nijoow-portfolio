@@ -26,7 +26,7 @@ const BUTTON_TAP = { scale: 0.98 };
 
 function fieldClass(hasError: boolean) {
   return cn(
-    'w-full rounded-xl border bg-black/20 p-3.5 text-sm text-white transition-colors outline-none placeholder:text-ink-muted focus:ring-2',
+    'w-full rounded-xl border bg-black/20 p-3.5 text-base text-white transition-colors outline-none placeholder:text-ink-muted focus:ring-2',
     hasError
       ? 'border-status-danger/70 focus:border-status-danger focus:ring-status-danger/30'
       : 'focus:border-brand-lavender/45 focus:ring-brand-lavender/20 border-white/10',
@@ -97,7 +97,20 @@ function SubmissionBanner({ state }: { state: SubmissionState }) {
         size={16}
         aria-hidden
       />
-      <span>{state.message}</span>
+      <span>
+        {state.message}
+        {state.status === 'error' ? (
+          <>
+            {' '}
+            <a
+              href="mailto:nijoow1127@gmail.com"
+              className="font-bold underline underline-offset-2"
+            >
+              이메일로 직접 연락하기
+            </a>
+          </>
+        ) : null}
+      </span>
     </div>
   );
 }
@@ -182,6 +195,7 @@ export function ContactForm() {
             suppressHydrationWarning
             type="text"
             id="name"
+            required
             autoComplete="name"
             maxLength={50}
             placeholder="이름을 입력해 주세요"
@@ -204,6 +218,7 @@ export function ContactForm() {
             suppressHydrationWarning
             type="email"
             id="email"
+            required
             inputMode="email"
             autoComplete="email"
             maxLength={100}
@@ -228,6 +243,7 @@ export function ContactForm() {
           suppressHydrationWarning
           type="text"
           id="subject"
+          required
           maxLength={100}
           placeholder="어떤 이야기인지 간단히 알려주세요"
           aria-invalid={Boolean(errors.subject)}
@@ -251,6 +267,7 @@ export function ContactForm() {
           {...register('message')}
           suppressHydrationWarning
           id="message"
+          required
           rows={6}
           maxLength={1000}
           placeholder="프로젝트나 협업에 관해 편하게 남겨주세요"

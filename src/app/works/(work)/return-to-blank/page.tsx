@@ -24,13 +24,9 @@ const ReturnToBlankPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-
-      <CustomList>
-        <CustomList.MainListItem>
-          졸업전시회 개인 인터랙티브아트
-        </CustomList.MainListItem>
-      </CustomList>
+      <p className="text-ink-muted mt-4 text-sm leading-relaxed break-keep">
+        졸업전시회 개인 인터랙티브아트
+      </p>
 
       <PartSubTitle title="콘셉트" />
 
@@ -60,7 +56,7 @@ const ReturnToBlankPage = () => {
         <li>2) 스크린에서 붓을 떼는 순간 그리던 그림이 사라진다.</li>
         <li>3) 백지상태로 돌아간다.</li>
       </ul>
-      <PartSubTitle title="기술 스택 및 사용 도구" />
+      <PartSubTitle title="기술 스택과 도구" />
 
       <TechStack
         stacks={['Unity', '빔프로젝터', 'Kinect v1', '패브릭 스크린']}

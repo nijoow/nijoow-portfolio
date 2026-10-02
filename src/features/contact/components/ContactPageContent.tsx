@@ -1,10 +1,9 @@
-import Eyebrow from '@/components/ui/Eyebrow';
 import { GithubIcon } from '@/components/Icons/GithubIcon';
 import GlassCard from '@/components/Motion/GlassCard';
 import TransitionPageWrapper from '@/components/PageTransition/TransitionPageWrapper';
 import Section from '@/components/Section/Section';
 import { ContactForm } from '@/features/contact/components/ContactForm';
-import { ArrowUpRight, Mail, MessageCircleMore } from 'lucide-react';
+import { ArrowUpRight, Mail } from 'lucide-react';
 
 const CONTACT_CHANNELS = [
   {
@@ -43,7 +42,7 @@ export function ContactPageContent() {
           />
 
           <div className="relative max-w-3xl">
-            <h1 className="mt-5 text-3xl leading-tight font-bold break-keep sm:text-5xl">
+            <h1 className="mt-5 text-[28px] leading-tight font-bold break-keep sm:text-[42px]">
               함께 이야기해 보고 싶은 일이 있다면, 편하게 연락해 주세요.
             </h1>
             <p className="text-ink-muted mt-5 max-w-2xl text-sm leading-relaxed break-keep sm:text-base">
@@ -63,8 +62,8 @@ export function ContactPageContent() {
           </div>
         </section>
 
-        <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-5">
-          <aside className="flex flex-col gap-3 lg:col-span-2">
+        <div className="flex w-full flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {CONTACT_CHANNELS.map(
               ({ label, value, description, href, icon, external }) => (
                 <a
@@ -72,9 +71,9 @@ export function ContactPageContent() {
                   href={href}
                   target={external ? '_blank' : undefined}
                   rel={external ? 'noopener noreferrer' : undefined}
-                  className="group focus-visible:ring-brand-lavender rounded-2xl outline-none focus-visible:ring-2"
+                  className="group focus-visible:ring-brand-lavender h-full rounded-2xl outline-none focus-visible:ring-2"
                 >
-                  <GlassCard className="w-full">
+                  <GlassCard className="h-full w-full">
                     <div className="flex items-center gap-3 p-5">
                       <div className="text-accent-light flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5">
                         {icon}
@@ -100,25 +99,13 @@ export function ContactPageContent() {
                 </a>
               ),
             )}
+          </div>
 
-            <div className="frosted-glass-subtle rounded-2xl border p-5">
-              <MessageCircleMore
-                className="text-accent-light"
-                size={20}
-                aria-hidden
-              />
-              <p className="text-ink-muted mt-4 text-sm leading-relaxed break-keep">
-                문의 폼이 동작하지 않을 때는 이메일로 바로 연락할 수 있습니다.
-              </p>
-            </div>
-          </aside>
-
-          <GlassCard lift={false} className="lg:col-span-3">
+          <GlassCard lift={false} className="w-full">
             <div className="p-5 sm:p-7">
-              <Eyebrow>Send a message</Eyebrow>
-              <h2 className="mt-2 text-2xl font-bold">문의 남기기</h2>
+              <h2 className="text-2xl font-bold">문의 남기기</h2>
               <p className="text-ink-muted mt-2 mb-6 text-sm leading-relaxed break-keep">
-                필요한 내용을 남겨주시면 확인 후 이메일로 답장드릴게요.
+                남겨주신 이메일로 답장드릴게요.
               </p>
               <ContactForm />
             </div>

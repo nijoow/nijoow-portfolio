@@ -22,13 +22,12 @@ const MemoryPage = () => {
         imgSrc="pnudt12.webp"
       />
       <div className="my-3" />
+      <p className="text-ink-muted mt-4 text-sm leading-relaxed break-keep">
+        부산대학교 디자인학과 디자인엔테크놀로지 전공 12회 졸업전시회 웹사이트
+      </p>
+
       <PartTitle title="프로젝트 개요" />
       <CustomList>
-        <CustomList.MainListItem>
-          부산대학교 디자인학과 디자인엔테크놀로지 전공 12회 졸업전시회
-          웹사이트{' '}
-        </CustomList.MainListItem>
-
         <CustomList.MainListItem>
           졸업전시회 소개 및 전시 정보 소개
         </CustomList.MainListItem>

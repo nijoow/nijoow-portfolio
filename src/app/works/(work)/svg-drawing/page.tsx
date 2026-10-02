@@ -26,9 +26,6 @@ const SVGDrawingPage = () => {
 
       <PartTitle title="프로젝트 개요" />
       <CustomList>
-        <CustomList.MainListItem>
-          SVG 드로잉 토이 프로젝트
-        </CustomList.MainListItem>
         <CustomList.MainListItem>🚧 개발 임시 중단 🚧</CustomList.MainListItem>
       </CustomList>
 
@@ -36,7 +33,7 @@ const SVGDrawingPage = () => {
 
       <TechStack stacks={['Next.js', 'TypeScript', 'Recoil', 'Tailwind CSS']} />
 
-      <PartSubTitle title="주요 기능" />
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>
@@ -64,23 +61,14 @@ const SVGDrawingPage = () => {
       <PartSubTitle title="문제 해결" />
 
       <CustomList>
-        <CustomList.MainListItem>
-          <strong className="font-bold">
-            도형 크기 조절 시 회전에 따른 마우스 좌표 불일치 문제
-          </strong>
-        </CustomList.MainListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="text-ink-muted border-l-2 border-white/15 pl-3 text-sm break-keep">
-            이슈: 도형이 회전되어 있는 상태에서 크기를 조절할 때, 실제 드래그
-            거리와 도형의 크기 변화가 일치하지 않는 현상 발생
+        <li className="mt-5 first:mt-0">
+          <h3 className="text-base font-bold">회전한 도형의 크기 조절</h3>
+          <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
+            회전된 도형의 크기를 조절할 때 드래그 거리와 실제 크기 변화가
+            일치하지 않았습니다. 중심점을 기준으로 꼭짓점의 상대 좌표를 계산하고
+            회전각을 적용한 벡터 연산으로 크기 조절 로직을 보정했습니다.
           </p>
-        </CustomList.SubListItem>
-        <CustomList.SubListItem showBullet={false}>
-          <p className="border-brand-lavender/40 text-brand-lavender/90 border-l-2 pl-3 text-sm break-keep">
-            해결책: 중심점을 기준으로 각 꼭짓점의 상대 좌표를 계산하고, 회전각을
-            적용한 벡터 연산을 통해 크기 조절 로직을 보정하여 해결
-          </p>
-        </CustomList.SubListItem>
+        </li>
       </CustomList>
 
       <div className="my-3" />

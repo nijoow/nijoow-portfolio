@@ -11,7 +11,7 @@ interface TransitionPageWrapperProps {
 function TransitionPageWrapper({ children }: TransitionPageWrapperProps) {
   return (
     <m.div
-      initial={{ y: -20, opacity: 0 }}
+      initial={false}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 20, opacity: 0 }}
       transition={STANDARD_TRANSITION}

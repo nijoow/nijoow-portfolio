@@ -7,8 +7,7 @@ import { Dialog } from 'radix-ui';
 import { type KeyboardEvent, useCallback, useRef, useState } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import { A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 const NAV_BUTTON_CLASSES =
@@ -16,6 +15,9 @@ const NAV_BUTTON_CLASSES =
 
 interface WorkCarouselProps {
   imgSrcList: string[];
+  imageLabels?: readonly string[];
+  eager?: boolean;
+  background?: 'light' | 'dark';
   aspectRatio?: 'video' | 'square';
 }
 
@@ -44,13 +46,24 @@ function CarouselNavigationButton({ direction }: { direction: -1 | 1 }) {
 
 export function WorkCarousel({
   imgSrcList,
+  imageLabels,
+  eager = true,
+  background = 'light',
   aspectRatio = 'video',
 }: WorkCarouselProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
-  const openingTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const imageButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const images = imgSrcList.map((src, index) => ({
+    src,
+    index,
+    alt:
+      imageLabels?.[index] ??
+      `${src.replace(/\.\w+$/, '')} 작업 이미지 ${index + 1}`,
+  }));
   const selectedImage =
-    selectedIndex === null ? null : (imgSrcList[selectedIndex] ?? null);
+    selectedIndex === null ? null : (images[selectedIndex] ?? null);
   const isModalOpen = selectedImage !== null;
 
   const closeModal = useCallback(() => setSelectedIndex(null), []);
@@ -97,36 +110,47 @@ export function WorkCarousel({
     >
       <Swiper
         onSwiper={setSwiper}
-        modules={[Pagination]}
-        pagination={{ clickable: true }}
+        onSlideChange={(instance) => setActiveIndex(instance.realIndex)}
+        modules={[A11y]}
+        a11y={{
+          containerMessage: '프로젝트 작업 이미지',
+          itemRoleDescriptionMessage: '슬라이드',
+          slideLabelMessage: '{{slidesLength}}장 중 {{index}}번째 이미지',
+        }}
         loop={imgSrcList.length > 1}
         className={cn(
-          '[&_.swiper-pagination-bullet-active]:bg-brand-muted relative w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 shadow-md',
+          'relative w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 shadow-md',
           aspectRatio === 'video' ? 'aspect-video' : 'aspect-square',
         )}
       >
-        {imgSrcList.map((imgSrc, index) => (
+        {images.map(({ src, alt, index }) => (
           <SwiperSlide
-            key={imgSrc}
-            className="group relative h-full w-full bg-white"
+            key={src}
+            className={cn(
+              'group relative h-full w-full',
+              background === 'dark' ? 'bg-black' : 'bg-white',
+            )}
           >
             {({ isActive }) => (
               <>
                 <Image
-                  src={`/images/works/${imgSrc}`}
-                  alt={`${imgSrc.replace(/\.\w+$/, '')} 작업 이미지 ${index + 1}`}
+                  src={`/images/works/${src}`}
+                  alt={alt}
                   fill
                   sizes="(max-width: 768px) 100vw, 768px"
                   className="object-contain"
-                  priority={index === 0}
+                  loading={eager && index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={eager && index === 0 ? 'high' : 'auto'}
                 />
                 <button
+                  ref={(node) => {
+                    imageButtonRefs.current[index] = node;
+                  }}
                   type="button"
                   aria-label={`${index + 1}번 이미지 크게 보기`}
                   aria-hidden={!isActive}
                   tabIndex={isActive ? 0 : -1}
-                  onClick={(event) => {
-                    openingTriggerRef.current = event.currentTarget;
+                  onClick={() => {
                     setSelectedIndex(index);
                   }}
                   className="focus-visible:ring-brand-lavender absolute inset-0 z-10 cursor-zoom-in outline-none focus-visible:ring-2 focus-visible:ring-inset"
@@ -144,6 +168,39 @@ export function WorkCarousel({
         ) : null}
       </Swiper>
 
+      <div className="flex w-full flex-wrap items-center justify-center gap-x-3">
+        {imgSrcList.length > 1 ? (
+          <div
+            role="group"
+            aria-label="이미지 선택"
+            className="flex flex-wrap justify-center"
+          >
+            {imgSrcList.map((imgSrc, index) => (
+              <button
+                key={imgSrc}
+                type="button"
+                aria-label={`${index + 1}번 이미지 보기`}
+                aria-current={activeIndex === index ? 'true' : undefined}
+                onClick={() => swiper?.slideToLoop(index)}
+                className="focus-visible:ring-brand-lavender flex size-11 items-center justify-center rounded-full outline-none focus-visible:ring-2"
+              >
+                <span
+                  aria-hidden
+                  className={cn(
+                    'size-2 rounded-full',
+                    activeIndex === index ? 'bg-brand-lavender' : 'bg-white/30',
+                  )}
+                />
+              </button>
+            ))}
+          </div>
+        ) : null}
+        <p role="status" className="text-ink-muted text-xs">
+          {imageLabels?.[activeIndex] ? `${imageLabels[activeIndex]} · ` : ''}
+          이미지 {activeIndex + 1} / {imgSrcList.length}
+        </p>
+      </div>
+
       {selectedImage ? (
         <Dialog.Portal>
           <Dialog.Overlay className="work-dialog-overlay fixed inset-0 z-100 cursor-zoom-out bg-black/75 backdrop-blur-sm" />
@@ -151,13 +208,17 @@ export function WorkCarousel({
             onKeyDown={handleModalKeyDown}
             onCloseAutoFocus={(event) => {
               event.preventDefault();
-              openingTriggerRef.current?.focus();
+              imageButtonRefs.current[swiper?.realIndex ?? activeIndex]?.focus({
+                preventScroll: true,
+              });
             }}
-            className="work-dialog-content fixed top-1/2 left-1/2 z-101 flex h-full w-full overflow-hidden rounded-2xl bg-gray-500/30 outline-none md:max-h-[90vh] md:max-w-[86vw]"
+            className="work-dialog-content bg-surface-elevated/80 fixed top-1/2 left-1/2 z-101 flex h-full w-full overflow-hidden rounded-2xl outline-none md:max-h-[90vh] md:max-w-[86vw]"
           >
-            <Dialog.Title className="sr-only">
-              작업 이미지 확대 보기
-            </Dialog.Title>
+            <Dialog.Title className="sr-only">{selectedImage.alt}</Dialog.Title>
+            <Dialog.Description className="sr-only">
+              {imgSrcList.length}장 중 {selectedImage.index + 1}번째 이미지.
+              좌우 방향키로 이동하고 Escape로 닫을 수 있습니다.
+            </Dialog.Description>
 
             <Dialog.Close asChild>
               <button
@@ -171,8 +232,8 @@ export function WorkCarousel({
 
             <div className="relative m-auto h-full w-full md:h-[96%] md:w-[84%]">
               <Image
-                src={`/images/works/${selectedImage}`}
-                alt={`${selectedImage.replace(/\.\w+$/, '')} 확대 이미지`}
+                src={`/images/works/${selectedImage.src}`}
+                alt={selectedImage.alt}
                 fill
                 sizes="100vw"
                 className="object-contain"

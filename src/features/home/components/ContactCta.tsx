@@ -29,12 +29,8 @@ export function ContactCta() {
           <div className="max-w-lg">
             <Eyebrow>Contact</Eyebrow>
             <h2 className="mt-2 text-2xl font-bold break-keep sm:text-3xl">
-              함께 이야기해 보고 싶은 일이 있다면, 편하게 연락해 주세요.
+              프로젝트나 협업에 관해 연락 주세요.
             </h2>
-            <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-              프론트엔드 협업과 프로젝트 제안, 채용 관련 이야기, 커피챗까지
-              편하게 남겨 주세요.
-            </p>
           </div>
 
           <div className="flex w-full flex-col gap-2 lg:w-72">
@@ -48,9 +44,7 @@ export function ContactCta() {
               >
                 <span className="text-accent-light">{icon}</span>
                 <span className="min-w-0 flex-1">
-                  <Eyebrow tone="muted" className="block">
-                    {label}
-                  </Eyebrow>
+                  <span className="text-ink-muted block text-xs">{label}</span>
                   <span className="text-ink-secondary block truncate font-bold group-hover:text-white">
                     {value}
                   </span>
@@ -65,7 +59,7 @@ export function ContactCta() {
               href="/contact"
               className="focus-visible:ring-brand-lavender text-ink-muted mt-3 flex min-h-11 items-center justify-center rounded-lg text-center text-xs font-bold transition-colors outline-none hover:text-white focus-visible:ring-2"
             >
-              메일 보내기
+              문의 남기기
             </Link>
           </div>
         </div>

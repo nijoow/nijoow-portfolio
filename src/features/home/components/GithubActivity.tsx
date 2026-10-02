@@ -13,20 +13,6 @@ import { ExternalLink, FolderGit2, Hammer, Star } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const CONTRIBUTION_OPACITY_STEPS = [0.08, 0.18, 0.32, 0.5] as const;
-
-const CONTRIBUTION_CELLS = Array.from({ length: 70 }, (_, index) => {
-  const seeded = Math.sin(index * 91.37 + 47.11) * 10000;
-  const step = Math.floor(
-    (seeded - Math.floor(seeded)) * CONTRIBUTION_OPACITY_STEPS.length,
-  );
-
-  return {
-    id: index,
-    opacity: CONTRIBUTION_OPACITY_STEPS[step] ?? CONTRIBUTION_OPACITY_STEPS[0],
-  };
-});
-
 const dateFormatter = new Intl.DateTimeFormat('ko-KR', {
   month: 'short',
   day: 'numeric',
@@ -164,22 +150,17 @@ function RepositoryContent({
   );
 }
 
-function StaticContributionPreview() {
+function ContributionLink() {
   return (
-    <div
-      role="img"
-      aria-label="GitHub 기여 활동 미리보기"
-      className="grid h-full grid-cols-[repeat(14,minmax(0,1fr))] gap-1 p-2.5"
+    <a
+      href="https://github.com/nijoow"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="focus-visible:ring-brand-lavender text-ink-secondary flex h-full min-h-11 items-center justify-center gap-2 rounded-xl px-3 text-sm outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-inset"
     >
-      {CONTRIBUTION_CELLS.map((cell) => (
-        <span
-          key={cell.id}
-          aria-hidden="true"
-          className="bg-accent aspect-square rounded-[2px]"
-          style={{ opacity: cell.opacity }}
-        />
-      ))}
-    </div>
+      GitHub에서 기여 활동 보기
+      <ExternalLink size={14} aria-hidden />
+    </a>
   );
 }
 
@@ -188,7 +169,7 @@ function ContributionPreview() {
   const [hasImageError, setHasImageError] = useState(false);
 
   if (shouldReduceMotion || hasImageError) {
-    return <StaticContributionPreview />;
+    return <ContributionLink />;
   }
 
   return (

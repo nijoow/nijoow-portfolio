@@ -22,9 +22,7 @@ export default function ClassicHome() {
       <GlassPopoverGroup>
         <div className="flex flex-col gap-20 sm:gap-24">
           <Section>
-            <Reveal>
-              <PositioningStatement />
-            </Reveal>
+            <PositioningStatement />
           </Section>
           <Section>
             <Reveal>

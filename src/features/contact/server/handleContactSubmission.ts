@@ -19,6 +19,7 @@ interface RateLimitRecord {
 
 const rateLimitRecords = new Map<string, RateLimitRecord>();
 const recentSubmissions = new Map<string, number>();
+const pendingSubmissions = new Set<string>();
 
 const contactEnvSchema = z.object({
   WEB3FORMS_ACCESS_KEY: z.string().min(1).optional(),
@@ -82,26 +83,32 @@ function pruneExpiredRecords(now: number) {
   for (const [key, expiresAt] of recentSubmissions) {
     if (expiresAt <= now) recentSubmissions.delete(key);
   }
-
-  trimOldestRecords(rateLimitRecords);
-  trimOldestRecords(recentSubmissions);
 }
 
-function isRateLimited(key: string, now: number): boolean {
-  const record = rateLimitRecords.get(key);
-
-  if (!record || record.expiresAt <= now) {
-    rateLimitRecords.set(key, {
-      count: 1,
-      expiresAt: now + RATE_LIMIT_WINDOW_MS,
-    });
-    return false;
+function isRateLimited(keys: readonly string[], now: number): boolean {
+  const newKeyCount = keys.filter((key) => !rateLimitRecords.has(key)).length;
+  if (
+    rateLimitRecords.size + newKeyCount > MAX_TRACKED_RECORDS ||
+    keys.some(
+      (key) =>
+        (rateLimitRecords.get(key)?.count ?? 0) >= MAX_REQUESTS_PER_WINDOW,
+    )
+  ) {
+    return true;
   }
 
-  if (record.count >= MAX_REQUESTS_PER_WINDOW) return true;
-
-  rateLimitRecords.set(key, { ...record, count: record.count + 1 });
+  for (const key of keys) {
+    const record = rateLimitRecords.get(key);
+    rateLimitRecords.set(key, {
+      count: (record?.count ?? 0) + 1,
+      expiresAt: record?.expiresAt ?? now + RATE_LIMIT_WINDOW_MS,
+    });
+  }
   return false;
+}
+
+function isDuplicateSubmission(key: string, now: number) {
+  return pendingSubmissions.has(key) || (recentSubmissions.get(key) ?? 0) > now;
 }
 
 export async function handleContactSubmission(request: NextRequest) {
@@ -137,28 +144,21 @@ export async function handleContactSubmission(request: NextRequest) {
   const now = Date.now();
   const clientAddress = getClientAddress(request);
   const normalizedEmail = contact.email.toLowerCase();
-  const rateLimitKey = createIdentifier(`${clientAddress}:${normalizedEmail}`);
+  const rateLimitKeys = [
+    createIdentifier(`ip:${clientAddress}`),
+    createIdentifier(`email:${normalizedEmail}`),
+  ];
   const duplicateKey = createIdentifier(
-    `${clientAddress}:${normalizedEmail}:${contact.subject}:${contact.message}`,
+    JSON.stringify([normalizedEmail, contact.subject, contact.message]),
   );
 
   pruneExpiredRecords(now);
 
-  if (isRateLimited(rateLimitKey, now)) {
-    return errorResponse(
-      429,
-      'BIZ_CONTACT_RATE_LIMITED',
-      '짧은 시간에 여러 번 요청되었습니다. 잠시 후 다시 시도해 주세요.',
-    );
-  }
-
-  const duplicateExpiresAt = recentSubmissions.get(duplicateKey);
-
-  if (duplicateExpiresAt && duplicateExpiresAt > now) {
+  if (isDuplicateSubmission(duplicateKey, now)) {
     return errorResponse(
       409,
       'BIZ_CONTACT_DUPLICATE',
-      '같은 내용이 이미 전송되었습니다.',
+      '같은 내용을 전송 중이거나 이미 전송했습니다.',
     );
   }
 
@@ -172,6 +172,15 @@ export async function handleContactSubmission(request: NextRequest) {
     );
   }
 
+  if (isRateLimited(rateLimitKeys, now)) {
+    return errorResponse(
+      429,
+      'BIZ_CONTACT_RATE_LIMITED',
+      '짧은 시간에 여러 번 요청되었습니다. 잠시 후 다시 시도해 주세요.',
+    );
+  }
+
+  pendingSubmissions.add(duplicateKey);
   try {
     const providerResponse = await fetch(WEB3FORMS_ENDPOINT, {
       method: 'POST',
@@ -213,7 +222,8 @@ export async function handleContactSubmission(request: NextRequest) {
       );
     }
 
-    recentSubmissions.set(duplicateKey, now + DUPLICATE_WINDOW_MS);
+    trimOldestRecords(recentSubmissions);
+    recentSubmissions.set(duplicateKey, Date.now() + DUPLICATE_WINDOW_MS);
     return successResponse('문의가 전송되었습니다. 확인 후 답장드릴게요.');
   } catch {
     return errorResponse(
@@ -221,5 +231,7 @@ export async function handleContactSubmission(request: NextRequest) {
       'INTERNAL_CONTACT_PROVIDER',
       '문의를 전송하지 못했습니다. 이메일로 직접 연락해 주세요.',
     );
+  } finally {
+    pendingSubmissions.delete(duplicateKey);
   }
 }

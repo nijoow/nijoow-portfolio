@@ -398,5 +398,3 @@ export function ParticleLogo({
     </group>
   );
 }
-
-useGLTF.preload('/3D/nijoowPurple.glb');

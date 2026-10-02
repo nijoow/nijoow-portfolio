@@ -92,6 +92,9 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
               </span>
             </div>
 
+            {work.role ? (
+              <p className="text-ink-secondary text-xs">{work.role}</p>
+            ) : null}
             <div className="mt-auto flex flex-wrap items-center gap-1.5">
               {work.tags.map((tag) => (
                 <span

@@ -22,13 +22,13 @@ import {
   useState,
 } from 'react';
 import { ParticleLogo } from './ParticleLogo';
+import type { SignatureQuality } from './signatureQuality';
 
 const INTRO_SEEN_KEY = 'nijoow-intro-seen-v2';
 const ASSEMBLE_MS = 3200;
 const LANDING_MS = 1350;
 
 type StagePhase = 'intro' | 'landing' | 'hero';
-type Quality = 'high' | 'medium' | 'low' | 'fallback';
 
 interface QualityConfig {
   count: number;
@@ -36,7 +36,10 @@ interface QualityConfig {
   sparkles: number;
 }
 
-const QUALITY_CONFIG: Record<Exclude<Quality, 'fallback'>, QualityConfig> = {
+const QUALITY_CONFIG: Record<
+  Exclude<SignatureQuality, 'fallback'>,
+  QualityConfig
+> = {
   high: { count: 40000, dpr: [1, 1.5], sparkles: 30 },
   medium: { count: 24000, dpr: [1, 1.25], sparkles: 22 },
   low: { count: 12000, dpr: [1, 1], sparkles: 12 },
@@ -54,7 +57,6 @@ const CAMERA_CONFIG = {
 const INTRO_SPARKLES_SCALE: [number, number, number] = [16, 10, 6];
 const HERO_SPARKLES_SCALE: [number, number, number] = [9, 4.5, 4];
 const HERO_LAYOUT_CLASS = 'mb-10 h-[240px] w-full sm:h-[400px]';
-const SOFTWARE_RENDERER_PATTERN = /swiftshader|software|llvmpipe/i;
 
 function makeCanvasTransparent({ gl }: RootState) {
   gl.setClearColor('#000000', 0);
@@ -66,50 +68,6 @@ function resolveFrameLoop(
 ): 'always' | 'demand' | 'never' {
   if (reduced) return 'demand';
   return isSceneVisible ? 'always' : 'never';
-}
-
-function hasHardwareAcceleratedWebGL() {
-  try {
-    const canvas = document.createElement('canvas');
-    if (!window.WebGLRenderingContext) return false;
-
-    const context = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
-    if (!context) return false;
-
-    const rendererInfo = context.getExtension('WEBGL_debug_renderer_info') as {
-      UNMASKED_RENDERER_WEBGL: number;
-    } | null;
-    const renderer = String(
-      rendererInfo
-        ? context.getParameter(rendererInfo.UNMASKED_RENDERER_WEBGL)
-        : context.getParameter(context.RENDERER),
-    );
-    context.getExtension('WEBGL_lose_context')?.loseContext();
-    return !SOFTWARE_RENDERER_PATTERN.test(renderer);
-  } catch {
-    return false;
-  }
-}
-
-function detectQuality(): Quality {
-  if (!hasHardwareAcceleratedWebGL()) return 'fallback';
-
-  const isReduced = window.matchMedia(
-    '(prefers-reduced-motion: reduce)',
-  ).matches;
-  const isSmall = window.innerWidth < 640;
-  const hasFewCores = navigator.hardwareConcurrency <= 4;
-  const hasMediumCores = navigator.hardwareConcurrency <= 8;
-  const savesData =
-    'connection' in navigator &&
-    typeof navigator.connection === 'object' &&
-    navigator.connection !== null &&
-    'saveData' in navigator.connection &&
-    navigator.connection.saveData === true;
-
-  if (isReduced || isSmall || hasFewCores || savesData) return 'low';
-  if (hasMediumCores || window.devicePixelRatio > 2) return 'medium';
-  return 'high';
 }
 
 function hasSeenIntro() {
@@ -303,6 +261,7 @@ function HeroOverlay({
 
             <div className="pointer-events-auto flex items-center gap-1.5">
               <span
+                role="img"
                 aria-label="드래그해서 회전"
                 title="드래그해서 회전"
                 className="text-ink-muted hidden size-11 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-sm sm:flex"
@@ -387,14 +346,16 @@ function ReplayButton({
   );
 }
 
-export default function SignatureExperience() {
+export default function SignatureExperience({
+  quality,
+}: {
+  quality: Exclude<SignatureQuality, 'fallback'>;
+}) {
   const reduced = useReducedMotion();
   const wrapRef = useRef<HTMLElement>(null);
   const orbitControlsRef = useRef<ComponentRef<typeof OrbitControls>>(null);
-  const [quality] = useState<Quality>(detectQuality);
   const [phase, setPhase] = useState<StagePhase>(() => {
     const shouldPlay =
-      quality !== 'fallback' &&
       quality !== 'low' &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
       !hasSeenIntro();
@@ -407,7 +368,7 @@ export default function SignatureExperience() {
   const isIntro = phase === 'intro';
   const isHero = phase === 'hero';
   const isCinematic = phase !== 'hero';
-  const config = quality === 'fallback' ? null : QUALITY_CONFIG[quality];
+  const config = QUALITY_CONFIG[quality];
   const heroInteractive = isHero && !reduced;
   const isSceneVisible = isInView || isCinematic;
   const showBurstButton = !reduced && config !== null;

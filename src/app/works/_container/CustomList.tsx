@@ -1,4 +1,3 @@
-import GlassCard from '@/components/Motion/GlassCard';
 import type { ReactNode } from 'react';
 
 interface ChildrenProps {
@@ -6,11 +5,7 @@ interface ChildrenProps {
 }
 
 function CustomList({ children }: ChildrenProps) {
-  return (
-    <GlassCard lift={false} className="w-full">
-      <ul className="flex w-full flex-col gap-1.5 p-4 sm:p-5">{children}</ul>
-    </GlassCard>
-  );
+  return <ul className="flex w-full flex-col gap-1.5 py-1">{children}</ul>;
 }
 
 function MainListItem({ children }: ChildrenProps) {

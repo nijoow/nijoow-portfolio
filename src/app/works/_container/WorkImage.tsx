@@ -13,7 +13,8 @@ function WorkImage({ url, imgSrc }: { url?: string; imgSrc: string }) {
           fill
           sizes="(max-width: 768px) 100vw, 768px"
           alt={`${imgSrc.replace(/\.\w+$/, '')} 작업 스크린샷`}
-          priority
+          fetchPriority="high"
+          loading="eager"
           className="object-contain transition-transform duration-300 group-hover:scale-105"
         />
       )}

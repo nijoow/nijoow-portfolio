@@ -21,14 +21,6 @@ const TelevisionPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-
-      <CustomList>
-        <CustomList.MainListItem>
-          YouTube 플레이리스트를 몰입형 3D 공간에서 감상하는 토이 프로젝트
-        </CustomList.MainListItem>
-      </CustomList>
-
       <PartSubTitle title="기술 스택" />
 
       <TechStack
@@ -42,7 +34,7 @@ const TelevisionPage = () => {
         ]}
       />
 
-      <PartSubTitle title="주요 기능" />
+      <PartSubTitle title="주요 작업" />
       <CustomList>
         <CustomList.MainListItem>
           <strong className="font-bold">🌌 몰입형 3D 환경</strong>

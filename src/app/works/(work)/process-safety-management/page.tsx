@@ -1,10 +1,5 @@
-import {
-  LimitedProjectCover,
-  LimitedProjectNotice,
-} from '@/features/works/components/LimitedProject';
 import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
-import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
 import {
   createWorkMetadata,
@@ -19,17 +14,6 @@ export default function ProcessSafetyManagementPage() {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <LimitedProjectCover className="aspect-video w-full rounded-2xl border border-white/10 shadow-md" />
-
-      <div className="my-3" />
-      <LimitedProjectNotice />
-
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          공정 프로세스의 작업 및 문서를 관리하는 B2B 웹 시스템
-        </CustomList.MainListItem>
-      </CustomList>
 
       <PartSubTitle title="기술 스택" />
       <TechStack
@@ -45,20 +29,8 @@ export default function ProcessSafetyManagementPage() {
         ]}
       />
 
-      <PartSubTitle title="담당 영역" />
-      <CustomList>
-        <CustomList.MainListItem>
-          반응형 웹 UI 및 한·영 다국어 환경 개발
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          대규모 문서 목록과 복합적인 도면 인터랙션 개발
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          PWA·푸시 알림·빌드 자동화 연동
-        </CustomList.MainListItem>
-      </CustomList>
+      <PartSubTitle title="주요 작업" />
 
-      <PartSubTitle title="주요 작업 및 문제 해결" />
       <CustomList>
         <CustomList.MainListItem>
           Next.js 기반 반응형 웹 UI 개발 및 한·영 다국어 환경 구축
@@ -82,8 +54,6 @@ export default function ProcessSafetyManagementPage() {
           FCM 푸시 알림 연동 및 Jenkins 기반 빌드 자동화
         </CustomList.MainListItem>
       </CustomList>
-
-      <div className="my-3" />
     </>
   );
 }

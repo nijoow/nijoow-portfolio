@@ -3,6 +3,7 @@ import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
 import WorkImage from '../../_container/WorkImage';
+import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -20,13 +21,6 @@ const FromYouPage = () => {
       <WorkImage imgSrc="fromyou.webp" />
 
       <div className="my-3" />
-      <PartTitle title="프로젝트 개요" />
-      <CustomList>
-        <CustomList.MainListItem>
-          독자가 선택한 지역구, 연령대, 관심사에 따라 맞춤형으로 기사를 보여주는
-          인터랙티브 웹사이트
-        </CustomList.MainListItem>
-      </CustomList>
 
       <PartSubTitle title="기술 스택" />
 
@@ -41,7 +35,7 @@ const FromYouPage = () => {
         ]}
       />
 
-      <PartSubTitle title="주요 작업과 결과" />
+      <PartSubTitle title="주요 작업" />
 
       <CustomList>
         <CustomList.MainListItem>
@@ -66,6 +60,27 @@ const FromYouPage = () => {
           인천일보 팀 이달의 기자상 수상에 기여
         </CustomList.MainListItem>
       </CustomList>
+
+      <div className="my-3" />
+      <PartTitle title="사용자 선택 흐름" />
+      <p className="text-ink-muted mb-3 text-sm leading-relaxed break-keep">
+        지도에서 지역을 고르고, 연령대와 관심사를 선택해 기사를 읽는 흐름입니다.
+        관심사는 드래그로 담고 순서를 바꿀 수 있습니다.
+      </p>
+      <WorkCarousel
+        eager={false}
+        background="dark"
+        imgSrcList={[
+          'fromyou/region.png',
+          'fromyou/age.png',
+          'fromyou/interests.png',
+        ]}
+        imageLabels={[
+          '지도에서 지역 선택',
+          '차트에서 연령대 선택',
+          '관심사 선택과 순서 변경',
+        ]}
+      />
 
       <div className="my-3" />
       <PartTitle title="관련 링크" />

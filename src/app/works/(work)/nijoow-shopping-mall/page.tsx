@@ -27,9 +27,6 @@ const NijoowShoppingMallPage = () => {
       <PartTitle title="프로젝트 개요" />
 
       <CustomList>
-        <CustomList.MainListItem>
-          인증부터 상품·배송 데이터까지 직접 구현하는 풀스택 토이 프로젝트
-        </CustomList.MainListItem>
         <CustomList.MainListItem>🚧 개발 진행 중 🚧</CustomList.MainListItem>
       </CustomList>
 
@@ -39,7 +36,7 @@ const NijoowShoppingMallPage = () => {
         stacks={['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL']}
       />
 
-      <PartSubTitle title="구현 기능" />
+      <PartSubTitle title="구현한 기능" />
 
       <CustomList>
         <CustomList.MainListItem>
