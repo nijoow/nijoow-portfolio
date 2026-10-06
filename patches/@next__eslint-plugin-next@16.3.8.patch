@@ -1,0 +1,33 @@
+diff --git a/dist/utils/get-root-dirs.js b/dist/utils/get-root-dirs.js
+index 47108c943514a1d7e686c5eb18aad00a59963c83..4c03953765d3952b1a579ef4bf6d446b483aca47 100644
+--- a/dist/utils/get-root-dirs.js
++++ b/dist/utils/get-root-dirs.js
+@@ -9,12 +9,25 @@ Object.defineProperty(exports, "getRootDirs", {
+     }
+ });
+ var _fastglob = require("fast-glob");
++var _path = require("path");
+ /**
+  * Process a Next.js root directory glob.
+  */ var processRootDir = function(rootDir) {
+-    return (0, _fastglob.globSync)(rootDir.replace(/\\/g, '/'), {
+-        onlyDirectories: true
+-    });
++    var pattern = rootDir.replace(/\\/g, '/');
++    var patterns = [pattern];
++    // fast-glob excludes a static base directory for a trailing globstar.
++    if (pattern === '**' || pattern.endsWith('/**')) {
++        patterns = [pattern + '/*'];
++        var base = pattern === '**' ? '.' : pattern.slice(0, -3);
++        if (/[*?()[\[\]]/.test(base)) patterns.push(base);
++    }
++    return Array.from(new Set((0, _fastglob.globSync)(patterns, {
++        onlyDirectories: true,
++        expandDirectories: false,
++        absolute: _path.isAbsolute(pattern)
++    }).map(function(directory) {
++        return _path.join(directory, '.');
++    })));
+ };
+ var getRootDirs = function(context) {
+     var rootDirs = [
