@@ -2,7 +2,7 @@ import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
-import WorkImage from '../../_container/WorkImage';
+import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -17,9 +17,15 @@ const LessorPandaVillagePage = () => {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <WorkImage
-        url="https://lessor-panda-village.vercel.app/"
-        imgSrc="lessor-panda-village.webp"
+      <WorkCarousel
+        imgSrcList={[
+          'lessor-panda-village/01-panda-village-overview.webp',
+          'lessor-panda-village/02-panda-village-daytime.webp',
+          'lessor-panda-village/03-panda-village-guestbook.webp',
+        ]}
+        imageLabels={['마을 전경과 주요 공간', '마을과 캐릭터', '마을 방명록']}
+        background="dark"
+        aspectRatio="video"
       />
 
       <div className="my-3" />

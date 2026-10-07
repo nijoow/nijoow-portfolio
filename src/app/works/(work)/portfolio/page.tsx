@@ -2,7 +2,7 @@ import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
-import WorkImage from '../../_container/WorkImage';
+import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -17,9 +17,15 @@ const PortPolioPage = () => {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <WorkImage
-        url="https://nijoow-portfolio.vercel.app"
-        imgSrc="portfolio.webp"
+      <WorkCarousel
+        imgSrcList={[
+          'portfolio/01-portfolio-3d-logo-home.webp',
+          'portfolio/02-portfolio-project-introduction.webp',
+          'portfolio/03-portfolio-works-list.webp',
+        ]}
+        imageLabels={['홈 3D 로고', '프로젝트 소개', 'Works 목록']}
+        background="dark"
+        aspectRatio="video"
       />
 
       <div className="my-3" />
