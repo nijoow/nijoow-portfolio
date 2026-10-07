@@ -1,6 +1,6 @@
 # 이미지 캡처 출처 및 사용 목록
 
-이 목록은 포트폴리오의 PNG 원본, 출처, 용도와 현재 연결 상태를 기록합니다. 서비스 화면 캡처는 사용자의 Mac에서 Chrome으로 대상 웹사이트를 열어 얻었습니다. 사이트의 코드나 콘텐츠를 변경하지 않았고, 결제·주문·외부 게시 작업을 하지 않았습니다.
+이 목록은 포트폴리오 이미지의 PNG 원본, 공개용 파생본, 출처, 용도와 현재 연결 상태를 기록합니다. 서비스 화면 캡처는 사용자의 Mac에서 Chrome으로 대상 웹사이트를 열어 얻었습니다. 사이트의 코드나 콘텐츠를 변경하지 않았고, 결제·주문·외부 게시 작업을 하지 않았습니다.
 
 ## 실제 서비스 캡처
 
@@ -40,18 +40,20 @@ Lessor Panda Village에서는 마을을 둘러보고 방명록 목록을 읽기 
 
 ### Doodin Calendar 별도 작업 캡처
 
-출처 폴더: `/Users/woojin/Desktop/works/doodin calendar/portfolio-captures/`. 최신 산출물 9개의 PNG(각 390 × 844)를 보관합니다. 01·02·06·07·08·09는 기존 보관본과 SHA-256이 같고, 03·04·05는 별도 작업에서 화면을 수정한 최신본으로 교체했습니다. 교체 전 3개 파일은 `capture-archive/doodin-calendar/`에 보존했습니다.
+출처 폴더: `/Users/woojin/Desktop/works/doodin calendar/portfolio-captures/`. 최신 산출물 9개 PNG(각 390 × 844)는 `capture-archive/doodin-calendar/`에 원본으로 보관합니다. 이 폴더는 `.gitignore` 대상이며 Git 커밋 및 Vercel 배포에 포함되지 않습니다. 01·02·06·07·08·09는 기존 보관본과 SHA-256이 같고, 03·04·05는 별도 작업에서 수정된 최신본입니다. 교체 전 3개 PNG도 같은 보관 폴더에 `*-previous-2026-10-07.png` 이름으로 유지합니다.
 
-| 포트폴리오 파일 | 출처 파일 | 화면 내용 / 연결 상태 |
-| --- | --- | --- |
-| `public/images/works/doodin-calendar/home-overview.png` | `01-home.png` | 홈과 최근 기록; Works 카드 대표 및 상세 갤러리 |
-| `public/images/works/doodin-calendar/month-calendar.png` | `02-calendar.png` | 월간 캘린더와 분류별 필터; 상세 갤러리 |
-| `public/images/works/doodin-calendar/record-editor.png` | `03-record-editor.png` | 수정된 기록 편집 폼; 상세 갤러리, 이전 이미지는 archive에 보존 |
-| `public/images/works/doodin-calendar/place-management.png` | `04-place-management.png` | 수정된 장소 검색·선택 UI; 상세 갤러리, 이전 이미지는 archive에 보존 |
-| `public/images/works/doodin-calendar/entry-comments.png` | `05-comments-reactions.png` | 수정된 기록 상세·댓글·반응 UI; 상세 갤러리, 이전 이미지는 archive에 보존 |
-| `public/images/works/doodin-calendar/anniversary-detail.png` | `06-anniversary-detail.png` | 기념일 상세 카드; 상세 갤러리 |
-| `public/images/works/doodin-calendar/upcoming-plans.png` | `07-plans-overview.png` | 다가오는 일정·할 일; 상세 갤러리 |
-| `public/images/works/doodin-calendar/saved-notes.png` | `08-notes-overview.png` | 저장된 메모; 상세 갤러리 |
-| `public/images/works/doodin-calendar/photo-library.png` | `09-photo-library.png` | 사진첩의 예시 사진 목록; 상세 갤러리 |
+공개용 WebP는 보관된 원본 PNG에서 `cwebp -q 85`로 생성했습니다. Works 카드 대표 이미지는 `home-overview.webp`이며, 상세 갤러리는 아래 WebP 9개를 모두 참조합니다.
 
-상세 페이지 갤러리에서 위 9개 화면을 모두 탐색할 수 있고 Works 목록에 공개했습니다. 사용자가 일정·기록·주소를 예시 데이터라고 확인했습니다. `portfolio-captures/virtual-photos/`의 독립 사진 파일은 포트폴리오 캡처로 복사하지 않았습니다. 캡처를 새로 만들지 않았고 캡처 반영 후 두딘 프로젝트를 Works 목록에 공개했습니다.
+| 공개 WebP | 배포 제외 원본 PNG | 출처 파일 | 화면 내용 / 연결 상태 |
+| --- | --- | --- | --- |
+| `public/images/works/doodin-calendar/home-overview.webp` | `capture-archive/doodin-calendar/home-overview.png` | `01-home.png` | 홈과 최근 기록; Works 카드 대표 및 상세 갤러리 |
+| `public/images/works/doodin-calendar/month-calendar.webp` | `capture-archive/doodin-calendar/month-calendar.png` | `02-calendar.png` | 월간 캘린더와 분류별 필터; 상세 갤러리 |
+| `public/images/works/doodin-calendar/record-editor.webp` | `capture-archive/doodin-calendar/record-editor.png` | `03-record-editor.png` | 수정된 기록 편집 폼; 상세 갤러리, 이전 PNG는 archive에 보존 |
+| `public/images/works/doodin-calendar/place-management.webp` | `capture-archive/doodin-calendar/place-management.png` | `04-place-management.png` | 수정된 장소 검색·선택 UI; 상세 갤러리, 이전 PNG는 archive에 보존 |
+| `public/images/works/doodin-calendar/entry-comments.webp` | `capture-archive/doodin-calendar/entry-comments.png` | `05-comments-reactions.png` | 수정된 기록 상세·댓글·반응 UI; 상세 갤러리, 이전 PNG는 archive에 보존 |
+| `public/images/works/doodin-calendar/anniversary-detail.webp` | `capture-archive/doodin-calendar/anniversary-detail.png` | `06-anniversary-detail.png` | 기념일 상세 카드; 상세 갤러리 |
+| `public/images/works/doodin-calendar/upcoming-plans.webp` | `capture-archive/doodin-calendar/upcoming-plans.png` | `07-plans-overview.png` | 다가오는 일정·할 일; 상세 갤러리 |
+| `public/images/works/doodin-calendar/saved-notes.webp` | `capture-archive/doodin-calendar/saved-notes.png` | `08-notes-overview.png` | 저장된 메모; 상세 갤러리 |
+| `public/images/works/doodin-calendar/photo-library.webp` | `capture-archive/doodin-calendar/photo-library.png` | `09-photo-library.png` | 사진첩의 예시 사진 목록; 상세 갤러리 |
+
+사용자가 일정·기록·주소를 예시 데이터라고 확인했습니다. `portfolio-captures/virtual-photos/`의 독립 사진 파일은 포트폴리오에 복사하지 않았습니다. 캡처를 새로 만들지 않았고 두딘 상세 본문은 축약하거나 수정하지 않았습니다.

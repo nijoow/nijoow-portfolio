@@ -1,6 +1,6 @@
 import { SELECTED_WORK_PAGE_NAMES } from '@/features/home/data/homeContent';
 import { getWork, publicWorks, works } from '@/features/works/data/worksData';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -41,7 +41,7 @@ describe('worksData', () => {
     }
 
     expect(getWork('doodin-calendar')?.imgSrc).toBe(
-      'doodin-calendar/home-overview.png',
+      'doodin-calendar/home-overview.webp',
     );
     expect(getWork('ios-keyboard')?.imgSrc).toBe(
       'keyboard/keyboard-settings-and-theme-selection.webp',
@@ -85,5 +85,19 @@ describe('worksData', () => {
         `${work.pageName}: ${work.imgSrc}`,
       ).toBe(true);
     });
+  });
+
+  it('두딘 상세 갤러리에 공개용 WebP 9장을 제공하고 PNG 원본은 공개하지 않는다', () => {
+    const imageDirectory = resolve(
+      process.cwd(),
+      'public/images/works/doodin-calendar',
+    );
+    const files = readdirSync(imageDirectory);
+
+    expect(files.filter((file) => file.endsWith('.webp'))).toHaveLength(9);
+    expect(files.some((file) => file.endsWith('.png'))).toBe(false);
+    expect(existsSync(resolve(imageDirectory, 'home-overview.webp'))).toBe(
+      true,
+    );
   });
 });

@@ -240,7 +240,7 @@ export const works: readonly Work[] = [
   },
   {
     pageName: 'doodin-calendar',
-    imgSrc: 'doodin-calendar/home-overview.png',
+    imgSrc: 'doodin-calendar/home-overview.webp',
     name: '두딘캘린더',
     projectType: 'side',
     tags: ['Web', 'Frontend', 'Design', 'AI 활용 개발'],
