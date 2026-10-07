@@ -64,9 +64,9 @@ const LessorPandaVillagePage = () => {
         </div>
       </div>
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        산책과 방문자 간 상호작용을 기획하고, Google Antigravity·Claude·Codex를
-        활용해 구현·수정·리뷰했습니다. 생성형 3D 에셋을 사용하고 프론트엔드
-        구성과 인터랙션을 다듬는 데 집중했습니다.
+        레서판다로 산책하고 다른 방문자와 인사하거나 쪽지를 남길 수 있는 마을을
+        만들었습니다. 생성형 3D 에셋을 사용했고, 마을의 기능과 화면은 Google
+        Antigravity·Claude·Codex를 활용해 구현했습니다.
       </p>
 
       <PartSubTitle title="주요 작업" />
@@ -122,9 +122,9 @@ const LessorPandaVillagePage = () => {
         <li className="mt-5 first:mt-0">
           <h3 className="text-base font-bold">월드 배치의 일관성</h3>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-            월드의 배치 데이터를 렌더링·충돌 판정·미니맵이 함께 참조하도록
-            구성했습니다. 공간을 수정할 때 화면과 이동 가능한 영역, 지도에 같은
-            배치가 반영되도록 했습니다.
+            건물과 사물의 위치를 화면, 충돌 판정, 미니맵에서 따로 관리하면 서로
+            어긋날 수 있습니다. 세 곳에서 같은 배치 데이터를 읽게 해, 위치를 한
+            번 바꾸면 화면과 이동 가능한 영역, 지도에 함께 반영되도록 했습니다.
           </p>
         </li>
 
@@ -132,8 +132,8 @@ const LessorPandaVillagePage = () => {
           <h3 className="text-base font-bold">늦은 조회로 되돌아오는 쪽지</h3>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
             삭제한 쪽지가 늦게 도착한 조회 결과로 다시 표시되는 문제를
-            수정했습니다. 확인된 삭제 이후에는 이전 조회를 무효화하고,
-            목록·게시판·캐시에 같은 변경을 반영하도록 요청 수명을 관리했습니다.
+            수정했습니다. 삭제가 완료되면 그보다 먼저 시작한 조회 결과는
+            무시하고, 목록과 게시판, 캐시에서도 해당 쪽지를 지우도록 바꿨습니다.
           </p>
         </li>
 
@@ -147,13 +147,6 @@ const LessorPandaVillagePage = () => {
         </li>
       </CustomList>
 
-      <PartSubTitle title="검증 범위와 남은 확인" />
-      <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-        로컬 브라우저에서 이동·방명록 캐시·설정·키보드 포커스를 확인하고, 자동
-        검사로 전송 로직과 데이터 권한을 점검했습니다. 실서버에서 3~4명이 함께
-        접속하거나 재연결하는 동작, 실제 모바일 입력과 저사양 GPU 성능은 추가
-        검증이 필요합니다.
-      </p>
       <div className="my-3" />
 
       <PartTitle title="관련 링크" />

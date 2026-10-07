@@ -41,6 +41,10 @@ const LaunchpadPage = () => {
       <TechStack stacks={['Next.js', 'TypeScript', 'Tailwind CSS']} />
 
       <PartSubTitle title="주요 작업" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        건반 배치와 입력 방식을 정하고 AI를 활용해 구현했습니다. 피아노와 드럼을
+        번갈아 연주하며 누르고 떼는 타이밍에 맞춰 소리가 나도록 조정했습니다.
+      </p>
 
       <CustomList>
         <CustomList.MainListItem>
@@ -63,13 +67,6 @@ const LaunchpadPage = () => {
           </p>
         </li>
       </CustomList>
-
-      <PartSubTitle title="AI와 작업한 방식" />
-      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        건반 구성과 입력 방식을 정하고 AI를 활용해 기능을 구현했습니다. 생성된
-        코드를 검토하면서 누르기·떼기 이벤트와 사운드의 재생 흐름을 조정하고,
-        원하는 연주 동작에 맞게 수정했습니다.
-      </p>
 
       <div className="my-3" />
       <PartTitle title="관련 링크" />

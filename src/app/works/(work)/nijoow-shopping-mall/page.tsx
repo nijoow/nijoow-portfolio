@@ -38,10 +38,10 @@ const NijoowShoppingMallPage = () => {
 
       <PartTitle title="만든 이유" />
       <p className="text-ink-muted text-sm leading-relaxed break-keep">
-        상품을 둘러보는 과정에서 직접 디자인을 바꾸고 주문까지 이어지는 경험을
-        구현한 쇼핑몰 토이프로젝트입니다. 3D 스니커즈의 색상과 재질, 각인을
-        편집하고 결과를 저장·공유하거나 장바구니에 담을 수 있습니다. 결제와
-        배송은 데모로 동작합니다.
+        색상과 재질, 각인을 바꾼 신발을 주문해 볼 수 있는 쇼핑몰을 만들었습니다.
+        편집한 3D 스니커즈를 저장하거나 공유하고, 장바구니에 담아 주문해 볼 수
+        있습니다. 결제와 배송은 데모로 동작합니다. 화면과 기능을 기획하고 AI를
+        활용해 프론트엔드와 서버 코드를 구현했습니다.
       </p>
 
       <PartSubTitle title="기술 스택" />
@@ -60,11 +60,11 @@ const NijoowShoppingMallPage = () => {
         ]}
       />
 
-      <PartTitle title="직접 판단하고 구현한 부분" />
+      <PartTitle title="주요 작업" />
       <CustomList>
         <li className="mt-3 first:mt-0">
           <h3 className="text-base font-bold">
-            편집한 디자인을 구매 흐름에 연결
+            편집한 신발을 장바구니와 주문에 담기
           </h3>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
             부위별 색상과 재질·각인 설정을 3D 미리보기에 반영하고, 실행 취소와
@@ -74,9 +74,7 @@ const NijoowShoppingMallPage = () => {
           </p>
         </li>
         <li className="mt-3">
-          <h3 className="text-base font-bold">
-            데모에서도 다루는 저장과 주문의 예외
-          </h3>
+          <h3 className="text-base font-bold">중복 주문과 결제 실패 처리</h3>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
             서버에서 상품 구성·수량·금액을 검증하고, 같은 주문 요청이 중복
             처리되지 않도록 구성했습니다. 모의 승인 실패와 재고 부족, 주문
@@ -85,7 +83,9 @@ const NijoowShoppingMallPage = () => {
           </p>
         </li>
         <li className="mt-3">
-          <h3 className="text-base font-bold">3D 로딩과 실패 상태까지 구성</h3>
+          <h3 className="text-base font-bold">
+            3D 모델을 불러오는 동안의 화면
+          </h3>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
             3D 뷰어를 클라이언트에서 별도로 불러오고 준비 중에는 대표 이미지를
             보여 줍니다. 모델 로딩이 실패하면 안내와 재시도를 제공하도록
@@ -94,17 +94,10 @@ const NijoowShoppingMallPage = () => {
         </li>
       </CustomList>
 
-      <PartSubTitle title="작업 방식과 현재 범위" />
+      <PartSubTitle title="데모 이용 안내" />
       <p className="text-ink-muted text-sm leading-relaxed break-keep">
-        AI를 설계와 구현에 활용하며, 화면 방향과 기능 범위를 직접 정하고 생성된
-        코드를 검토했습니다. 편집·저장·주문 흐름을 확인하고 문제를 수정하는
-        방식으로 진행했습니다. 주문과 저장 로직의 자동 테스트 및 HTTP 검증
-        코드를 두고 있으며, 실제 모바일 기기의 성능 확인은 남아 있습니다.
-      </p>
-      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        게스트 체험과 Auth.js 기반 소셜 로그인 구성을 마련했습니다.
-        구글·카카오·네이버 로그인은 제공자 설정을 포함한 배포 환경 확인이
-        필요하며, 운영용 상품·주문 관리 화면은 이후 작업 범위로 남겨 두었습니다.
+        게스트로 체험할 수 있습니다. 소셜 로그인은 배포 설정 확인이 필요한
+        상태이며, 상품과 주문을 관리하는 운영자 화면은 포함하지 않았습니다.
       </p>
 
       <div className="my-3" />
