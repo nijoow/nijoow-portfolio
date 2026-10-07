@@ -77,13 +77,13 @@ const CusmeticPage = () => {
       <CustomList>
         <li className="mt-5 first:mt-0">
           <h3 className="text-base font-bold">
-            서버 컴포넌트 데이터 캐싱 문제
+            페이지 이동 후 Router Cache의 이전 데이터 표시
           </h3>
           <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-            fetch 함수에 no-store 옵션을 적용했지만 클라이언트 Router Cache
-            때문에 새 데이터를 약 30초 동안 불러오지 못했습니다. 페이지 진입 시
-            router.refresh()를 호출해 클라이언트 캐시를 무효화하고 최신 데이터를
-            보여주도록 했습니다.
+            fetch 함수에 no-store 옵션을 적용한 상태에서도 당시 페이지 이동 후
+            약 30초 동안 이전 데이터가 표시되는 문제를 다뤘습니다. 페이지 진입
+            시 router.refresh()를 호출해 Router Cache를 갱신하고 서버에서
+            데이터를 다시 받아오도록 처리했습니다.
           </p>
         </li>
       </CustomList>

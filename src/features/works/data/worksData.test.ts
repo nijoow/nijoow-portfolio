@@ -41,14 +41,14 @@ describe('worksData', () => {
     }
 
     expect(getWork('doodin-calendar')?.imgSrc).toBe(
-      'doodin-calendar/saved-notes.webp',
+      'doodin-calendar/home-overview.png',
     );
     expect(getWork('ios-keyboard')?.imgSrc).toBe(
       'keyboard/keyboard-settings-and-theme-selection.webp',
     );
     expect(getWork('nijoow-shopping-mall')).toMatchObject({
       name: '3D Shopping Mall',
-      imgSrc: 'nijoow-shopping-mall/01-shopping-mall-home.webp',
+      imgSrc: 'nijoow-shopping-mall/01-shopping-mall-home.png',
     });
     expect(getWork('fromis9-stickers')?.imgSrc).toBe('fromis9-stickers.webp');
 

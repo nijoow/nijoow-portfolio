@@ -18,11 +18,11 @@ const MoimcityPage = () => {
       <WorkCarousel
         imgSrcList={[
           'moimcity/moimcity.webp',
-          'moimcity/만남.webp',
-          'moimcity/위시리스트.webp',
-          'moimcity/필터.webp',
-          'moimcity/모임상세.webp',
-          'moimcity/프로필상세.webp',
+          'moimcity/meetups.webp',
+          'moimcity/wishlist.webp',
+          'moimcity/filters.webp',
+          'moimcity/meetup-detail.webp',
+          'moimcity/profile-detail.webp',
         ]}
         aspectRatio="square"
       />

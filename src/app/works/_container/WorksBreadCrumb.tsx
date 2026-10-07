@@ -41,7 +41,7 @@ function WorksBreadCrumb({ work, slug }: WorksBreadCrumbProps) {
         )}
       </div>
       {work?.description ? (
-        <p className="text-ink-muted mt-1 max-w-3xl text-[15px] leading-relaxed break-keep sm:text-base">
+        <p className="text-ink-secondary mt-1 max-w-3xl text-base leading-relaxed break-keep">
           {work.description}
         </p>
       ) : null}
