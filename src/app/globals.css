@@ -52,28 +52,21 @@ body,
   font-family: var(--font-binggrae), sans-serif;
 }
 
-/* Detail prose shares one reading rhythm; media keeps the wider page frame. */
+/* Detail text and media share the same centered content frame. */
 .work-detail-body {
   color: var(--color-ink-body);
   font-size: 1rem;
   line-height: 1.8;
 }
 
-.work-detail-body > div > :is(h2, p, ul, span, .work-tech-stack),
-.work-detail-body > div > div:has(.work-tech-stack) {
-  width: 100%;
-  max-width: 44rem;
-  margin-inline: auto;
+.work-detail-body > div {
+  max-width: 48rem;
 }
 
 .work-detail-body p:not([role='status']) {
   color: var(--color-ink-body);
   font-size: 1rem;
   line-height: 1.8;
-}
-
-.work-detail-body > div > a {
-  margin-left: max(0px, calc((100% - 44rem) / 2));
 }
 
 .work-detail-body :is(h2, h3, strong) {
