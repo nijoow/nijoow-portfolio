@@ -42,7 +42,7 @@ const PortPolioPage = () => {
       </CustomList>
 
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        로고와 화면의 분위기를 정하고, 구현과 리팩터링에 AI를 함께 사용했습니다.
+        로고와 화면의 분위기를 정하고, 구현과 리팩토링에 AI를 함께 사용했습니다.
         작업이 추가될 때마다 내용을 갱신하고 모바일 배치와 인터랙션도 손보고
         있습니다.
       </p>

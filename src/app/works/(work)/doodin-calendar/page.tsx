@@ -94,11 +94,6 @@ export default function DoodinCalendarPage() {
       <PartTitle title="구현 과정" />
       <CustomList>
         <CustomList.MainListItem>
-          다녀온 일정을 기록으로 바꿀 때 기존 메모를 가져오도록 했습니다. 메모를
-          다시 쓰지 않아도 되고, 전환한 뒤에는 일정과 기록을 따로 수정할 수
-          있습니다.
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
           서버 데이터, 탐색 상태, 작성 중인 입력을 구분했습니다. 조회와 갱신은
           TanStack Query, 날짜·필터·상세 대상은 URL, 저장 전 입력은 React Hook
           Form에서 관리합니다.

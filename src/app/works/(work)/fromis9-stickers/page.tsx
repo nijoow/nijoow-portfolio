@@ -63,11 +63,6 @@ const Fromis9StickersPage = () => {
         </CustomList.MainListItem>
       </CustomList>
 
-      <PartSubTitle title="공개한 결과" />
-      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        완성한 웹사이트를 공개하고 커뮤니티에 공유했습니다.
-      </p>
-
       <div className="my-3" />
 
       <PartTitle title="관련 링크" />
