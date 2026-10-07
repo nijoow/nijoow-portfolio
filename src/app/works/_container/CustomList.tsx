@@ -10,8 +10,8 @@ function CustomList({ children }: ChildrenProps) {
 
 function MainListItem({ children }: ChildrenProps) {
   return (
-    <li className="mt-3 flex gap-2.5 text-[15px] break-keep first:mt-0">
-      <span className="bg-brand-lavender/80 mt-2 size-1.5 shrink-0 rounded-full" />
+    <li className="mt-3 flex gap-2.5 break-keep first:mt-0">
+      <span className="bg-brand-lavender/80 mt-3 size-1.5 shrink-0 rounded-full" />
       <div className="min-w-0">{children}</div>
     </li>
   );
@@ -24,9 +24,9 @@ function SubListItem({
   showBullet?: boolean;
 }) {
   return (
-    <li className="text-ink-muted flex gap-2.5 pl-4 text-sm leading-relaxed break-keep">
+    <li className="flex gap-2.5 pl-4 break-keep">
       {showBullet ? (
-        <span className="mt-2 size-1 shrink-0 rounded-full bg-white/40" />
+        <span className="mt-3 size-1 shrink-0 rounded-full bg-white/40" />
       ) : null}
       <div className="min-w-0">{children}</div>
     </li>

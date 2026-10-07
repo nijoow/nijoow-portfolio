@@ -19,6 +19,16 @@
   --color-status-danger: var(--palette-status-danger);
 
   --color-ink-primary: #ffffff;
+  --color-ink-body: color-mix(
+    in srgb,
+    var(--color-ink-primary) 80%,
+    transparent
+  );
+  --color-ink-heading: color-mix(
+    in srgb,
+    var(--color-ink-primary) 92%,
+    transparent
+  );
   --color-ink-secondary: color-mix(in srgb, white 75%, transparent);
   --color-ink-muted: color-mix(in srgb, white 55%, transparent);
   --color-ink-faint: color-mix(in srgb, white 40%, transparent);
@@ -40,6 +50,43 @@ html,
 body,
 * {
   font-family: var(--font-binggrae), sans-serif;
+}
+
+/* Detail prose shares one reading rhythm; media keeps the wider page frame. */
+.work-detail-body {
+  color: var(--color-ink-body);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.work-detail-body > div > :is(h2, p, ul, span, .work-tech-stack),
+.work-detail-body > div > div:has(.work-tech-stack) {
+  width: 100%;
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.work-detail-body p:not([role='status']) {
+  color: var(--color-ink-body);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.work-detail-body > div > a {
+  margin-left: max(0px, calc((100% - 44rem) / 2));
+}
+
+.work-detail-body :is(h2, h3, strong) {
+  color: var(--color-ink-heading);
+}
+
+.work-detail-body h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.work-detail-body h3 {
+  line-height: 1.6;
 }
 
 html[data-custom-cursor='ready'],

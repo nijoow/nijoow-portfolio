@@ -2,7 +2,7 @@ import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
-import WorkCarousel from '../../_container/WorkCarousel';
+import WorkImage from '../../_container/WorkImage';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -17,18 +17,15 @@ const PortPolioPage = () => {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <WorkCarousel
-        imgSrcList={[
-          'portfolio/01-portfolio-3d-logo-home.webp',
-          'portfolio/02-portfolio-project-introduction.webp',
-          'portfolio/03-portfolio-works-list.webp',
-        ]}
-        imageLabels={['홈 3D 로고', '프로젝트 소개', 'Works 목록']}
-        background="dark"
-        aspectRatio="video"
+      <WorkImage
+        url="https://nijoow-portfolio.vercel.app"
+        imgSrc="portfolio/01-portfolio-3d-logo-home.webp"
       />
 
-      <div className="my-3" />
+      <div className="my-3 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <WorkImage imgSrc="portfolio/02-portfolio-project-introduction.webp" />
+        <WorkImage imgSrc="portfolio/03-portfolio-works-list.webp" />
+      </div>
 
       <PartTitle title="프로젝트 개요" />
 
@@ -82,6 +79,13 @@ const PortPolioPage = () => {
           마이그레이션
         </CustomList.MainListItem>
       </CustomList>
+
+      <PartSubTitle title="AI와 작업한 방식" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        손글씨 로고와 화면의 분위기, 작업을 보여주는 순서는 직접 정하고 AI를
+        활용해 구현과 리팩터링을 진행했습니다. 생성된 코드를 검토하고 실제
+        화면에서 내용의 가독성, 모바일 배치, 인터랙션을 확인하며 수정했습니다.
+      </p>
 
       <div className="my-3" />
 

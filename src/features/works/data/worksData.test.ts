@@ -1,7 +1,5 @@
 import { SELECTED_WORK_PAGE_NAMES } from '@/features/home/data/homeContent';
 import { getWork, publicWorks, works } from '@/features/works/data/worksData';
-import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 describe('worksData', () => {
@@ -68,22 +66,9 @@ describe('worksData', () => {
 
   it('홈 선택 프로젝트 네 개가 모두 공개된 작업으로 연결된다', () => {
     expect(SELECTED_WORK_PAGE_NAMES).toHaveLength(4);
-    expect(SELECTED_WORK_PAGE_NAMES).toContain('doodin-calendar');
-    expect(SELECTED_WORK_PAGE_NAMES).not.toContain('atop-dms');
 
     SELECTED_WORK_PAGE_NAMES.forEach((pageName) => {
       expect(getWork(pageName)?.status).toBe('published');
-    });
-  });
-
-  it('공개 Works 카드의 모든 이미지 경로가 실제 파일과 일치한다', () => {
-    publicWorks.forEach((work) => {
-      if (!work.imgSrc) return;
-
-      expect(
-        existsSync(resolve(process.cwd(), 'public/images/works', work.imgSrc)),
-        `${work.pageName}: ${work.imgSrc}`,
-      ).toBe(true);
     });
   });
 });

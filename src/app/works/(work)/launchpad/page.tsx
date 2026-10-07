@@ -2,7 +2,7 @@ import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
-import WorkCarousel from '../../_container/WorkCarousel';
+import WorkImage from '../../_container/WorkImage';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -17,24 +17,16 @@ const LaunchpadPage = () => {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <WorkCarousel
-        imgSrcList={[
-          'launchpad/01-launchpad-drum-mode.webp',
-          'launchpad/02-launchpad-piano-mode.webp',
-          'launchpad/03-launchpad-drum-controls.webp',
-          'launchpad/04-launchpad-piano-controls.webp',
-        ]}
-        imageLabels={[
-          '드럼 모드',
-          '피아노 모드',
-          '드럼 컨트롤',
-          '피아노 컨트롤',
-        ]}
-        background="dark"
-        aspectRatio="video"
+      <WorkImage
+        url="https://nijoow-launchpad.vercel.app/"
+        imgSrc="launchpad/01-launchpad-drum-mode.webp"
       />
 
-      <div className="my-3" />
+      <div className="my-3 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <WorkImage imgSrc="launchpad/02-launchpad-piano-mode.webp" />
+        <WorkImage imgSrc="launchpad/03-launchpad-drum-controls.webp" />
+        <WorkImage imgSrc="launchpad/04-launchpad-piano-controls.webp" />
+      </div>
 
       <PartSubTitle title="기술 스택" />
 
@@ -63,6 +55,13 @@ const LaunchpadPage = () => {
           </p>
         </li>
       </CustomList>
+
+      <PartSubTitle title="AI와 작업한 방식" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        건반 구성과 입력 방식을 정하고 AI를 활용해 기능을 구현했습니다. 생성된
+        코드를 검토하면서 누르기·떼기 이벤트와 사운드의 재생 흐름을 조정하고,
+        원하는 연주 동작에 맞게 수정했습니다.
+      </p>
 
       <div className="my-3" />
       <PartTitle title="관련 링크" />
