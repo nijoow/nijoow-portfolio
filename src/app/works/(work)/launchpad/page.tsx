@@ -24,7 +24,12 @@ const LaunchpadPage = () => {
           'launchpad/03-launchpad-drum-controls.png',
           'launchpad/04-launchpad-piano-controls.png',
         ]}
-        imageLabels={['드럼 모드', '피아노 모드', '드럼 컨트롤', '피아노 컨트롤']}
+        imageLabels={[
+          '드럼 모드',
+          '피아노 모드',
+          '드럼 컨트롤',
+          '피아노 컨트롤',
+        ]}
         background="dark"
         aspectRatio="video"
       />
