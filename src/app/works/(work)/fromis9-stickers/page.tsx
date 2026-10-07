@@ -26,9 +26,10 @@ const Fromis9StickersPage = () => {
 
       <PartSubTitle title="만들게 된 계기" />
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        팬덤을 위한 인터랙티브 웹사이트를 만들어보고 싶었습니다. 사진과 문구를
-        자유롭게 배치하고, 완성한 화면을 이미지로 저장하는 스티커 꾸미기
-        경험으로 구성했습니다.
+        팬들이 멤버 사진과 문구로 화면을 꾸밀 수 있는 사이트를 만들어보고
+        싶었습니다. 사진을 옮기거나 돌리고, 텍스트 스티커를 붙인 뒤 이미지로
+        저장할 수 있습니다. 꾸미기 방식과 화면을 기획하고 AI를 활용해
+        구현했습니다.
       </p>
 
       <PartSubTitle title="사용 기술" />
@@ -44,7 +45,7 @@ const Fromis9StickersPage = () => {
         ]}
       />
 
-      <PartSubTitle title="구현하며 정한 부분" />
+      <PartSubTitle title="사진과 스티커 편집" />
       <CustomList>
         <CustomList.MainListItem>
           사진 배치를 먼저 정한 뒤 문구를 꾸밀 수 있도록 멤버 사진 잠금과 뒤로
@@ -61,12 +62,6 @@ const Fromis9StickersPage = () => {
           구성했습니다.
         </CustomList.MainListItem>
       </CustomList>
-
-      <PartSubTitle title="AI와 작업한 방식" />
-      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        요구사항과 화면 흐름을 직접 정하고 AI를 활용해 구현했습니다. 생성된
-        코드와 실제 동작을 검토하며 배치·선택 상태·모바일 조작을 수정했습니다.
-      </p>
 
       <PartSubTitle title="공개한 결과" />
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">

@@ -24,13 +24,6 @@ const CONTACT_CHANNELS = [
   },
 ] as const;
 
-const CONVERSATION_TOPICS = [
-  '프로젝트 제안',
-  '프론트엔드 협업',
-  '채용 관련 이야기',
-  '커피챗',
-] as const;
-
 export function ContactPageContent() {
   return (
     <TransitionPageWrapper>
@@ -43,22 +36,11 @@ export function ContactPageContent() {
 
           <div className="relative max-w-3xl">
             <h1 className="mt-5 text-[28px] leading-tight font-bold break-keep sm:text-[42px]">
-              함께 이야기해 보고 싶은 일이 있다면, 편하게 연락해 주세요.
+              함께할 일이 있다면, 편하게 연락해 주세요.
             </h1>
             <p className="text-ink-muted mt-5 max-w-2xl text-sm leading-relaxed break-keep sm:text-base">
-              프론트엔드 협업과 프로젝트 제안, 채용 관련 이야기, 커피챗까지
-              편하게 남겨 주세요.
+              프로젝트 제안이나 채용 문의, 가벼운 커피챗도 좋습니다.
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {CONVERSATION_TOPICS.map((topic) => (
-                <span
-                  key={topic}
-                  className="text-ink-muted rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold"
-                >
-                  {topic}
-                </span>
-              ))}
-            </div>
           </div>
         </section>
 
