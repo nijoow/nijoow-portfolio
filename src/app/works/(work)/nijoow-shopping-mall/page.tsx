@@ -2,7 +2,7 @@ import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
-import WorkImage from '../../_container/WorkImage';
+import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -17,9 +17,21 @@ const NijoowShoppingMallPage = () => {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <WorkImage
-        url="https://nijoow-shopping-mall.vercel.app/"
-        imgSrc="nijoow-shopping-mall.webp"
+      <WorkCarousel
+        imgSrcList={[
+          'nijoow-shopping-mall/01-shopping-mall-home.webp',
+          'nijoow-shopping-mall/02-shopping-product-list.webp',
+          'nijoow-shopping-mall/03-shopping-product-detail.webp',
+          'nijoow-shopping-mall/04-sneaker-customizer.webp',
+        ]}
+        imageLabels={[
+          '메인 화면',
+          '상품 목록',
+          '상품 상세',
+          '3D 스니커즈 커스터마이징',
+        ]}
+        background="dark"
+        aspectRatio="video"
       />
 
       <div className="my-3" />
