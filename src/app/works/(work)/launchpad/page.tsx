@@ -19,17 +19,12 @@ const LaunchpadPage = () => {
       <WorkStructuredData pageName={PAGE_NAME} />
       <WorkCarousel
         imgSrcList={[
-          'launchpad/01-launchpad-drum-mode.webp',
-          'launchpad/02-launchpad-piano-mode.webp',
-          'launchpad/03-launchpad-drum-controls.webp',
-          'launchpad/04-launchpad-piano-controls.webp',
+          'launchpad/01-launchpad-drum-mode.png',
+          'launchpad/02-launchpad-piano-mode.png',
+          'launchpad/03-launchpad-drum-controls.png',
+          'launchpad/04-launchpad-piano-controls.png',
         ]}
-        imageLabels={[
-          '드럼 모드',
-          '피아노 모드',
-          '드럼 컨트롤',
-          '피아노 컨트롤',
-        ]}
+        imageLabels={['드럼 모드', '피아노 모드', '드럼 컨트롤', '피아노 컨트롤']}
         background="dark"
         aspectRatio="video"
       />
@@ -63,6 +58,13 @@ const LaunchpadPage = () => {
           </p>
         </li>
       </CustomList>
+
+      <PartSubTitle title="AI와 작업한 방식" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        건반 구성과 입력 방식을 정하고 AI를 활용해 기능을 구현했습니다. 생성된
+        코드를 검토하면서 누르기·떼기 이벤트와 사운드의 재생 흐름을 조정하고,
+        원하는 연주 동작에 맞게 수정했습니다.
+      </p>
 
       <div className="my-3" />
       <PartTitle title="관련 링크" />
