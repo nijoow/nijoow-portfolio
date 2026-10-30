@@ -7,9 +7,12 @@ import {
 } from '@/features/works/components/LimitedProject';
 import { ProjectTypeChip } from '@/features/works/components/ProjectTypeChip';
 import { publicWorks, type Work } from '@/features/works/data/worksData';
-import { filterWorksByTag } from '@/features/works/lib/filterWorks';
+import { filterWorks } from '@/features/works/lib/filterWorks';
 import {
   WORK_FILTER_TAGS,
+  WORK_TYPE_OPTIONS,
+  workTypeParser,
+  featuredParser,
   workFilterParser,
 } from '@/features/works/lib/workFilters';
 import { cn } from '@/lib/utils';
@@ -17,7 +20,7 @@ import { AnimatePresence, m, type Transition } from 'framer-motion';
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryState } from 'nuqs';
+import { useQueryStates } from 'nuqs';
 
 const newestFirstWorks = [...publicWorks].reverse();
 const CARD_INITIAL = { opacity: 0, y: 12, scale: 0.98 };
@@ -130,8 +133,15 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
 }
 
 export function WorksGallery() {
-  const [selectedTag, setSelectedTag] = useQueryState('tag', workFilterParser);
-  const filteredWorks = filterWorksByTag(newestFirstWorks, selectedTag);
+  const [filters, setFilters] = useQueryStates({
+    tag: workFilterParser,
+    type: workTypeParser,
+    featured: featuredParser,
+  });
+  const selectedTag = filters.tag;
+  const filteredWorks = filterWorks(newestFirstWorks, filters);
+  const clearFilters = () =>
+    setFilters({ tag: null, type: 'all', featured: false });
   const firstImageIndex = filteredWorks.findIndex((work) => work.imgSrc);
 
   function getFilterClass(isActive: boolean): string {
@@ -145,25 +155,57 @@ export function WorksGallery() {
 
   return (
     <div className="flex w-full flex-col gap-4">
+      <div className="works-filter-header">
+        <div
+          role="group"
+          aria-label="프로젝트 유형"
+          className="works-type-filter"
+        >
+          {WORK_TYPE_OPTIONS.map(({ value, label }) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={filters.type === value}
+              onClick={() => setFilters({ type: value })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <label className="works-featured-toggle">
+          <input
+            type="checkbox"
+            checked={filters.featured}
+            onChange={(event) => setFilters({ featured: event.target.checked })}
+            aria-describedby="featured-description"
+          />
+          <span>Featured only</span>
+        </label>
+      </div>
+      <p id="featured-description" className="text-ink-secondary text-xs">
+        Featured는 작성자가 선택한 대표작입니다.
+      </p>
       <div
         role="group"
-        aria-label="작업 태그 필터"
+        aria-label="기술·분야 필터"
         className="flex flex-wrap gap-1.5"
       >
         <button
           type="button"
           aria-pressed={selectedTag === null}
-          onClick={() => setSelectedTag(null)}
+          onClick={() => setFilters({ tag: null })}
           className={getFilterClass(selectedTag === null)}
         >
-          All
+          전체 기술·분야
         </button>
         {WORK_FILTER_TAGS.map((tag) => (
           <button
             key={tag}
             type="button"
             aria-pressed={selectedTag === tag}
-            onClick={() => setSelectedTag(tag)}
+            onClick={() =>
+              setFilters({ tag: selectedTag === tag ? null : tag })
+            }
             className={getFilterClass(selectedTag === tag)}
           >
             {tag}
@@ -171,6 +213,13 @@ export function WorksGallery() {
         ))}
       </div>
 
+      <p
+        role="status"
+        aria-live="polite"
+        className="text-ink-secondary text-sm"
+      >
+        {filteredWorks.length}개 프로젝트 / 전체 {publicWorks.length}개
+      </p>
       {filteredWorks.length > 0 ? (
         <m.div layout className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <AnimatePresence initial={false} mode="popLayout">
@@ -193,7 +242,7 @@ export function WorksGallery() {
           </p>
           <button
             type="button"
-            onClick={() => setSelectedTag(null)}
+            onClick={clearFilters}
             className="focus-visible:ring-brand-lavender text-brand-lavender min-h-11 rounded-full border border-white/10 px-4 text-sm font-bold outline-none hover:bg-white/5 focus-visible:ring-2"
           >
             전체 작업 보기

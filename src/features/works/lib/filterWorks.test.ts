@@ -1,39 +1,44 @@
-import type { Work } from '@/features/works/data/worksData';
+import { publicWorks } from '@/features/works/data/worksData';
 import { describe, expect, it } from 'vitest';
-import { filterWorksByTag } from './filterWorks';
+import { filterWorks } from './filterWorks';
 
-const works: readonly Work[] = [
-  {
-    pageName: 'business-web',
-    name: 'Business Web',
-    imgSrc: 'business.webp',
-    projectType: 'business',
-    tags: ['Web', 'Frontend'],
-    status: 'published',
-  },
-  {
-    pageName: 'side-3d',
-    name: 'Side 3D',
-    imgSrc: 'side.webp',
-    projectType: 'side',
-    tags: ['Web', '3D'],
-    status: 'published',
-  },
-];
-
-describe('filterWorksByTag', () => {
-  it('필터가 없으면 원본 목록을 그대로 반환한다', () => {
-    expect(filterWorksByTag(works, null)).toBe(works);
-  });
-
-  it.each([
-    ['Business Project', ['business-web']],
-    ['Side Project', ['side-3d']],
-    ['Frontend', ['business-web']],
-    ['3D', ['side-3d']],
-  ])('%s 필터에 맞는 작업만 반환한다', (filter, expectedPageNames) => {
+describe('Works intersection filters', () => {
+  it('defaults to all 22 public projects without a featured restriction', () => {
     expect(
-      filterWorksByTag(works, filter).map((work) => work.pageName),
-    ).toEqual(expectedPageNames);
+      filterWorks(publicWorks, { type: 'all', tag: null, featured: false }),
+    ).toHaveLength(22);
+  });
+  it('intersects business, field and author selection without changing order', () => {
+    const result = filterWorks(publicWorks, {
+      type: 'business',
+      tag: 'Frontend',
+      featured: true,
+    });
+    expect(result.map((work) => work.pageName)).toEqual([
+      'atop-dms',
+      'fromyou',
+      'digital-asset-management',
+    ]);
+  });
+  it('keeps the selected field when switching project type', () => {
+    expect(
+      filterWorks(publicWorks, {
+        type: 'business',
+        tag: 'iOS',
+        featured: false,
+      }),
+    ).toHaveLength(0);
+    expect(
+      filterWorks(publicWorks, {
+        type: 'side',
+        tag: 'iOS',
+        featured: false,
+      }).map((work) => work.pageName),
+    ).toContain('ios-keyboard');
+  });
+  it('featured only is the existing four home selections, not a favourite list', () => {
+    expect(
+      filterWorks(publicWorks, { type: 'all', tag: null, featured: true }),
+    ).toHaveLength(4);
   });
 });

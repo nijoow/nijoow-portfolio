@@ -6,6 +6,7 @@ export interface Work {
   imgSrc?: string;
   projectType: ProjectType;
   isFreelance?: boolean;
+  aiAssisted?: boolean;
   disclosure?: 'full' | 'limited';
   tags: readonly string[];
   description?: string;
@@ -67,7 +68,8 @@ export const works: readonly Work[] = [
     name: 'portfolio',
     imgSrc: 'portfolio/01-portfolio-3d-logo-home.webp',
     projectType: 'side',
-    tags: ['Web', 'Interactive', 'Design', '3D', 'Frontend', 'AI 활용 개발'],
+    tags: ['Web', 'Interactive', 'Design', '3D', 'Frontend'],
+    aiAssisted: true,
     description:
       '3D 파티클 로고와 작업 아카이브, 최근 활동, 연락 기능을 담은 개인 포트폴리오 웹사이트',
     role: 'UX/UI·프론트엔드',
@@ -204,7 +206,8 @@ export const works: readonly Work[] = [
     name: 'Midnight Lo-fi 3D YouTube Player',
     imgSrc: 'ml3yp.webp',
     projectType: 'side',
-    tags: ['Web', 'Frontend', '3D', 'Interactive', 'Design', 'AI 활용 개발'],
+    tags: ['Web', 'Frontend', '3D', 'Interactive', 'Design'],
+    aiAssisted: true,
     description: '몰입형 3D 가상 공간 속 YouTube 플레이리스트 플레이어',
     role: 'UX/UI·개발',
     liveUrl: 'https://ml3yp.vercel.app/',
@@ -216,7 +219,8 @@ export const works: readonly Work[] = [
     name: '프로미스나인 스티커 꾸미기',
     imgSrc: 'fromis9-stickers.webp',
     projectType: 'side',
-    tags: ['Web', 'Interactive', 'Design', 'Frontend', 'AI 활용 개발'],
+    tags: ['Web', 'Interactive', 'Design', 'Frontend'],
+    aiAssisted: true,
     description: '팬덤용 스티커 꾸미기 웹사이트',
     role: 'UX/UI·프론트엔드',
     liveUrl: 'https://fromis9-stickers.vercel.app/',
@@ -227,7 +231,8 @@ export const works: readonly Work[] = [
     name: 'launchpad',
     imgSrc: 'launchpad/01-launchpad-drum-mode.png',
     projectType: 'side',
-    tags: ['Web', 'Interactive', 'Frontend', 'Design', 'AI 활용 개발'],
+    tags: ['Web', 'Interactive', 'Frontend', 'Design'],
+    aiAssisted: true,
     description: '웹 브라우저 기반의 런치패드 악기 연주 토이 프로젝트',
     role: 'UX/UI·프론트엔드',
     liveUrl: 'https://nijoow-launchpad.vercel.app/',
@@ -239,15 +244,8 @@ export const works: readonly Work[] = [
     name: '3D Shopping Mall',
     imgSrc: 'nijoow-shopping-mall/01-shopping-mall-home.webp',
     projectType: 'side',
-    tags: [
-      'Web',
-      'Frontend',
-      'Backend',
-      'Design',
-      '3D',
-      'Interactive',
-      'AI 활용 개발',
-    ],
+    tags: ['Web', 'Frontend', 'Backend', 'Design', '3D', 'Interactive'],
+    aiAssisted: true,
     description:
       '3D 스니커즈 커스터마이징과 디자인 저장·공유, 상품 탐색과 주문 흐름을 연결한 쇼핑몰 데모',
     role: '풀스택 개발',
@@ -261,7 +259,8 @@ export const works: readonly Work[] = [
     imgSrc: 'keyboard/keyboard-settings-and-theme-selection.webp',
     name: '아이폰 커스텀 키보드',
     projectType: 'side',
-    tags: ['iOS', 'Interactive', 'Design', 'AI 활용 개발'],
+    tags: ['iOS', 'Interactive', 'Design'],
+    aiAssisted: true,
     description:
       '숫자 입력과 커서 이동의 불편을 줄이기 위해 만들어 직접 사용하는 한글·영문 키보드',
     role: '기획·UX/UI·구현 검토·사용 검증',
@@ -272,7 +271,8 @@ export const works: readonly Work[] = [
     imgSrc: 'doodin-calendar/home-overview.png',
     name: '두딘캘린더',
     projectType: 'side',
-    tags: ['Web', 'Frontend', 'Design', 'AI 활용 개발'],
+    tags: ['Web', 'Frontend', 'Design'],
+    aiAssisted: true,
     description:
       '여자친구와 둘이 일정과 기록을 나누며, 실제 사용 피드백으로 개선하는 비공개 캘린더',
     role: '기획·UX/UI·구현 검토·운영',
@@ -283,7 +283,8 @@ export const works: readonly Work[] = [
     name: '레서판다 빌리지',
     imgSrc: 'lessor-panda-village/01-panda-village-overview.webp',
     projectType: 'side',
-    tags: ['Web', 'Interactive', '3D', 'Frontend', 'AI 활용 개발'],
+    tags: ['Web', 'Interactive', '3D', 'Frontend'],
+    aiAssisted: true,
     description: '3D 캐릭터 기반 실시간 멀티플레이어 레서판다 마을',
     role: 'UX/UI·개발',
     period: '2026.03',
@@ -297,7 +298,8 @@ export const works: readonly Work[] = [
     projectType: 'business',
     isFreelance: true,
     disclosure: 'limited',
-    tags: ['Web', 'Frontend', 'AI 활용 개발'],
+    tags: ['Web', 'Frontend'],
+    aiAssisted: true,
     description:
       '기존 디지털 자산 관리 솔루션의 신규 환경 이관과 업무 규칙 변경에 따른 기능 개발·구조 개선',
     role: '프론트엔드 2인 분담·AI 구현 지시·동작 확인',

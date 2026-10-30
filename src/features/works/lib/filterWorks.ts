@@ -1,19 +1,14 @@
 import type { ProjectType, Work } from '@/features/works/data/worksData';
+import { FEATURED_WORK_PAGE_NAMES } from '@/features/works/data/featuredWorks';
 
-const PROJECT_TYPE_FILTERS: Readonly<Record<string, ProjectType | undefined>> =
-  {
-    'Business Project': 'business',
-    'Side Project': 'side',
-  };
-
-export function filterWorksByTag(
+export function filterWorks(
   works: readonly Work[],
-  selectedTag: string | null,
+  filters: { type: ProjectType | 'all'; tag: string | null; featured: boolean },
 ): readonly Work[] {
-  if (selectedTag === null) return works;
-
-  const projectType = PROJECT_TYPE_FILTERS[selectedTag];
-  return projectType
-    ? works.filter((work) => work.projectType === projectType)
-    : works.filter((work) => work.tags.includes(selectedTag));
+  return works.filter(
+    (work) =>
+      (filters.type === 'all' || work.projectType === filters.type) &&
+      (filters.tag === null || work.tags.includes(filters.tag)) &&
+      (!filters.featured || FEATURED_WORK_PAGE_NAMES.includes(work.pageName)),
+  );
 }

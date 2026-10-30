@@ -70,7 +70,8 @@ body,
   line-height: 1.8;
 }
 
-.work-detail-body :is(h2, h3, strong) {
+.work-detail-body :is(h2, h3, h4, strong) {
+  font-weight: 700;
   color: var(--color-ink-heading);
 }
 
@@ -663,22 +664,56 @@ body {
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
+/* An index, visually separate from the technology chips below. */
 .study-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0 0 1.5rem;
+  margin: 0 0 2rem;
+  padding: 0 0 1.25rem;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 25%, transparent);
+}
+.work-detail-body .study-nav-title {
+  color: var(--color-ink-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+.study-nav ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.15rem 1.5rem;
+  padding: 0;
+  margin: 0;
 }
 .study-nav a {
-  font-size: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--color-brand-lavender);
-  border-radius: 999px;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  min-height: 44px;
+  padding: 0.65rem 0;
+  color: var(--color-ink-heading);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.35em;
+}
+.study-nav a > span {
+  font: 0.7rem/1.6 monospace;
   color: var(--color-brand-lavender);
+}
+.study-nav a:hover {
+  text-decoration-color: currentColor;
 }
 .study-nav a:focus-visible {
   outline: 2px solid var(--color-brand-lavender);
-  outline-offset: 3px;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+@media (max-width: 480px) {
+  .study-nav ol {
+    grid-template-columns: 1fr;
+  }
 }
 .study-section,
 #work-overview {
@@ -692,7 +727,8 @@ body {
     color-mix(in srgb, var(--color-brand-lavender) 20%, transparent);
   padding-bottom: 0.8rem;
   margin: 2.5rem 0 1.25rem;
-  font-size: 1.25rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 700;
 }
 .study-section > h2 > span {
   font: 0.75rem monospace;
@@ -870,7 +906,7 @@ body {
 }
 .study-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--color-brand-lavender);
   margin-bottom: 0.6rem;
@@ -960,11 +996,69 @@ body {
 .study-diagram {
   background: transparent;
 }
-.study-nav a {
-  border-color: color-mix(
-    in srgb,
-    var(--color-brand-lavender) 25%,
-    transparent
-  );
+
+.work-detail-body h3 {
+  font-size: 1.0625rem;
+  margin-bottom: 0.75rem;
+}
+.work-detail-body .study-case > h3 {
+  font-size: 1.125rem;
+  margin-bottom: 1.25rem;
+}
+.work-detail-body .study-tech-groups h3 {
+  font-size: 0.875rem;
   color: var(--color-ink-secondary);
+}
+.work-detail-body .study-label {
+  color: var(--color-brand-lavender);
+  line-height: 1.5;
+}
+.study-case-part {
+  margin: 1.25rem 0;
+}
+.works-filter-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.works-type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  border-bottom: 1px solid #ffffff30;
+  flex: 1 1 24rem;
+}
+.works-type-filter button {
+  min-height: 48px;
+  padding: 0.65rem 0;
+  border-bottom: 2px solid transparent;
+  font-size: 0.875rem;
+  color: var(--color-ink-secondary);
+}
+.works-type-filter button[aria-pressed='true'] {
+  border-bottom-color: var(--color-brand-lavender);
+  color: white;
+  font-weight: 700;
+}
+.works-type-filter button:focus-visible {
+  outline: 2px solid var(--color-brand-lavender);
+  outline-offset: 4px;
+}
+.works-featured-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+  font-size: 0.8rem;
+  color: var(--color-ink-secondary);
+}
+.works-featured-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-brand-lavender);
+}
+.works-featured-toggle input:focus-visible {
+  outline: 2px solid var(--color-brand-lavender);
+  outline-offset: 4px;
 }

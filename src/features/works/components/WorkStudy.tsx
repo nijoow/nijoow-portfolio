@@ -29,20 +29,20 @@ function CaseCard({ item }: { item: StudyCase }) {
     <article className="study-case">
       <h3>{item.title}</h3>
       <div className="study-case-part">
-        <span className="study-label">문제</span>
+        <h4 className="study-label">문제</h4>
         {item.problem.map((p) => (
           <p key={p}>{p}</p>
         ))}
       </div>
       <div className="study-case-part">
-        <span className="study-label">구현</span>
+        <h4 className="study-label">구현</h4>
         {item.approach.map((p) => (
           <p key={p}>{p}</p>
         ))}
       </div>
       {item.outcome.length ? (
         <div className="study-case-result">
-          <span className="study-label">결과</span>
+          <h4 className="study-label">결과</h4>
           {item.outcome.map((p) => (
             <p key={p}>{p}</p>
           ))}
@@ -76,11 +76,19 @@ export function WorkStudy({
   return (
     <div className="work-study">
       <nav className="study-nav" aria-label="프로젝트 상세 목차">
-        {sections.map(([id, label]) => (
-          <a key={String(id)} href={'#' + id}>
-            {label}
-          </a>
-        ))}
+        <p className="study-nav-title">이 프로젝트에서</p>
+        <ol>
+          {sections.map(([id, label], index) => (
+            <li key={String(id)}>
+              <a href={'#' + id}>
+                <span aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ol>
       </nav>
       {context ? <div className="study-context">{context}</div> : null}
       {links && work.disclosure !== 'limited' ? (
@@ -98,7 +106,7 @@ export function WorkStudy({
       {showDetails ? <DetailsSection guide={guide} details={details} /> : null}
       {guide.ai ? (
         <aside className="study-ownership">
-          <h3>작업 방식</h3>
+          <h3>AI-assisted development</h3>
           <p>{guide.ai}</p>
         </aside>
       ) : null}
