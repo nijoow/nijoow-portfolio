@@ -1,7 +1,7 @@
 import Eyebrow from '@/components/ui/Eyebrow';
 import { ProjectTypeChip } from '@/features/works/components/ProjectTypeChip';
 import type { Work } from '@/features/works/data/worksData';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
 interface WorksBreadCrumbProps {
@@ -16,6 +16,24 @@ function DisclosureNotice({ work }: { work: Work | undefined }) {
     <p className="text-ink-muted mt-1 text-sm">
       보안상 화면과 내부 자료는 공개하지 않습니다.
     </p>
+  );
+}
+
+function PrimaryWorkLink({ work }: { work: Work | undefined }) {
+  if (!work?.liveUrl || work.disclosure === 'limited') return null;
+  const label = work.liveLabel ?? '사이트 바로가기';
+
+  return (
+    <Link
+      href={work.liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${work.name} ${label} (새 창)`}
+      className="bg-brand-lavender text-surface-ink hover:bg-brand-lavender/90 focus-visible:ring-brand-lavender focus-visible:ring-offset-surface-ink mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-xl px-6 py-3 text-base font-bold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-4 sm:w-fit"
+    >
+      {label}
+      <ExternalLink aria-hidden size={18} />
+    </Link>
   );
 }
 
@@ -41,7 +59,7 @@ function WorksBreadCrumb({ work, slug }: WorksBreadCrumbProps) {
         )}
       </div>
       {work?.description ? (
-        <p className="text-ink-muted mt-1 max-w-3xl text-[15px] leading-relaxed break-keep sm:text-base">
+        <p className="text-ink-secondary mt-1 max-w-3xl text-base leading-relaxed break-keep">
           {work.description}
         </p>
       ) : null}
@@ -78,6 +96,7 @@ function WorksBreadCrumb({ work, slug }: WorksBreadCrumbProps) {
           ))}
         </div>
       ) : null}
+      <PrimaryWorkLink work={work} />
     </div>
   );
 }

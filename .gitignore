@@ -44,4 +44,5 @@ next-env.d.ts
 !.yarn/versions
 
 # Visual Studio Code
-.vscode 
+.vscode
+/capture-archive/

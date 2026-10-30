@@ -19,6 +19,16 @@
   --color-status-danger: var(--palette-status-danger);
 
   --color-ink-primary: #ffffff;
+  --color-ink-body: color-mix(
+    in srgb,
+    var(--color-ink-primary) 80%,
+    transparent
+  );
+  --color-ink-heading: color-mix(
+    in srgb,
+    var(--color-ink-primary) 92%,
+    transparent
+  );
   --color-ink-secondary: color-mix(in srgb, white 75%, transparent);
   --color-ink-muted: color-mix(in srgb, white 55%, transparent);
   --color-ink-faint: color-mix(in srgb, white 40%, transparent);
@@ -40,6 +50,37 @@ html,
 body,
 * {
   font-family: var(--font-binggrae), sans-serif;
+}
+
+/* Detail prose shares one reading rhythm and uses the card's inner width. */
+.work-detail-body {
+  color: var(--color-ink-body);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.work-detail-body > div > :is(h2, p, ul, span, .work-tech-stack),
+.work-detail-body > div > div:has(.work-tech-stack) {
+  width: 100%;
+}
+
+.work-detail-body p:not([role='status']) {
+  color: var(--color-ink-body);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.work-detail-body :is(h2, h3, strong) {
+  color: var(--color-ink-heading);
+}
+
+.work-detail-body h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.work-detail-body h3 {
+  line-height: 1.6;
 }
 
 html[data-custom-cursor='ready'],
@@ -443,52 +484,487 @@ body {
   opacity: 0.07;
 }
 
-.interest-object {
-  transition: transform 420ms var(--ease-emphasized);
+.interest-scene {
+  overflow: visible;
 }
 
-.group\/interest:hover .interest-object-bounce,
-.group\/interest:focus-visible .interest-object-bounce,
-.group\/interest[aria-expanded='true'] .interest-object-bounce {
-  animation: interest-bounce 820ms var(--ease-emphasized) infinite;
+.interest-coffee-kettle {
+  transform-origin: 96px 38px;
+}
+.interest-coffee-water {
+  opacity: 0;
+  stroke-dasharray: 2 3;
+}
+.interest-basketball {
+  transform-origin: 82px 83px;
+}
+.interest-ball-shadow {
+  transform-origin: 82px 99px;
+}
+.interest-hoop-net {
+  transform-origin: 135px 44px;
+}
+.interest-record {
+  transform-origin: 95px 65px;
+}
+.interest-tonearm {
+  transform-origin: 135px 43px;
+}
+.interest-score-spark {
+  opacity: 0;
+}
+.interest-equalizer rect {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  opacity: 0.6;
 }
 
-.group\/interest:hover .interest-object-pulse,
-.group\/interest:focus-visible .interest-object-pulse,
-.group\/interest[aria-expanded='true'] .interest-object-pulse {
-  animation: interest-pulse 680ms ease-in-out infinite;
+.interest-scene[data-active='true'] .interest-coffee-kettle {
+  animation: interest-pour 2.8s ease-in-out infinite;
+}
+.interest-scene[data-active='true'] .interest-coffee-water {
+  animation: interest-water-flow 700ms linear infinite;
+}
+.interest-scene[data-active='true'] .interest-coffee-drop {
+  animation: interest-drip 1.2s ease-in infinite;
+}
+.interest-scene[data-active='true'] .interest-coffee-steam {
+  animation: interest-steam 2.4s ease-in-out infinite;
+}
+.interest-scene[data-active='true'] .interest-coffee-steam-late {
+  animation-delay: -1.2s;
+}
+.interest-scene[data-active='true'] .interest-hoop-net {
+  animation: interest-net 5.2s ease-in-out infinite;
+}
+.interest-scene[data-active='true'] .interest-score-spark {
+  animation: interest-score 5.2s ease-in-out infinite;
+}
+.interest-scene[data-active='true'] .interest-record {
+  animation: interest-spin 5s linear infinite;
+}
+.interest-scene[data-active='true'] .interest-tonearm {
+  animation: interest-tonearm 2.4s ease-in-out infinite alternate;
+}
+.interest-scene[data-active='true'] .interest-equalizer rect {
+  animation: interest-equalizer 850ms ease-in-out infinite alternate;
+}
+.interest-scene[data-active='true'] .interest-equalizer rect:nth-child(2n) {
+  animation-delay: -450ms;
+  animation-duration: 1100ms;
+}
+.interest-scene[data-active='true'] .interest-equalizer rect:nth-child(3n) {
+  animation-delay: -200ms;
+  animation-duration: 650ms;
+}
+.interest-scene[data-active='true'] .interest-music-note {
+  animation: interest-steam 2.8s ease-in-out infinite;
 }
 
-@keyframes interest-bounce {
+@keyframes interest-pour {
   0%,
   100% {
-    transform: translateY(0) rotate(0);
+    transform: rotate(0);
   }
-  44% {
-    transform: translateY(-12px) rotate(7deg);
-  }
-  68% {
-    transform: translateY(1px) rotate(-2deg) scaleY(0.94);
-  }
-}
-
-@keyframes interest-pulse {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-2deg) scale(1);
-  }
-  35% {
-    transform: translateY(-3px) rotate(3deg) scale(1.07);
-  }
+  40%,
   70% {
-    transform: translateY(-1px) rotate(-3deg) scale(1.025);
+    transform: rotate(-6deg);
+  }
+}
+@keyframes interest-water-flow {
+  from {
+    stroke-dashoffset: 0;
+    opacity: 0.8;
+  }
+  to {
+    stroke-dashoffset: -10;
+    opacity: 0.8;
+  }
+}
+@keyframes interest-drip {
+  0% {
+    transform: translateY(-3px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(7px);
+    opacity: 0;
+  }
+}
+@keyframes interest-steam {
+  0%,
+  100% {
+    transform: translateY(1px);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-7px);
+    opacity: 0.8;
+  }
+}
+@keyframes interest-net {
+  0%,
+  35%,
+  52%,
+  100% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(1.18);
+  }
+}
+@keyframes interest-score {
+  0%,
+  35%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.9;
+  }
+}
+@keyframes interest-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes interest-tonearm {
+  to {
+    transform: rotate(3deg);
+  }
+}
+@keyframes interest-equalizer {
+  from {
+    transform: scaleY(0.35);
+    opacity: 0.45;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 0.95;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .group\/interest:hover .interest-object,
-  .group\/interest:focus-visible .interest-object,
-  .group\/interest[aria-expanded='true'] .interest-object {
+  .interest-scene[data-active='true'] * {
     animation: none;
   }
+}
+
+/* Project case studies: one readable hierarchy; diagrams are conceptual. */
+.work-study {
+  width: 100%;
+  min-width: 0;
+}
+.work-study :is(p, li, dd, h2, h3, strong) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.study-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+}
+.study-nav a {
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-brand-lavender);
+  border-radius: 999px;
+  color: var(--color-brand-lavender);
+}
+.study-nav a:focus-visible {
+  outline: 2px solid var(--color-brand-lavender);
+  outline-offset: 3px;
+}
+.study-section,
+#work-overview {
+  scroll-margin-top: 7rem;
+}
+.work-detail-body .study-section > h2 {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 20%, transparent);
+  padding-bottom: 0.8rem;
+  margin: 2.5rem 0 1.25rem;
+  font-size: 1.25rem;
+}
+.study-section > h2 > span {
+  font: 0.75rem monospace;
+  color: var(--color-brand-lavender);
+}
+.study-context,
+.study-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.study-context {
+  margin: 1rem 0 1.5rem;
+}
+.study-links,
+.study-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.study-links {
+  margin: 1rem 0 1.5rem;
+}
+.study-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.study-media > * {
+  max-width: 100%;
+}
+.study-tech-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+.study-tech-groups h3 {
+  font-size: 0.8rem;
+  color: var(--color-ink-muted);
+  margin-bottom: 0.6rem;
+}
+.study-chips > span {
+  font-size: 0.75rem;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 35%, transparent);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
+.study-reasons {
+  margin-top: 1.25rem;
+}
+.study-reasons > div {
+  padding: 0.6rem 0;
+}
+.study-reasons dt {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.study-reasons dd {
+  margin-top: 0.3rem;
+  color: var(--color-ink-body);
+  font-size: 0.9rem;
+}
+.study-diagram {
+  margin: 1rem 0;
+  padding: 1.4rem;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 30%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--color-brand-violet) 10%, transparent);
+}
+.study-diagram-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.study-flow {
+  display: flex;
+  gap: 1.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.study-flow > li {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 25%, transparent);
+  border-radius: 0.65rem;
+}
+.study-flow > li + li::before {
+  content: '→';
+  position: absolute;
+  left: -1.2rem;
+  top: 50%;
+  color: var(--color-brand-lavender);
+}
+.study-step-number {
+  color: var(--color-brand-lavender);
+  font: 0.7rem monospace;
+}
+.study-flow strong {
+  font-size: 0.9rem;
+}
+.study-node-detail {
+  color: var(--color-ink-secondary);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+.study-plane {
+  width: 100%;
+  height: auto;
+  color: var(--color-brand-lavender);
+}
+.study-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+.study-row {
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 25%, transparent);
+  padding: 0.6rem;
+  font-size: 0.9rem;
+}
+.study-child {
+  margin-left: 1rem;
+  padding: 0.55rem 0.7rem;
+  border-left: 1px solid var(--color-brand-lavender);
+  font-size: 0.85rem;
+}
+.study-emphasis {
+  color: var(--color-brand-lavender);
+  font-weight: 700;
+}
+.study-diagram-note {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+}
+.study-keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+.study-keyboard b {
+  border: 1px solid var(--color-brand-lavender);
+  border-radius: 0.3rem;
+  padding: 0.2rem 0.5rem;
+}
+.study-case {
+  padding: 1.4rem;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 25%, transparent);
+  border-radius: 1rem;
+  margin: 1rem 0;
+}
+.study-case > h3 {
+  font-size: 1.15rem;
+  margin-bottom: 1.3rem;
+}
+.study-case-part {
+  margin: 1rem 0;
+}
+.study-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-brand-lavender);
+  margin-bottom: 0.6rem;
+}
+.study-case p + p {
+  margin-top: 0.7rem;
+}
+.study-case-result {
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 20%, transparent);
+  margin-top: 1.3rem;
+  padding-top: 1rem;
+}
+.study-ownership {
+  border-left: 2px solid var(--color-brand-lavender);
+  padding: 0.3rem 0 0.3rem 1rem;
+  margin: 1.5rem 0;
+}
+.study-ownership h3,
+.case-subheading {
+  margin-bottom: 0.65rem;
+  font-weight: 700;
+}
+.study-impact-badge {
+  display: inline-block;
+  color: var(--color-brand-lavender);
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 40%, transparent);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.6rem;
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+.case-feature-list {
+  list-style: disc;
+  padding-left: 1.2rem;
+}
+@media (max-width: 640px) {
+  .study-tech-groups,
+  .study-compare {
+    grid-template-columns: 1fr;
+  }
+  .study-flow {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .study-flow > li + li::before {
+    content: '↓';
+    left: 50%;
+    top: -1.5rem;
+  }
+  .study-diagram,
+  .study-case {
+    padding: 1rem;
+  }
+  .study-plane {
+    max-height: 120px;
+  }
+}
+.study-parallel > li + li::before {
+  display: none;
+}
+
+/* Keep structure only where there is distinct project content. */
+.study-case {
+  border: 0;
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 20%, transparent);
+  border-radius: 0;
+  padding: 1.2rem 0 0.5rem;
+  margin: 1.25rem 0;
+}
+.study-case:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.study-case-result {
+  border-top: 0;
+  padding-top: 0;
+}
+.study-ownership {
+  border-left: 0;
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 20%, transparent);
+  padding: 1.25rem 0 0;
+}
+.study-diagram {
+  background: transparent;
+}
+.study-nav a {
+  border-color: color-mix(
+    in srgb,
+    var(--color-brand-lavender) 25%,
+    transparent
+  );
+  color: var(--color-ink-secondary);
 }

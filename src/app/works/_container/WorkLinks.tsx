@@ -15,15 +15,17 @@ interface WorkLinksProps {
   liveLabel?: string;
 }
 
-export function WorkLinks({
-  pageName,
-  links = [],
-  liveLabel = '사이트 바로가기',
-}: WorkLinksProps) {
+export function WorkLinks({ pageName, links = [], liveLabel }: WorkLinksProps) {
   const work = pageName ? getWork(pageName) : undefined;
   const resolvedLinks: WorkLink[] = [
     ...(work?.liveUrl
-      ? [{ href: work.liveUrl, label: liveLabel, kind: 'site' as const }]
+      ? [
+          {
+            href: work.liveUrl,
+            label: liveLabel ?? work.liveLabel ?? '사이트 바로가기',
+            kind: 'site' as const,
+          },
+        ]
       : []),
     ...(work?.repoUrl
       ? [{ href: work.repoUrl, label: 'GitHub', kind: 'github' as const }]

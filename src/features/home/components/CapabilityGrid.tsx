@@ -36,7 +36,7 @@ const capabilities = [
 export function CapabilityGrid() {
   return (
     <section className="w-full">
-      <SubTitle eyebrow="How I Work" title="핵심 가치" />
+      <SubTitle eyebrow="How I Work" title="작업 방식" />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {capabilities.map((capability) => (
           <CapabilityCard key={capability.title} {...capability} />

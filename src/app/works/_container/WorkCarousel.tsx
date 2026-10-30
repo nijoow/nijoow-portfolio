@@ -11,7 +11,7 @@ import { A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 const NAV_BUTTON_CLASSES =
-  'focus-visible:ring-brand-lavender absolute top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/25 text-brand-muted outline-none transition-colors hover:bg-black/45 focus-visible:ring-2';
+  'swiper-no-swiping focus-visible:ring-brand-lavender absolute top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/25 text-brand-muted outline-none transition-colors hover:bg-black/45 focus-visible:ring-2';
 
 interface WorkCarouselProps {
   imgSrcList: string[];
@@ -55,6 +55,7 @@ export function WorkCarousel({
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const imageButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const didDragRef = useRef(false);
   const images = imgSrcList.map((src, index) => ({
     src,
     index,
@@ -111,7 +112,16 @@ export function WorkCarousel({
       <Swiper
         onSwiper={setSwiper}
         onSlideChange={(instance) => setActiveIndex(instance.realIndex)}
+        onTouchStart={() => {
+          didDragRef.current = false;
+        }}
+        onSliderMove={() => {
+          didDragRef.current = true;
+        }}
         modules={[A11y]}
+        grabCursor={imgSrcList.length > 1}
+        simulateTouch
+        focusableElements="input, select, option, textarea, button:not([data-gallery-image]), video, label"
         a11y={{
           containerMessage: '프로젝트 작업 이미지',
           itemRoleDescriptionMessage: '슬라이드',
@@ -139,6 +149,7 @@ export function WorkCarousel({
                   fill
                   sizes="(max-width: 768px) 100vw, 768px"
                   className="object-contain"
+                  draggable={false}
                   loading={eager && index === 0 ? 'eager' : 'lazy'}
                   fetchPriority={eager && index === 0 ? 'high' : 'auto'}
                 />
@@ -147,13 +158,24 @@ export function WorkCarousel({
                     imageButtonRefs.current[index] = node;
                   }}
                   type="button"
+                  data-gallery-image
                   aria-label={`${index + 1}번 이미지 크게 보기`}
                   aria-hidden={!isActive}
                   tabIndex={isActive ? 0 : -1}
-                  onClick={() => {
+                  onClick={(event) => {
+                    if (
+                      event.detail !== 0 &&
+                      (didDragRef.current || event.defaultPrevented)
+                    )
+                      return;
                     setSelectedIndex(index);
                   }}
-                  className="focus-visible:ring-brand-lavender absolute inset-0 z-10 cursor-zoom-in outline-none focus-visible:ring-2 focus-visible:ring-inset"
+                  className={cn(
+                    'focus-visible:ring-brand-lavender absolute inset-0 z-10 outline-none focus-visible:ring-2 focus-visible:ring-inset',
+                    imgSrcList.length > 1
+                      ? 'cursor-grab active:cursor-grabbing'
+                      : 'cursor-zoom-in',
+                  )}
                 />
               </>
             )}

@@ -44,6 +44,11 @@ export const COLOR_TOKENS = {
     warning: '#ddb66d',
     danger: '#df7b7b',
   },
+  interests: {
+    coffee: '#c79064',
+    espresso: '#43291a',
+    basketball: '#e99a53',
+  },
 } as const;
 
 type PaletteVariable = `--palette-${string}`;

@@ -11,7 +11,11 @@ interface LivePersonalityProps {
 export function LivePersonality({ music, github }: LivePersonalityProps) {
   return (
     <section className="w-full">
-      <SubTitle tone="quiet" title="요즘의 기록" />
+      <SubTitle
+        tone="quiet"
+        eyebrow="Life & Work"
+        title="요즘의 기록과 좋아하는 것들"
+      />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-2">
           <Eyebrow tone="muted" className="px-1">

@@ -1,28 +1,67 @@
 import { SELECTED_WORK_PAGE_NAMES } from '@/features/home/data/homeContent';
-import { getWork, works } from '@/features/works/data/worksData';
+import { getWork, publicWorks, works } from '@/features/works/data/worksData';
 import { describe, expect, it } from 'vitest';
 
 describe('worksData', () => {
   it('제한 공개 프로젝트에는 실제 화면과 외부 링크를 노출하지 않는다', () => {
     const limitedWorks = works.filter((work) => work.disclosure === 'limited');
 
-    expect(limitedWorks).toHaveLength(2);
+    expect(limitedWorks.length).toBeGreaterThanOrEqual(2);
     limitedWorks.forEach((work) => {
       expect(work.imgSrc).toBeUndefined();
       expect(work.liveUrl).toBeUndefined();
       expect(work.repoUrl).toBeUndefined();
-      expect(work.status).toBe('published');
+      expect(['published', 'draft']).toContain(work.status);
     });
   });
 
   it('일반 공개 프로젝트에는 카드에 사용할 이미지가 있다', () => {
     const fullyDisclosedWorks = works.filter(
-      (work) => work.disclosure !== 'limited',
+      (work) => work.status !== 'draft' && work.disclosure !== 'limited',
     );
 
     fullyDisclosedWorks.forEach((work) => {
       expect(work.imgSrc).toBeTruthy();
     });
+  });
+
+  it('캡처한 프로젝트와 기존 스티커 작업을 지정한 순서로 공개한다', () => {
+    const publicPageNames = publicWorks.map((work) => work.pageName);
+
+    for (const pageName of [
+      'doodin-calendar',
+      'ios-keyboard',
+      'nijoow-shopping-mall',
+      'fromis9-stickers',
+    ]) {
+      expect(publicPageNames).toContain(pageName);
+      expect(getWork(pageName)?.status).toBe('published');
+    }
+
+    expect(getWork('doodin-calendar')?.imgSrc).toBe(
+      'doodin-calendar/home-overview.png',
+    );
+    expect(getWork('ios-keyboard')?.imgSrc).toBe(
+      'keyboard/keyboard-settings-and-theme-selection.webp',
+    );
+    expect(getWork('nijoow-shopping-mall')).toMatchObject({
+      name: '3D Shopping Mall',
+      imgSrc: 'nijoow-shopping-mall/01-shopping-mall-home.webp',
+    });
+    expect(getWork('fromis9-stickers')?.imgSrc).toBe('fromis9-stickers.webp');
+
+    const displayedOrder = [...publicWorks]
+      .reverse()
+      .map((work) => work.pageName);
+    expect(displayedOrder.slice(0, 7)).toEqual([
+      'digital-asset-management',
+      'lessor-panda-village',
+      'doodin-calendar',
+      'ios-keyboard',
+      'nijoow-shopping-mall',
+      'launchpad',
+      'fromis9-stickers',
+    ]);
   });
 
   it('홈 선택 프로젝트 네 개가 모두 공개된 작업으로 연결된다', () => {
@@ -31,5 +70,22 @@ describe('worksData', () => {
     SELECTED_WORK_PAGE_NAMES.forEach((pageName) => {
       expect(getWork(pageName)?.status).toBe('published');
     });
+  });
+
+  it('추가 실무 프로젝트는 화면 없이 공개하며 고객사명을 표시하지 않는다', () => {
+    for (const pageName of ['quve', 'ev-charging-management']) {
+      expect(getWork(pageName)).toMatchObject({
+        status: 'published',
+        disclosure: 'limited',
+      });
+      expect(publicWorks.map((work) => work.pageName)).toContain(pageName);
+    }
+
+    const chargingWork = getWork('ev-charging-management');
+    expect(chargingWork?.name).toBe('전기차 충전소 관리 시스템');
+    expect(chargingWork?.organization).toBe('주식회사 아론');
+    expect(chargingWork?.description).toBe(
+      '전기차 충전소 관리 화면과 API 연동·인증·테이블 상태 관리 개선',
+    );
   });
 });

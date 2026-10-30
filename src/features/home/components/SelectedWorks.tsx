@@ -107,6 +107,7 @@ export function SelectedWorks({ works }: SelectedWorksProps) {
     <section className="w-full">
       <SubTitle
         tone="primary"
+        eyebrow="Projects"
         title="프로젝트"
         trailing={
           <Link

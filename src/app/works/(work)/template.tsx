@@ -15,10 +15,12 @@ export default function Template({ children }: { children: ReactNode }) {
 
   return (
     <div>
-      <Section>
-        <WorksBreadCrumb work={work} slug={slug} />
-      </Section>
-      <div className="bg-surface-ink/60 rounded-3xl p-5 sm:p-7">
+      <div id="work-overview">
+        <Section>
+          <WorksBreadCrumb work={work} slug={slug} />
+        </Section>
+      </div>
+      <div className="work-detail-body bg-surface-ink/80 rounded-3xl p-5 sm:p-7">
         <Section alignItems="items-start">{children}</Section>
       </div>
       <nav

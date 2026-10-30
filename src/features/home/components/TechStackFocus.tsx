@@ -18,6 +18,7 @@ const currentFocus = [
   'UI/UX',
   '인터랙션',
   '웹 성능',
+  'AI',
 ] as const;
 
 function StackGroup({
@@ -47,12 +48,12 @@ function StackGroup({
 export function TechStackFocus() {
   return (
     <section className="w-full">
-      <SubTitle title="기술 스택과 관심 분야" />
+      <SubTitle eyebrow="Tech & Interests" title="기술 스택과 관심 분야" />
       <GlassCard lift={false}>
         <div className="grid grid-cols-1 sm:grid-cols-2">
           <StackGroup title="주로 쓰는 기술" items={coreStack} />
           <div className="border-t border-white/10 sm:border-t-0 sm:border-l">
-            <StackGroup title="요즘 관심 있는 것" items={currentFocus} />
+            <StackGroup title="관심 분야" items={currentFocus} />
           </div>
         </div>
       </GlassCard>
