@@ -17,7 +17,7 @@ function techGroup(name: string) {
     return 3;
   if (/Query|Zustand|Recoil|Form|Zod|SQLite|PostgreSQL/i.test(name)) return 1;
   if (
-    /CSS|SCSS|Tailwind|Motion|Three|Fiber|drei|postprocessing|SVG|moveable|mapper|dnd|Nivo|ECharts|Material|DataGrid|gesture|screenshot|VFX/i.test(
+    /CSS|SCSS|Tailwind|Motion|Three|Fiber|drei|postprocessing|SVG|moveable|mapper|dnd|Nivo|ECharts|Material|DataGrid|Spreadsheet|mentions|gesture|screenshot|VFX/i.test(
       name,
     )
   )
@@ -34,6 +34,7 @@ function CaseCard({ item }: { item: StudyCase }) {
           <p key={p}>{p}</p>
         ))}
       </div>
+      {item.diagram ? <WorkDiagram diagram={item.diagram} /> : null}
       <div className="study-case-part">
         <h4 className="study-label">구현</h4>
         {item.approach.map((p) => (
@@ -75,8 +76,34 @@ export function WorkStudy({
   const sections = navigation(guide, showDetails);
   return (
     <div className="work-study">
+      {context ? <div className="study-context">{context}</div> : null}
+      <StudyToc sections={sections} />
+      {media && !guide.mediaAfterDetails && work.disclosure !== 'limited' ? (
+        <div className="study-media">{media}</div>
+      ) : null}
+      {showDetails ? <DetailsSection guide={guide} details={details} /> : null}
+      <DiagramSection guide={guide} />
+      <section id="study-features" className="study-section">
+        <h2>{guide.sections.features}</h2>
+        <div className="study-prose">{features}</div>
+      </section>
+      {media && guide.mediaAfterDetails && work.disclosure !== 'limited' ? (
+        <div className="study-media">{media}</div>
+      ) : null}
+      <TechnologySection guide={guide} />
+      <StudyAfterword
+        guide={guide}
+        links={work.disclosure !== 'limited' ? links : undefined}
+      />
+    </div>
+  );
+}
+
+function StudyToc({ sections }: { sections: ReturnType<typeof navigation> }) {
+  return sections.length > 3 ? (
+    <details className="study-toc">
+      <summary>내용 살펴보기</summary>
       <nav className="study-nav" aria-label="프로젝트 상세 목차">
-        <p className="study-nav-title">이 프로젝트에서</p>
         <ol>
           {sections.map(([id, label], index) => (
             <li key={String(id)}>
@@ -90,45 +117,19 @@ export function WorkStudy({
           ))}
         </ol>
       </nav>
-      {context ? <div className="study-context">{context}</div> : null}
-      {links && work.disclosure !== 'limited' ? (
-        <div className="study-links">{links}</div>
-      ) : null}
-      {media && work.disclosure !== 'limited' ? (
-        <div className="study-media">{media}</div>
-      ) : null}
-      <TechnologySection guide={guide} />
-      <DiagramSection guide={guide} pageName={pageName} />
-      <section id="study-features" className="study-section">
-        <h2>{guide.sections.features}</h2>
-        <div className="study-prose">{features}</div>
-      </section>
-      {showDetails ? <DetailsSection guide={guide} details={details} /> : null}
-      {guide.ai ? (
-        <aside className="study-ownership">
-          <h3>AI-assisted development</h3>
-          <p>{guide.ai}</p>
-        </aside>
-      ) : null}
-      {guide.result ? (
-        <section id="study-impact" className="study-section">
-          <h2>{guide.sections.impact ?? '결과'}</h2>
-          <p>{guide.result}</p>
-        </section>
-      ) : null}
-    </div>
-  );
+    </details>
+  ) : null;
 }
 
 function navigation(guide: StudyGuide, showDetails: boolean) {
   return [
     ['work-overview', '개요'],
-    ['study-tech', '사용 기술'],
+    ...(showDetails ? [['study-cases', guide.sections.details]] : []),
     ...(guide.sections.diagram && guide.diagram
       ? [['study-diagram', guide.sections.diagram]]
       : []),
     ['study-features', guide.sections.features],
-    ...(showDetails ? [['study-cases', guide.sections.details]] : []),
+    ['study-tech', '사용 기술'],
     ...(guide.result
       ? [['study-impact', guide.sections.impact ?? '결과']]
       : []),
@@ -164,34 +165,12 @@ function TechnologySection({ guide }: { guide: StudyGuide }) {
     </section>
   );
 }
-function DiagramSection({
-  guide,
-  pageName,
-}: {
-  guide: StudyGuide;
-  pageName: string;
-}) {
+function DiagramSection({ guide }: { guide: StudyGuide }) {
   if (!guide.sections.diagram || !guide.diagram) return null;
   return (
     <section id="study-diagram" className="study-section">
       <h2>{guide.sections.diagram}</h2>
       <WorkDiagram diagram={guide.diagram} />
-      {pageName === 'digital-asset-management' ? (
-        <WorkDiagram
-          diagram={{
-            kind: 'responsibilities',
-            title: '서버 상태·UI 상태·폼 입력',
-            nodes: [
-              { label: 'TanStack Query', detail: '서버 조회·갱신 상태' },
-              { label: 'Zustand', detail: '클라이언트 UI 상태' },
-              {
-                label: 'React Hook Form · Zod',
-                detail: '입력 상태·유효성 검증',
-              },
-            ],
-          }}
-        />
-      ) : null}
     </section>
   );
 }
@@ -211,5 +190,32 @@ function DetailsSection({
         <div className="study-prose">{details}</div>
       )}
     </section>
+  );
+}
+
+function StudyAfterword({
+  guide,
+  links,
+}: {
+  guide: StudyGuide;
+  links?: ReactNode;
+}) {
+  return (
+    <>
+      {' '}
+      {guide.ai ? (
+        <aside className="study-ownership">
+          <h3>AI와 작업한 부분</h3>
+          <p>{guide.ai}</p>
+        </aside>
+      ) : null}
+      {guide.result ? (
+        <section id="study-impact" className="study-section">
+          <h2>{guide.sections.impact ?? '결과'}</h2>
+          <p>{guide.result}</p>
+        </section>
+      ) : null}
+      {links ? <div className="study-links">{links}</div> : null}
+    </>
   );
 }

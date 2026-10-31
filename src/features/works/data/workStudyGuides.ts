@@ -3,6 +3,7 @@ export interface StudyCase {
   problem: readonly string[];
   approach: readonly string[];
   outcome: readonly string[];
+  diagram?: StudyDiagram;
 }
 export interface StudyDiagram {
   kind: string;
@@ -11,6 +12,7 @@ export interface StudyDiagram {
 }
 export interface StudyGuide {
   diagram?: StudyDiagram;
+  mediaAfterDetails?: boolean;
   result?: string;
   reasons: readonly (readonly string[])[];
   stacks: readonly string[];
@@ -25,46 +27,24 @@ export interface StudyGuide {
 }
 export const workStudyGuides: Record<string, StudyGuide> = {
   'digital-asset-management': {
-    diagram: {
-      kind: 'hierarchy',
-      title: '평면 목록에서 관계가 보이는 목록으로',
-      nodes: [
-        {
-          label: '폴더·파일 목록',
-          detail: '평면적인 자산 목록',
-        },
-        {
-          label: '클래스',
-          detail: '자산의 기준이 되는 개념',
-        },
-        {
-          label: '인스턴스',
-          detail: '클래스와의 관계를 같은 목록에 표시',
-        },
-      ],
-    },
-    reasons: [
-      [
-        'TanStack Query · Zustand',
-        '서버 상태와 UI 상태를 구분해 반복되는 비동기 처리와 상태 관리 코드를 정리했습니다.',
-      ],
-      [
-        'React Hook Form · Zod',
-        '폼 입력 상태와 유효성 검증을 일관된 방식으로 관리했습니다.',
-      ],
-    ],
+    reasons: [],
     cases: [
       {
-        title: '클래스와 인스턴스 관계를 목록 안에 표시',
+        title: '폴더 목록에 상속 관계 표시',
         problem: [
-          '폴더·파일을 관리하던 표준 자산 관리 솔루션을 공간·설비와 실물·가상 자산 관리에 맞게 확장했습니다. 클래스와 인스턴스라는 개념의 추가가 핵심 과제였습니다.',
-          '기존 자산 테이블은 평면적인 목록이어서 클래스와 인스턴스의 상속 관계를 함께 읽기 어려웠습니다.',
+          '폴더·파일을 관리하던 표준 자산 관리 솔루션을 공간·설비와 실물·가상 자산 관리에 맞게 확장했습니다. 이 시스템에서는 폴더가 클래스나 인스턴스일 수 있고, 그 아래에 하위 클래스와 인스턴스가 이어집니다.',
+          '기존 목록은 이 항목들을 같은 깊이로 나열했습니다. 어떤 클래스를 상속한 하위 클래스·인스턴스인지 목록 안에서 알 수 있도록 표현을 바꿔야 했습니다.',
         ],
         approach: [
-          '기존 리스트 안에서 클래스와 인스턴스의 계층 관계를 표시했습니다. 자산 항목을 보면서 그 항목이 어떤 클래스에 속하는지 함께 읽을 수 있도록 했습니다.',
-          '맡은 기능의 기존 코드와 요구사항을 확인하고 화면·데이터 처리 흐름·입력 제약을 변경된 자산 개념과 업무 규칙에 맞춰 수정했습니다.',
+          '각 행에 클래스·인스턴스 구분을 표시하고 상위 클래스 아래에 하위 항목을 들여썼습니다. 연결선을 함께 표시해 같은 클래스에서 파생된 항목을 묶어 볼 수 있게 했습니다.',
+          '맡은 기능의 기존 코드와 요구사항을 확인하고, 목록의 계층 표현과 관련 데이터 처리·입력 제약을 변경된 자산 개념과 업무 규칙에 맞춰 수정했습니다.',
         ],
         outcome: [],
+        diagram: {
+          kind: 'hierarchy',
+          title: '같은 항목을 나열하는 두 가지 방식',
+          nodes: [],
+        },
       },
       {
         title: '서버 상태·UI 상태·폼의 책임 구분',
@@ -78,6 +58,24 @@ export const workStudyGuides: Record<string, StudyGuide> = {
         outcome: [
           '전체 프론트엔드 개발 소스 규모를 팀 공동 작업으로 약 20% 줄였습니다. 저는 담당 기능의 전환·공통화·미사용 코드 정리에 참여했습니다.',
         ],
+        diagram: {
+          kind: 'responsibilities',
+          title: '상태 관리 도구별 역할',
+          nodes: [
+            {
+              label: 'TanStack Query',
+              detail: '서버 조회·갱신 상태',
+            },
+            {
+              label: 'Zustand',
+              detail: '클라이언트 UI 상태',
+            },
+            {
+              label: 'React Hook Form · Zod',
+              detail: '폼 입력·검증',
+            },
+          ],
+        },
       },
     ],
     stacks: [
@@ -88,46 +86,16 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       'React Hook Form',
       'Zod',
     ],
-    ai: '맡은 기능의 요구사항을 정리해 AI Agent와 구현하고, 주요 코드와 실제 화면 동작을 확인하며 수정했습니다. 기획이 불명확한 기능은 동작하는 UI를 먼저 만들어 클라이언트와 요구사항을 구체화했습니다.',
+    ai: '기획이 구체적이지 않은 기능은 먼저 동작하는 화면을 만들어 클라이언트와 요구사항을 정했습니다. AI로 작성한 코드의 주요 로직과 화면 동작을 확인하고 수정했으며, 기술 전환 방향은 팀원들과 함께 검토했습니다.',
     sections: {
       features: '맡은 작업',
       details: '기존 솔루션을 변경한 과정',
-      diagram: '자산 계층과 상태 관리',
+      diagram: false,
     },
+    mediaAfterDetails: true,
   },
   'process-safety-management': {
-    diagram: {
-      kind: 'coordinates',
-      title: '픽셀 좌표를 도면 사이에 그대로 옮기지 않는 이유',
-      nodes: [
-        {
-          label: '전체 도면 · 픽셀',
-          detail: '이동·크기 조절',
-        },
-        {
-          label: 'GPS 좌표 · 서버 저장',
-          detail: '이미지 모서리 위경도 기준으로 remapping',
-        },
-        {
-          label: '상세 도면 · 픽셀',
-          detail: '역변환 후 transform으로 복원',
-        },
-      ],
-    },
-    reasons: [
-      [
-        'react-image-mapper · react-moveable',
-        '구역 클릭과 도형 조작은 라이브러리를 활용하고, 도면 간 좌표 변환과 복원 계산을 직접 연결했습니다.',
-      ],
-      [
-        'React Query · MUI DataGrid',
-        '페이지네이션·정렬·필터링을 서버 조회와 연결해 문서 목록을 다뤘습니다.',
-      ],
-      [
-        'PWA · FCM · Jenkins',
-        '모바일 사용 흐름, 푸시 알림, 빌드 자동화를 담당했습니다.',
-      ],
-    ],
+    reasons: [],
     cases: [
       {
         title: '픽셀 대신 GPS 좌표로 위치와 크기 저장',
@@ -137,13 +105,18 @@ export const workStudyGuides: Record<string, StudyGuide> = {
         ],
         approach: [
           '전체 도면의 구역 이동은 react-image-mapper에 구역 좌표를 지정해 연결했습니다. 작업 위치는 중앙에 도형을 띄운 뒤 react-moveable로 드래그와 크기 조절을 할 수 있게 했습니다.',
-          '이미지 모서리의 실제 위도·경도를 기준으로 위치·크기 값을 양쪽 GPS 좌표로 remapping하는 함수를 만들고 서버에 저장했습니다. 불러올 때는 각 도면 이미지의 크기에 맞춰 역변환했습니다.',
+          '이미지 모서리의 실제 위도·경도를 기준으로 위치와 크기를 GPS 좌표로 변환하는 함수를 만들고, 변환한 값을 서버에 저장했습니다. 불러올 때는 각 도면 이미지의 크기에 맞춰 역변환했습니다.',
           'react-moveable은 엘리먼트 이동에 CSS transform을 사용했습니다. 따라서 저장값을 불러오는 것만으로 끝나지 않고, 복원한 위치와 크기를 다시 transform 값으로 변환하는 계산이 필요했습니다. 이 계산을 조정하는 시행착오를 거쳐 저장·불러오기·재수정 흐름을 연결했습니다.',
         ],
         outcome: [],
+        diagram: {
+          kind: 'coordinates',
+          title: '서로 다른 도면에서 같은 위치 찾기',
+          nodes: [],
+        },
       },
       {
-        title: '자유 곡선을 일반 도형처럼 이동·저장·수정',
+        title: '자유 곡선을 SVG 요소로 변환',
         problem: [
           '도면 출력을 위한 글·도형·스티커 마크업이 필요했습니다. 그중 직접 그린 자유 곡선을 다른 도형처럼 조작하고 저장·수정하는 부분이 까다로웠습니다.',
         ],
@@ -152,9 +125,14 @@ export const workStudyGuides: Record<string, StudyGuide> = {
           '곡선을 하나의 SVG 요소로 다룰 수 있게 되면서 다른 도형에 적용했던 이동·저장·복원 방식을 함께 사용할 수 있었습니다.',
         ],
         outcome: [],
+        diagram: {
+          kind: 'path-bounds',
+          title: '경로의 범위를 SVG의 viewBox로',
+          nodes: [],
+        },
       },
       {
-        title: 'WebView 제약에서 PWA 적용까지',
+        title: 'PWA 적용과 모바일 이동 오류 수정',
         problem: [
           '기존 앱 WebView에서 외부 링크 이동과 뒤로가기 문제가 발생했습니다.',
         ],
@@ -184,34 +162,12 @@ export const workStudyGuides: Record<string, StudyGuide> = {
     sections: {
       features: '맡은 작업',
       details: '도면 조작과 모바일 사용',
-      diagram: '도면 사이의 좌표 변환',
+      diagram: false,
     },
+    mediaAfterDetails: true,
   },
   'atop-dms': {
-    diagram: {
-      kind: 'formula',
-      title: '텍스트 입력 위치와 변수 표시 영역 맞추기',
-      nodes: [
-        {
-          label: '입력 레이어',
-          detail: 'textarea · 커서와 선택 범위',
-        },
-        {
-          label: '표시 레이어',
-          detail: '변수 박스·색상 강조 · 글자 크기·행간·패딩 맞춤',
-        },
-        {
-          label: '변수 경계',
-          detail: '토큰의 시작·끝으로 커서 이동',
-        },
-      ],
-    },
-    reasons: [
-      [
-        'React Hook Form',
-        'useState로 관리하던 모달 폼을 바꿔 입력 상태와 검증을 한곳에서 다루도록 했습니다.',
-      ],
-    ],
+    reasons: [],
     cases: [
       {
         title: '변수 박스와 텍스트 커서의 위치 맞추기',
@@ -226,17 +182,27 @@ export const workStudyGuides: Record<string, StudyGuide> = {
           'Backspace로는 변수 하나가 함께 삭제되도록 입력 동작을 맞췄습니다. 변수 추가와 수식 오류 처리도 함께 구현했습니다.',
         ],
         outcome: [],
+        diagram: {
+          kind: 'formula',
+          title: '입력 문자열과 변수 박스를 겹치는 구조',
+          nodes: [],
+        },
       },
       {
-        title: '여러 워크시트를 다루는 표로 전환',
+        title: '표 데이터 변환과 셀 범위의 양방향 연동',
         problem: [
-          '기존 엑셀 데이터를 웹 표로 표시하면서 여러 워크시트의 데이터도 다룰 수 있어야 했습니다.',
+          'React Spreadsheet와 MUI DataGrid에 전달하는 데이터 형식이 달랐습니다. 엑셀에서 읽은 값을 각 표가 사용할 수 있도록 정제하고, 셀 범위 선택도 화면과 입력창에 연결해야 했습니다.',
         ],
         approach: [
-          '기존 표 데이터를 MUI DataGrid가 사용하는 형식으로 변환하고 가상 스크롤을 적용했습니다.',
-          '여러 워크시트를 다룰 수 있도록 데이터의 수신·처리 부분도 수정했습니다. 데이터 정제와 차트 시각화에는 Apache ECharts를 사용했습니다.',
+          '각 표 라이브러리에 맞게 데이터를 변환하고 선택 범위를 나타내는 데이터도 맞췄습니다. 시작·끝 입력창에 A4, D22 같은 주소를 입력하면 해당 범위가 선택되고, 반대로 표에서 셀을 선택하면 입력창의 값도 바뀌도록 연결했습니다.',
+          '기존 표 데이터를 MUI DataGrid 형식으로 전환하고 가상 스크롤을 적용했습니다. 기존 엑셀 업로드 코드는 한 시트를 전제로 작성돼 있었습니다. 파일 안의 여러 시트를 읽고 사용자가 선택한 시트의 데이터로 표가 바뀌도록 수정했습니다. 데이터를 정제하고 Apache ECharts로 차트를 시각화했습니다.',
         ],
         outcome: [],
+        diagram: {
+          kind: 'sheet-range',
+          title: '셀 주소 입력과 표 선택의 양방향 연동',
+          nodes: [],
+        },
       },
     ],
     stacks: [
@@ -248,12 +214,15 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       'Apache ECharts',
       'React Hook Form',
       'MUI DataGrid',
+      'React Spreadsheet',
+      'react-mentions',
     ],
     sections: {
       features: '맡은 작업',
       details: '수식 입력과 표 구현',
-      diagram: '수식의 입력과 표시',
+      diagram: false,
     },
+    mediaAfterDetails: true,
   },
   fromyou: {
     diagram: {
@@ -305,24 +274,6 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       '개발에 참여한 From You를 활용한 인천일보 팀의 보도가 제423회 이달의 기자상을 받았습니다.',
   },
   'doodin-calendar': {
-    diagram: {
-      kind: 'flow',
-      title: '내용을 작성하고 함께 확인하는 순서',
-      nodes: [
-        {
-          label: '편집 화면',
-          detail: '일정·기록 입력과 임시 초안',
-        },
-        {
-          label: '세부 설정',
-          detail: '날짜·장소 선택 후 적용',
-        },
-        {
-          label: '공유와 확인',
-          detail: '저장·변경 충돌 확인·댓글·사진',
-        },
-      ],
-    },
     reasons: [
       [
         'TanStack Query · React Hook Form',
@@ -345,31 +296,19 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       'Cloudflare Access',
       'PWA',
     ],
-    ai: '필요한 기능과 화면 흐름을 정하고 AI와 구현했습니다. 직접 쓰면서 저장·이동·사진·댓글 동작을 확인하고 수정했으며, 반복해서 확인할 데이터 처리와 사용 흐름에는 테스트를 구성했습니다.',
+    ai: '댓글·반응과 홈 사진처럼 함께 쓰면서 필요해진 기능을 정리해 AI로 구현했습니다. 실제 저장·수정·이동 동작을 확인하고 오류를 수정했으며, 반복 확인이 필요한 데이터 처리에는 테스트를 구성했습니다.',
     sections: {
       features: '구현할 때 정한 것',
       details: '함께 쓰면서 바꾼 부분',
-      diagram: '일정과 기록을 다루는 흐름',
+      diagram: false,
     },
+    mediaAfterDetails: true,
   },
   'ios-keyboard': {
     diagram: {
-      kind: 'flow',
-      title: '키를 누른 뒤 문서에 입력되기까지',
-      nodes: [
-        {
-          label: '키 입력',
-          detail: '숫자 행·한글·영문',
-        },
-        {
-          label: '조합과 이동',
-          detail: '한글 변경 부분 반영·커서 이동 전 조합 확정',
-        },
-        {
-          label: '문서 입력',
-          detail: 'UIKit 키보드 확장·기기 사용 확인',
-        },
-      ],
+      kind: 'composition',
+      title: '입력된 글자는 두고, 조합 중인 글자만 갱신',
+      nodes: [],
     },
     reasons: [
       [
@@ -382,7 +321,7 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       ],
     ],
     stacks: ['Swift', 'UIKit', 'SwiftUI', 'App Groups'],
-    ai: '원하는 배열과 입력 방식을 정하고 AI와 구현했습니다. 개인 iPhone에서 직접 입력하며 코드와 동작을 확인하고 불편한 부분을 수정했습니다.',
+    ai: '배열과 커서 조작 방식을 정하고 AI 도구로 코드를 작성했습니다. 제 iPhone에서 한글 입력과 커서 이동을 반복해서 사용하며 불편한 동작을 수정했습니다.',
     sections: {
       features: '주요 기능',
       details: '입력 동작을 다듬은 과정',
@@ -390,7 +329,7 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       impact: '직접 사용하며',
     },
     result:
-      '개인 iPhone에 설치해 사용하고 있습니다. 숫자 입력과 커서 이동을 자주 쓰는 위치에서 바로 할 수 있어 제게 익숙하고 편한 키보드가 되었습니다.',
+      '개인 iPhone에 설치해 사용하고 있습니다. 숫자 키와 커서 이동 버튼을 익숙한 위치에 두어 편하게 사용하고 있습니다.',
   },
   'fromis9-stickers': {
     reasons: [
@@ -412,7 +351,7 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       '@use-gesture/react',
       'modern-screenshot',
     ],
-    ai: '사진과 문구를 편집하는 흐름을 정하고 AI와 구현했습니다. 실제 화면에서 선택·잠금·겹침 순서와 모바일 조작을 확인하며 수정했습니다.',
+    ai: '사진과 문구를 배치하는 편집 화면을 AI와 구현했습니다. 선택·잠금·겹침 순서와 모바일의 확대·회전이 의도대로 동작하는지 직접 확인하고 수정했습니다.',
     sections: {
       features: '주요 기능',
       details: false,
@@ -434,7 +373,7 @@ export const workStudyGuides: Record<string, StudyGuide> = {
       'Tailwind CSS 4',
       'Framer Motion',
     ],
-    ai: '생성형 3D 에셋을 사용했고, 화면에서 캐릭터를 움직여 보며 이동과 상호작용을 다듬었습니다. 세부 코드는 AI의 도움을 받아 구현하고 수정했습니다.',
+    ai: '공간의 분위기와 캐릭터 동작을 정하고 AI 도구로 구현·수정했습니다. 생성형 3D 에셋을 사용했으며, 화면에서 직접 움직여 보며 이동과 상호작용을 확인했습니다.',
     sections: {
       features: '주요 기능',
       details: false,
@@ -489,24 +428,6 @@ export const workStudyGuides: Record<string, StudyGuide> = {
     },
   },
   portfolio: {
-    diagram: {
-      kind: 'flow',
-      title: '프로젝트 정보를 목록과 상세에 연결',
-      nodes: [
-        {
-          label: '작업 데이터',
-          detail: '공개 상태·역할·링크',
-        },
-        {
-          label: '페이지 구성',
-          detail: '목록·상세·필터',
-        },
-        {
-          label: '공유와 탐색',
-          detail: 'metadata·사이트맵·외부 활동 API',
-        },
-      ],
-    },
     reasons: [
       [
         'Next.js · TypeScript',
@@ -533,13 +454,13 @@ export const workStudyGuides: Record<string, StudyGuide> = {
     sections: {
       features: '화면과 데이터 구성',
       details: false,
-      diagram: '작업 정보와 화면 연결',
+      diagram: false,
     },
   },
   launchpad: {
     diagram: {
-      kind: 'flow',
-      title: '입력과 사운드 재생 연결',
+      kind: 'timeline',
+      title: '누름·해제 이벤트와 소리 제어',
       nodes: [
         {
           label: '입력 시작',
@@ -592,22 +513,9 @@ export const workStudyGuides: Record<string, StudyGuide> = {
   },
   'svg-drawing': {
     diagram: {
-      kind: 'flow',
-      title: '그린 경로를 편집 핸들과 연결',
-      nodes: [
-        {
-          label: '그리기 입력',
-          detail: '도형·자유 곡선·다각형',
-        },
-        {
-          label: '편집 데이터',
-          detail: '꼭짓점·제어점·회전',
-        },
-        {
-          label: 'SVG path',
-          detail: '화면과 편집 핸들에 반영',
-        },
-      ],
+      kind: 'rotation',
+      title: '회전된 도형의 축을 기준으로 크기 조절',
+      nodes: [],
     },
     reasons: [
       [
@@ -728,7 +636,7 @@ export const workStudyGuides: Record<string, StudyGuide> = {
   },
   'return-to-blank': {
     diagram: {
-      kind: 'flow',
+      kind: 'art-sequence',
       title: '스크린을 누르고 손을 뗄 때',
       nodes: [
         {

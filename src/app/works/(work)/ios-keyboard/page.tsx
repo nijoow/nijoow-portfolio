@@ -63,7 +63,7 @@ export default function Page() {
               ]}
               imageLabels={['키보드 설정과 테마', '입력 미리보기와 이모지']}
               background="dark"
-              aspectRatio="square"
+              aspectRatio="portrait"
             />
           </>
         }

@@ -72,8 +72,10 @@ export default function Page() {
                 </h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
                   앱에서 키보드가 나타나면 키보드 높이만큼 화면이 더 드래그되어
-                  하단에 빈 공간이 생겼습니다. 관련 CSS를 수정해 불필요한
-                  스크롤과 하단 여백을 개선했습니다.
+                  하단에 빈 공간이 생겼습니다. html과 body에 지정된 height:
+                  100%를 제거해 콘텐츠에 따라 문서 높이가 잡히도록 바꿨습니다.
+                  키보드가 열린 상태에서 불필요하게 늘어나던 스크롤 영역과 하단
+                  여백을 줄였습니다.
                 </p>
               </li>
             </CustomList>

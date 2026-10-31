@@ -13,12 +13,18 @@ interface WorkLinksProps {
   pageName?: string;
   links?: readonly WorkLink[];
   liveLabel?: string;
+  includeLive?: boolean;
 }
 
-export function WorkLinks({ pageName, links = [], liveLabel }: WorkLinksProps) {
+export function WorkLinks({
+  pageName,
+  links = [],
+  liveLabel,
+  includeLive = false,
+}: WorkLinksProps) {
   const work = pageName ? getWork(pageName) : undefined;
   const resolvedLinks: WorkLink[] = [
-    ...(work?.liveUrl
+    ...(includeLive && work?.liveUrl
       ? [
           {
             href: work.liveUrl,

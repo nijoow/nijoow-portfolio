@@ -5,7 +5,7 @@ import GlassCard from '@/components/Motion/GlassCard';
 import { useNowPlaying } from '@/features/home/hooks/useNowPlaying';
 import type { Music } from '@/features/home/schemas/spotifySchemas';
 import { m, useInView, useReducedMotion } from 'framer-motion';
-import { ExternalLink, History, Music2 } from 'lucide-react';
+import { ExternalLink, History, Music2, RotateCw } from 'lucide-react';
 import Image from 'next/image';
 import { useRef } from 'react';
 
@@ -116,7 +116,8 @@ function MusicCardSkeleton() {
 }
 
 export function RecentlyPlayedMusic() {
-  const { data, isPending } = useNowPlaying();
+  const { data, isPending, isError, isFetching, refetch, dataUpdatedAt } =
+    useNowPlaying();
   const shouldReduceMotion = useReducedMotion();
   const animationRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(animationRef, { margin: '120px' });
@@ -125,20 +126,34 @@ export function RecentlyPlayedMusic() {
 
   if (!data?.current) {
     return (
-      <GlassCard className="h-full min-h-96">
-        <div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
+      <GlassCard lift={false} className="w-full">
+        <div className="flex flex-col items-start gap-3 p-6">
           <span className="bg-brand-deep/35 text-brand-lavender flex size-12 items-center justify-center rounded-2xl border border-white/10">
             <Music2 size={20} />
           </span>
-          <p className="font-bold">재생 정보를 불러오지 못했습니다</p>
-          <p className="text-ink-muted text-sm">잠시 후 다시 시도해 주세요.</p>
+          <p role="status" className="text-ink-muted text-sm">
+            {isError
+              ? '음악 정보를 잠시 불러올 수 없습니다.'
+              : '아직 표시할 음악 기록이 없습니다.'}
+          </p>
+          <button
+            type="button"
+            onClick={() => void refetch()}
+            disabled={isFetching}
+            className="focus-visible:ring-brand-lavender inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-4 text-sm outline-none focus-visible:ring-2 disabled:opacity-50"
+          >
+            <RotateCw size={14} aria-hidden />
+            {isFetching ? '불러오는 중' : '다시 불러오기'}
+          </button>
         </div>
       </GlassCard>
     );
   }
 
   const { current, recent, isPlaying } = data;
-  const shouldAnimate = isPlaying && isInView && !shouldReduceMotion;
+  const playbackLabel = isPlaying ? '지금 듣는 중' : '마지막으로 들은 곡';
+  const shouldAnimate =
+    isPlaying && !isError && isInView && !shouldReduceMotion;
 
   return (
     <div ref={animationRef} className="h-full">
@@ -156,7 +171,7 @@ export function RecentlyPlayedMusic() {
             <div className="min-w-0 flex-1">
               <Eyebrow tone="muted" className="mb-2 flex items-center gap-2">
                 <span className="bg-status-success shadow-status-success/60 size-2 rounded-full shadow-sm" />
-                {isPlaying ? '지금 듣는 중' : '마지막으로 들은 곡'}
+                {isError ? '마지막으로 확인한 음악' : playbackLabel}
               </Eyebrow>
               <h3 className="group-hover/current:text-brand-lavender truncate text-lg font-bold transition-colors sm:text-xl">
                 {current.title}
@@ -186,6 +201,19 @@ export function RecentlyPlayedMusic() {
             </div>
             <ExternalLink className="text-ink-faint group-hover/current:text-ink-secondary size-4 shrink-0 self-start transition-colors" />
           </a>
+
+          {isError ? (
+            <p role="status" className="text-ink-muted relative mt-3 text-xs">
+              업데이트를 잠시 불러올 수 없어{' '}
+              <time dateTime={new Date(dataUpdatedAt).toISOString()}>
+                {new Date(dataUpdatedAt).toLocaleTimeString('ko-KR', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </time>
+              에 확인한 기록을 보여드립니다.
+            </p>
+          ) : null}
 
           <div className="relative my-5 h-px bg-white/10" />
 

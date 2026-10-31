@@ -32,7 +32,9 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
   let previewContent = null;
 
   if (work.disclosure === 'limited') {
-    previewContent = <LimitedProjectCover className="h-full w-full" />;
+    previewContent = (
+      <LimitedProjectCover pageName={work.pageName} className="h-full w-full" />
+    );
   } else if (work.imgSrc) {
     previewContent = (
       <Image
@@ -57,7 +59,7 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
     >
       <GlassCard className="group/work h-full">
         <Link
-          href={`/works/${work.pageName}`}
+          href={`/works/${work.pageName}#work-overview`}
           aria-label={`${work.name} 작업 상세 보기${
             work.disclosure === 'limited' ? ', 보안상 화면 비공개' : ''
           }`}
@@ -177,14 +179,10 @@ export function WorksGallery() {
             type="checkbox"
             checked={filters.featured}
             onChange={(event) => setFilters({ featured: event.target.checked })}
-            aria-describedby="featured-description"
           />
-          <span>Featured only</span>
+          <span>홈에 소개한 작업만 보기</span>
         </label>
       </div>
-      <p id="featured-description" className="text-ink-secondary text-xs">
-        Featured는 작성자가 선택한 대표작입니다.
-      </p>
       <div
         role="group"
         aria-label="기술·분야 필터"

@@ -1,11 +1,10 @@
 import { COLOR_TOKENS } from '@/lib/designTokens';
 import { ImageResponse } from 'next/og';
 
-export const alt = 'nijoow | portfolio';
-export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
+const size = { width: 1200, height: 630 };
+export const dynamic = 'force-static';
 
-export default function OpengraphImage() {
+export function GET() {
   return new ImageResponse(
     (
       <div

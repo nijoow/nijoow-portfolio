@@ -14,6 +14,7 @@ import {
   useMediaQuery,
 } from '@/hooks/useMediaQuery';
 import { useEffect } from 'react';
+import { useAppearance } from '@/context/AppearanceProvider';
 
 interface StarParticle {
   id: number;
@@ -56,7 +57,9 @@ const STAR_PARTICLES: StarParticle[] = Array.from(
 const STATIC_TRANSITION = { duration: 0 } as const;
 
 export function AmbientBackground() {
-  const shouldReduceMotion = useMediaQuery(REDUCED_MOTION_MEDIA_QUERY);
+  const reduced = useMediaQuery(REDUCED_MOTION_MEDIA_QUERY);
+  const appearance = useAppearance();
+  const shouldReduceMotion = reduced || !appearance.motion;
   const pointerX = useMotionValue(0);
   const smoothPointerX = useSpring(pointerX, { stiffness: 45, damping: 24 });
   const blobX1 = useTransform(smoothPointerX, (value) => value * -0.75);
@@ -86,7 +89,7 @@ export function AmbientBackground() {
   }, [pointerX, shouldReduceMotion]);
 
   return (
-    <div className="bg-surface-ink pointer-events-none fixed inset-0 -z-20 overflow-hidden select-none">
+    <div className="ambient-background bg-surface-ink pointer-events-none fixed inset-0 -z-20 overflow-hidden select-none">
       <div className="cosmic-stars absolute inset-0 opacity-75" />
       <div className="cosmic-grid absolute inset-0 opacity-50" />
 

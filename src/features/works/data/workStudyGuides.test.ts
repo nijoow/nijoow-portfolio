@@ -12,7 +12,14 @@ describe('published project case-study contract', () => {
       if (guide.sections.diagram) {
         if (!guide.diagram)
           throw new Error(`Missing diagram: ${work.pageName}`);
-        expect(guide.diagram.nodes.length, work.pageName).toBeGreaterThan(1);
+        expect(guide.diagram.title.trim(), work.pageName).not.toBe('');
+        if (
+          ['flow', 'responsibilities', 'timeline', 'art-sequence'].includes(
+            guide.diagram.kind,
+          )
+        ) {
+          expect(guide.diagram.nodes.length, work.pageName).toBeGreaterThan(1);
+        }
       }
       if (guide.result) expect(guide.result.trim()).not.toBe('');
     }

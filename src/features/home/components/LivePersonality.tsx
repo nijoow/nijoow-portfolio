@@ -16,19 +16,14 @@ export function LivePersonality({ music, github }: LivePersonalityProps) {
         eyebrow="Life & Work"
         title="요즘의 기록과 좋아하는 것들"
       />
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-2">
           <Eyebrow tone="muted" className="px-1">
             최근 들은 음악
           </Eyebrow>
           {music}
         </div>
-        <div className="flex min-w-0 flex-col gap-2">
-          <Eyebrow tone="muted" className="px-1">
-            최근 작업
-          </Eyebrow>
-          {github}
-        </div>
+        <div className="flex min-w-0 flex-col gap-2">{github}</div>
       </div>
       <PersonalInterests />
     </section>

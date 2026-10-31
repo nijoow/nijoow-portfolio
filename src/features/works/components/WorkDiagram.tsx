@@ -1,102 +1,107 @@
+import type { ComponentType } from 'react';
 import type { StudyDiagram } from '../data/workStudyGuides';
+import {
+  CompositionDiagram,
+  CoordinateDiagram,
+  FormulaDiagram,
+  InheritanceDiagram,
+  PathBoundsDiagram,
+  RotationDiagram,
+} from './WorkInteractiveDiagrams';
+import { SheetRangeDiagram } from './SheetRangeDiagram';
 
-function CoordinatePlane({ label }: { label: string }) {
+const INTERACTIVE_DIAGRAMS: Record<string, ComponentType> = {
+  hierarchy: InheritanceDiagram,
+  coordinates: CoordinateDiagram,
+  'path-bounds': PathBoundsDiagram,
+  formula: FormulaDiagram,
+  'sheet-range': SheetRangeDiagram,
+  composition: CompositionDiagram,
+  rotation: RotationDiagram,
+};
+
+function InputTimeline() {
   return (
-    <svg
-      viewBox="0 0 240 126"
-      aria-label={label}
-      role="img"
-      className="study-plane"
-    >
-      <rect
-        x="18"
-        y="12"
-        width="204"
-        height="100"
-        rx="8"
-        fill="none"
-        stroke="currentColor"
-      />
-      <path
-        d="M86 12V112M154 12V112M18 45H222M18 78H222"
-        fill="none"
-        stroke="currentColor"
-        opacity=".2"
-      />
-      <path
-        d="M18 12L150 69"
-        fill="none"
-        stroke="currentColor"
-        strokeDasharray="4 4"
-        opacity=".6"
-      />
-      <rect
-        x="132"
-        y="56"
-        width="36"
-        height="26"
-        rx="3"
-        fill="currentColor"
-        opacity=".18"
-      />
-      <circle cx="150" cy="69" r="5" fill="currentColor" />
-      <text x="25" y="29" fill="currentColor" fontSize="10">
-        모서리 기준
-      </text>
-      <text x="143" y="99" fill="currentColor" fontSize="10">
-        작업 위치
-      </text>
-    </svg>
+    <div className="input-timeline">
+      <div>
+        <span className="study-label">입력</span>
+        <div className="timeline-track">
+          <b>누름</b>
+          <span className="timeline-held">누르고 있는 구간</span>
+          <b>뗌</b>
+        </div>
+      </div>
+      <div>
+        <span className="study-label">처리</span>
+        <div className="timeline-track">
+          <span>재생 요청</span>
+          <span aria-hidden>→</span>
+          <span>입력 해제 처리</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
+function ArtworkSequence() {
+  return (
+    <ol className="art-sequence" aria-label="스크린을 누르고 손을 뗄 때의 변화">
+      {['붓으로 누르기', '그림이 이어짐', '손을 떼면 비워짐'].map(
+        (label, index) => (
+          <li key={label}>
+            <svg viewBox="0 0 160 110" role="img" aria-label={label}>
+              <rect
+                x="8"
+                y="8"
+                width="144"
+                height="94"
+                rx="5"
+                className="diagram-plane"
+              />
+              <path
+                d="M35 78C35 22 100 15 115 45S65 86 124 72"
+                className="diagram-curve"
+                style={{
+                  opacity: [0.5, 1, 0.07][index],
+                  strokeDasharray: index === 0 ? '45 200' : undefined,
+                }}
+              />
+            </svg>
+            <span>{label}</span>
+          </li>
+        ),
+      )}
+    </ol>
+  );
+}
+
+function DiagramContent({ diagram }: { diagram: StudyDiagram }) {
+  const Interactive = INTERACTIVE_DIAGRAMS[diagram.kind];
+  if (Interactive) return <Interactive />;
+  if (diagram.kind === 'timeline') return <InputTimeline />;
+  if (diagram.kind === 'art-sequence') return <ArtworkSequence />;
+  return (
+    <ol
+      className={
+        diagram.kind === 'responsibilities'
+          ? 'study-flow study-parallel'
+          : 'study-flow'
+      }
+    >
+      {diagram.nodes.map((node) => (
+        <li key={node.label}>
+          <strong>{node.label}</strong>
+          <span className="study-node-detail">{node.detail}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
 export function WorkDiagram({ diagram }: { diagram: StudyDiagram }) {
   return (
     <figure className="study-diagram" aria-label={diagram.title}>
       <figcaption className="study-diagram-title">{diagram.title}</figcaption>
-      {diagram.kind === 'hierarchy' ? (
-        <div className="study-compare">
-          <div>
-            <span className="study-label">기존 · 평면 목록</span>
-            <div className="study-row">폴더 / 파일</div>
-            <div className="study-row">자산 항목</div>
-            <div className="study-row">자산 항목</div>
-          </div>
-          <div>
-            <span className="study-label">변경 · 관계 표시</span>
-            <div className="study-row study-emphasis">클래스</div>
-            <div className="study-child">인스턴스 A</div>
-            <div className="study-child">인스턴스 B</div>
-          </div>
-        </div>
-      ) : (
-        <ol
-          className={
-            diagram.kind === 'responsibilities'
-              ? 'study-flow study-parallel'
-              : 'study-flow'
-          }
-        >
-          {diagram.nodes.map((node, index) => (
-            <li key={node.label}>
-              {diagram.kind === 'coordinates' && index !== 1 ? (
-                <CoordinatePlane label={node.label} />
-              ) : null}
-              <strong>{node.label}</strong>
-              <span className="study-node-detail">{node.detail}</span>
-            </li>
-          ))}
-        </ol>
-      )}
-      {diagram.kind === 'formula' ? (
-        <div className="study-keyboard">
-          <span>커서 이동</span>
-          <span>
-            ← <b>변수 전체</b> →
-          </span>
-          <span>Backspace → 변수 단위 삭제</span>
-        </div>
-      ) : null}
+      <DiagramContent diagram={diagram} />
     </figure>
   );
 }

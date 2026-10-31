@@ -15,6 +15,7 @@ describe('Works intersection filters', () => {
       featured: true,
     });
     expect(result.map((work) => work.pageName)).toEqual([
+      'process-safety-management',
       'atop-dms',
       'fromyou',
       'digital-asset-management',
@@ -36,9 +37,9 @@ describe('Works intersection filters', () => {
       }).map((work) => work.pageName),
     ).toContain('ios-keyboard');
   });
-  it('featured only is the existing four home selections, not a favourite list', () => {
+  it('featured only includes the six selected home projects', () => {
     expect(
       filterWorks(publicWorks, { type: 'all', tag: null, featured: true }),
-    ).toHaveLength(4);
+    ).toHaveLength(6);
   });
 });

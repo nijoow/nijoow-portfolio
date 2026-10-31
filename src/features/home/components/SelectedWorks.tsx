@@ -18,7 +18,9 @@ function SelectedWorkCard({ work }: { work: Work }) {
   let previewContent = null;
 
   if (work.disclosure === 'limited') {
-    previewContent = <LimitedProjectCover className="h-full w-full" />;
+    previewContent = (
+      <LimitedProjectCover pageName={work.pageName} className="h-full w-full" />
+    );
   } else if (work.imgSrc) {
     previewContent = (
       <>
@@ -43,7 +45,7 @@ function SelectedWorkCard({ work }: { work: Work }) {
   return (
     <GlassCard className="group/work h-full">
       <Link
-        href={`/works/${work.pageName}`}
+        href={`/works/${work.pageName}#work-overview`}
         aria-label={`${work.name} 작업 상세 보기${
           work.disclosure === 'limited' ? ', 보안상 화면 비공개' : ''
         }`}

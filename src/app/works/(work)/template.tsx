@@ -15,7 +15,7 @@ export default function Template({ children }: { children: ReactNode }) {
 
   return (
     <div>
-      <div id="work-overview">
+      <div id="work-overview" tabIndex={-1} className="outline-none">
         <Section>
           <WorksBreadCrumb work={work} slug={slug} />
         </Section>

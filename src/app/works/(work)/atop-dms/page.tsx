@@ -17,21 +17,17 @@ export default function Page() {
           <>
             <CustomList>
               <CustomList.MainListItem>
-                프로젝트에 중간 합류하여 비즈니스 로직과 라이브러리를 신속하게
-                파악하고,{' '}
+                프로젝트에 중간 합류해 기능 개발과 기존 구현 개선을 맡아,{' '}
                 <strong className="font-bold">데모용 MVP의 출시 기한</strong>을
                 맞추는 데 기여
               </CustomList.MainListItem>
               <CustomList.MainListItem>
-                기존 엑셀 표 데이터를 MUI DataGrid에 맞게 전환하고, 가상
-                스크롤과 다중 워크시트 기능 적용
+                기존 엑셀 표 데이터를 MUI DataGrid에 맞게 전환하고, 가상 스크롤
+                적용 및 엑셀 파일의 여러 시트 읽기·선택 전환
               </CustomList.MainListItem>
               <CustomList.MainListItem>
-                Apache ECharts를 활용한{' '}
-                <strong className="font-bold">
-                  데이터 정제 및 차트 시각화
-                </strong>{' '}
-                기능 개발
+                데이터 정제와 Apache ECharts를 활용한{' '}
+                <strong className="font-bold">차트 시각화</strong> 기능 개발
               </CustomList.MainListItem>
               <CustomList.MainListItem>
                 사용자 정의 Formula의 수식 입력 UI, 변수 추가와 입력 오류 처리

@@ -1,5 +1,5 @@
 import SubTitle from '@/components/SubTitle/SubTitle';
-import { CapabilityCard } from '@/features/home/components/capability/CapabilityCard';
+import { MaterialCapabilities } from '@/features/home/components/capability/MaterialCapabilities';
 import type { CapabilityConfig } from '@/features/home/components/capability/types';
 
 const capabilities = [
@@ -37,11 +37,7 @@ export function CapabilityGrid() {
   return (
     <section className="w-full">
       <SubTitle eyebrow="How I Work" title="작업 방식" />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {capabilities.map((capability) => (
-          <CapabilityCard key={capability.title} {...capability} />
-        ))}
-      </div>
+      <MaterialCapabilities capabilities={capabilities} />
     </section>
   );
 }

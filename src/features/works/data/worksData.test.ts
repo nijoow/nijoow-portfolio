@@ -64,8 +64,8 @@ describe('worksData', () => {
     ]);
   });
 
-  it('홈 선택 프로젝트 네 개가 모두 공개된 작업으로 연결된다', () => {
-    expect(SELECTED_WORK_PAGE_NAMES).toHaveLength(4);
+  it('홈 선택 프로젝트 여섯 개가 모두 공개된 작업으로 연결된다', () => {
+    expect(SELECTED_WORK_PAGE_NAMES).toHaveLength(6);
 
     SELECTED_WORK_PAGE_NAMES.forEach((pageName) => {
       expect(getWork(pageName)?.status).toBe('published');

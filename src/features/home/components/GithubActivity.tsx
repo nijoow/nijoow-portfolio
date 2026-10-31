@@ -56,7 +56,8 @@ function FeaturedRepository({ repository }: { repository: GithubRepository }) {
             {repository.name}
           </span>
           <span className="text-ink-muted mt-1 line-clamp-2 min-h-10 text-sm leading-relaxed">
-            {repository.description ?? '요즘 손보고 있는 프로젝트입니다.'}
+            {repository.description ??
+              'GitHub에서 최근 업데이트된 저장소입니다.'}
           </span>
         </span>
         <ExternalLink className="text-ink-faint group-hover/featured:text-ink-muted size-4 shrink-0 transition-colors" />

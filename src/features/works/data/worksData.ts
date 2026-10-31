@@ -263,7 +263,7 @@ export const works: readonly Work[] = [
     aiAssisted: true,
     description:
       '숫자 입력과 커서 이동의 불편을 줄이기 위해 만들어 직접 사용하는 한글·영문 키보드',
-    role: '기획·UX/UI·구현 검토·사용 검증',
+    role: '기획·UX/UI·개발·사용 검증',
     status: 'published',
   },
   {
@@ -275,7 +275,7 @@ export const works: readonly Work[] = [
     aiAssisted: true,
     description:
       '여자친구와 둘이 일정과 기록을 나누며, 실제 사용 피드백으로 개선하는 비공개 캘린더',
-    role: '기획·UX/UI·구현 검토·운영',
+    role: '기획·UX/UI·개발·운영',
     status: 'published',
   },
   {
@@ -302,7 +302,7 @@ export const works: readonly Work[] = [
     aiAssisted: true,
     description:
       '기존 디지털 자산 관리 솔루션의 신규 환경 이관과 업무 규칙 변경에 따른 기능 개발·구조 개선',
-    role: '프론트엔드 2인 분담·AI 구현 지시·동작 확인',
+    role: '프론트엔드 개발 (2인 분담)',
     organization: '(주)템페스트',
     period: '2026.05 ~ 현재',
     status: 'published',

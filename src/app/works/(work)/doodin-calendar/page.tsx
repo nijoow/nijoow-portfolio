@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import CustomList from '../../_container/CustomList';
 import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkStudy } from '@/features/works/components/WorkStudy';
@@ -74,7 +75,7 @@ export default function Page() {
               댓글·반응과 홈 사진 기능을 추가했습니다.
             </p>
             <CustomList>
-              <li className="mt-3 first:mt-0">
+              <li className="feedback-case">
                 <h3 className="text-base font-bold">
                   편집 화면과 장소 조작 정리
                 </h3>
@@ -85,8 +86,18 @@ export default function Page() {
                   기념일도 같은 방식으로 추가·수정하고, 장소를 새로 찾는 과정과
                   선택한 장소를 관리하는 과정을 분리했습니다.
                 </p>
+                <figure className="feedback-evidence">
+                  <Image
+                    src="/images/works/doodin-calendar/record-editor.png"
+                    width={390}
+                    height={844}
+                    sizes="(max-width: 600px) 240px, 220px"
+                    alt="일정과 기록을 같은 편집 방식으로 입력"
+                  />
+                  <figcaption>일정과 기록을 같은 편집 방식으로 입력</figcaption>
+                </figure>
               </li>
-              <li className="mt-3">
+              <li className="feedback-case">
                 <h3 className="text-base font-bold">기록에 댓글과 반응 추가</h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
                   함께 보는 기록에 각자의 댓글을 남기고 상대방 댓글에 이모지로
@@ -95,8 +106,18 @@ export default function Page() {
                   이모지 값도 암호화하면서 기존 댓글·반응과 백업의 호환성을
                   유지했습니다.
                 </p>
+                <figure className="feedback-evidence">
+                  <Image
+                    src="/images/works/doodin-calendar/entry-comments.png"
+                    width={390}
+                    height={844}
+                    sizes="(max-width: 600px) 240px, 220px"
+                    alt="기록 상세에서 댓글과 반응 확인"
+                  />
+                  <figcaption>기록 상세에서 댓글과 반응 확인</figcaption>
+                </figure>
               </li>
-              <li className="mt-3">
+              <li className="feedback-case">
                 <h3 className="text-base font-bold">함께 고르는 홈 사진</h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
                   홈에 사진 한 장을 표시하던 기능을 여러 장을 함께 등록하고
@@ -105,6 +126,16 @@ export default function Page() {
                   무작위로 선택합니다. 홈용 사본을 따로 두어 사진첩 원본과 홈
                   사진을 독립적으로 관리합니다.
                 </p>
+                <figure className="feedback-evidence">
+                  <Image
+                    src="/images/works/doodin-calendar/home-overview.png"
+                    width={390}
+                    height={844}
+                    sizes="(max-width: 600px) 240px, 220px"
+                    alt="함께 고른 사진이 표시되는 홈"
+                  />
+                  <figcaption>함께 고른 사진이 표시되는 홈</figcaption>
+                </figure>
               </li>
             </CustomList>
           </>
@@ -135,7 +166,7 @@ export default function Page() {
                 '사진첩',
               ]}
               background="light"
-              aspectRatio="square"
+              aspectRatio="portrait"
             />
           </>
         }

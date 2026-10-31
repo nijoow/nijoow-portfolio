@@ -1,9 +1,16 @@
 import { IntroVisitProvider } from '@/context/IntroVisitProvider';
+import { AppearanceProvider } from '@/context/AppearanceProvider';
 import { AmbientBackground } from '@/components/Motion/AmbientBackground';
 import CustomCursor from '@/components/Motion/CustomCursor';
 import NavBar from '@/components/Navbar/NavBar';
 import { COLOR_TOKENS, PALETTE_CSS_VARIABLES } from '@/lib/designTokens';
-import { PERSON_ID, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
+import {
+  PERSON_ID,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  SITE_OG_IMAGE,
+} from '@/lib/site';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { LazyMotion, MotionConfig, domMax } from 'framer-motion';
@@ -56,11 +63,13 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: [SITE_OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'nijoow | portfolio',
     description: SITE_DESCRIPTION,
+    images: [SITE_OG_IMAGE.url],
   },
   robots: {
     index: true,
@@ -118,49 +127,57 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }),
           }}
         />
-        <IntroVisitProvider>
-          <LazyMotion features={domMax}>
-            <MotionConfig reducedMotion="user">
-              <AmbientBackground />
-              <CustomCursor />
-              <div className="relative flex min-h-screen w-full flex-col bg-transparent text-white transition-all duration-300">
-                <NavBar />
-                <main
-                  id="main-content"
-                  tabIndex={-1}
-                  className="mx-auto w-full max-w-4xl flex-auto px-4 pt-24 pb-24 focus:outline-none"
-                >
-                  {children}
-                </main>
-                <footer className="mt-auto w-full border-t border-white/10">
-                  <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-between gap-3 px-4 py-7 sm:flex-row">
-                    <span className="text-ink-muted text-sm">
-                      &copy; {new Date().getFullYear()} Lee Woo Jin. All Rights
-                      Reserved.
-                    </span>
-                    <div className="text-ink-muted flex items-center gap-4 text-sm font-bold">
-                      <a
-                        href="https://github.com/nijoow"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="focus-visible:ring-brand-lavender inline-flex min-h-11 items-center rounded-sm transition-colors outline-none hover:text-white focus-visible:ring-2"
-                      >
-                        GitHub
-                      </a>
-                      <span className="text-ink-faint">|</span>
-                      <a
-                        href="mailto:nijoow1127@gmail.com"
-                        className="focus-visible:ring-brand-lavender inline-flex min-h-11 items-center rounded-sm transition-colors outline-none hover:text-white focus-visible:ring-2"
-                      >
-                        nijoow1127@gmail.com
-                      </a>
+        <AppearanceProvider
+          controls={
+            process.env.VERCEL_ENV === 'preview' ||
+            process.env.NODE_ENV === 'development' ||
+            process.env.NEXT_PUBLIC_DESIGN_CONTROLS === '1'
+          }
+        >
+          <IntroVisitProvider>
+            <LazyMotion features={domMax}>
+              <MotionConfig reducedMotion="user">
+                <AmbientBackground />
+                <CustomCursor />
+                <div className="relative flex min-h-screen w-full flex-col bg-transparent text-white transition-all duration-300">
+                  <NavBar />
+                  <main
+                    id="main-content"
+                    tabIndex={-1}
+                    className="mx-auto w-full max-w-4xl flex-auto px-4 pt-24 pb-24 focus:outline-none"
+                  >
+                    {children}
+                  </main>
+                  <footer className="mt-auto w-full border-t border-white/10">
+                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-between gap-3 px-4 py-7 sm:flex-row">
+                      <span className="text-ink-muted text-sm">
+                        &copy; {new Date().getFullYear()} Lee Woo Jin. All
+                        Rights Reserved.
+                      </span>
+                      <div className="text-ink-muted flex items-center gap-4 text-sm font-bold">
+                        <a
+                          href="https://github.com/nijoow"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="focus-visible:ring-brand-lavender inline-flex min-h-11 items-center rounded-sm transition-colors outline-none hover:text-white focus-visible:ring-2"
+                        >
+                          GitHub
+                        </a>
+                        <span className="text-ink-faint">|</span>
+                        <a
+                          href="mailto:nijoow1127@gmail.com"
+                          className="focus-visible:ring-brand-lavender inline-flex min-h-11 items-center rounded-sm transition-colors outline-none hover:text-white focus-visible:ring-2"
+                        >
+                          nijoow1127@gmail.com
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </footer>
-              </div>
-            </MotionConfig>
-          </LazyMotion>
-        </IntroVisitProvider>
+                  </footer>
+                </div>
+              </MotionConfig>
+            </LazyMotion>
+          </IntroVisitProvider>
+        </AppearanceProvider>
         <Analytics />
         <SpeedInsights />
       </body>
