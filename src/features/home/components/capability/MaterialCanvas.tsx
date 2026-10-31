@@ -12,7 +12,6 @@ import {
   Component,
   Suspense,
   useEffect,
-  useMemo,
   useRef,
   useState,
   type ReactNode,
@@ -21,7 +20,12 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import type { Group } from 'three';
-import { PMREMGenerator, MathUtils, type Texture } from 'three';
+import {
+  PMREMGenerator,
+  MathUtils,
+  type Texture,
+  type WebGLRenderTarget,
+} from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import {
   useAppearance,
@@ -61,7 +65,7 @@ function GlassSurface({
       chromaticAberration={0.025}
       anisotropicBlur={0.03}
       envMap={environment}
-      color={material === 'refraction' ? '#f5edf9' : '#c8b6df'}
+      color={material === 'refraction' ? '#c8c1dd' : '#b6a0d1'}
       metalness={0.06}
       roughness={material === 'refraction' ? 0.07 : 0.22}
       transmission={material === 'refraction' ? 0.82 : 0.32}
@@ -69,7 +73,7 @@ function GlassSurface({
       ior={1.45}
       clearcoat={1}
       clearcoatRoughness={0.08}
-      envMapIntensity={2.8}
+      envMapIntensity={0.7}
     />
   );
 }
@@ -146,10 +150,10 @@ function Sculpture({
   );
   return (
     <>
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[3, 4, 5]} intensity={3} color="#e7dcff" />
-      <pointLight position={[-3, 1, 2]} intensity={12} color="#7e9ff2" />
-      <pointLight position={[3, -1, 1]} intensity={7} color="#d8b7e5" />
+      <ambientLight intensity={0.18} />
+      <directionalLight position={[3, 4, 5]} intensity={1.6} color="#e7dcff" />
+      <pointLight position={[-3, 1, 2]} intensity={8} color="#7e9ff2" />
+      <pointLight position={[3, -1, 1]} intensity={5} color="#d8b7e5" />
 
       <mesh position={[0, -0.08, -1.3]} rotation={[0, 0, -0.28]}>
         <torusGeometry args={[1.5, 0.015, 8, 90, Math.PI * 1.65]} />
@@ -183,7 +187,7 @@ function Sculpture({
               clearcoat={1}
               clearcoatRoughness={0.08}
               iridescence={0.22}
-              envMapIntensity={1.5}
+              envMapIntensity={0.65}
               distort={0.16}
               speed={motion ? 0.8 : 0}
             />
@@ -204,6 +208,7 @@ function Sculpture({
               metalness={0.3}
               roughness={0.2}
               clearcoat={1}
+              envMapIntensity={0.65}
               distort={0.2}
               speed={motion ? 0.7 : 0}
             />
@@ -323,19 +328,27 @@ function Studio({
       if (element) observer.observe(element);
     return () => observer.disconnect();
   }, [tracks, count]);
-  const environment = useMemo(() => {
-    const room = new RoomEnvironment();
-    const generator = new PMREMGenerator(gl);
-    const target = generator.fromScene(room, 0.04);
-    room.dispose();
-    generator.dispose();
-    return target;
-  }, [gl]);
-  useEffect(() => () => environment.dispose(), [environment]);
+  const [environment, setEnvironment] = useState<Texture | null>(null);
   useEffect(() => {
+    let target: WebGLRenderTarget | undefined;
+    const frame = requestAnimationFrame(() => {
+      const room = new RoomEnvironment();
+      const generator = new PMREMGenerator(gl);
+      target = generator.fromScene(room, 0.04);
+      room.dispose();
+      generator.dispose();
+      setEnvironment(target.texture);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      target?.dispose();
+    };
+  }, [gl]);
+  useEffect(() => {
+    if (!environment) return;
     onReady();
     invalidate();
-  }, [onReady, invalidate, material, motion]);
+  }, [onReady, invalidate, material, motion, environment]);
   useEffect(() => {
     const redraw = () => invalidate();
     window.addEventListener('scroll', redraw, { passive: true });
@@ -352,11 +365,11 @@ function Studio({
         const input = inputs.current[index];
         return input ? (
           <View key={index} track={track} index={index + 1} visible={visible}>
-            {activeViews[index] ? (
+            {activeViews[index] && environment ? (
               <Sculpture
                 index={index}
                 material={material}
-                environment={environment.texture}
+                environment={environment}
                 input={input}
                 motion={motion}
                 lowPower={lowPower}
