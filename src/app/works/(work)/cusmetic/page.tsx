@@ -67,9 +67,10 @@ export default function Page() {
                   인증 상태에 맞는 화면 표시
                 </h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-                  클라이언트에서 인증 상태를 확인하는 동안 화면이 바뀌어 보이는
-                  문제를 줄이기 위해 서버에서 세션을 확인하고 인증 상태에 맞는
-                  화면을 표시했습니다. 소셜 로그인은 NextAuth로 구현했습니다.
+                  클라이언트에서 로그인 여부를 확인하는 동안 화면이 바뀌어
+                  보였습니다. 서버에서 세션을 먼저 확인해 초기 화면부터 인증
+                  상태에 맞는 내용을 표시하도록 했습니다. 소셜 로그인은
+                  NextAuth로 구현했습니다.
                 </p>
               </li>
               <li className="mt-5 first:mt-0">

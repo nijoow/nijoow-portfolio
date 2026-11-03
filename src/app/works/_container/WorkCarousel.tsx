@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import styles from './WorkCarousel.module.css';
-import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Image from 'next/image';
 import { Dialog } from 'radix-ui';
 import { type KeyboardEvent, useCallback, useRef, useState } from 'react';
@@ -60,7 +60,6 @@ interface GalleryControlsProps {
   activeIndex: number;
   swiper: SwiperType | null;
   label?: string;
-  onZoom: () => void;
 }
 function ImageSelector({
   images,
@@ -115,7 +114,6 @@ function GalleryControls({
   activeIndex,
   swiper,
   label,
-  onZoom,
 }: GalleryControlsProps) {
   return (
     <div className={styles.controls}>
@@ -154,17 +152,6 @@ function GalleryControls({
           <ChevronRight size={19} aria-hidden />
         </button>
       ) : null}
-      <button
-        type="button"
-        onClick={onZoom}
-        className={cn(
-          styles.zoom,
-          'focus-visible:ring-brand-lavender text-ink-secondary inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-xs outline-none focus-visible:ring-2',
-        )}
-      >
-        <ZoomIn size={15} aria-hidden />
-        이미지 확대
-      </button>
     </div>
   );
 }
@@ -191,6 +178,8 @@ export function WorkCarousel({
   const selectedImage =
     selectedIndex === null ? null : (images[selectedIndex] ?? null);
   const isModalOpen = selectedImage !== null;
+  let slideBackground = background === 'dark' ? 'bg-black' : 'bg-white';
+  if (aspectRatio === 'portrait') slideBackground = 'bg-transparent';
 
   const closeModal = useCallback(() => setSelectedIndex(null), []);
 
@@ -253,6 +242,15 @@ export function WorkCarousel({
           slideLabelMessage: '{{slidesLength}}장 중 {{index}}번째 이미지',
         }}
         loop={imgSrcList.length > 1}
+        style={
+          aspectRatio === 'portrait'
+            ? {
+                maxWidth: '100%',
+                height: 'min(692px, calc((100vw - 4rem) * 2.164))',
+                aspectRatio: 'auto',
+              }
+            : undefined
+        }
         className={cn(
           'relative w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 shadow-md',
           ASPECT_CLASSES[aspectRatio],
@@ -261,10 +259,7 @@ export function WorkCarousel({
         {images.map(({ src, alt, index }) => (
           <SwiperSlide
             key={src}
-            className={cn(
-              'group relative h-full w-full',
-              background === 'dark' ? 'bg-black' : 'bg-white',
-            )}
+            className={cn('group relative h-full w-full', slideBackground)}
           >
             {({ isActive }) => (
               <>
@@ -320,7 +315,6 @@ export function WorkCarousel({
         activeIndex={activeIndex}
         swiper={swiper}
         label={imageLabels?.[activeIndex]}
-        onZoom={() => setSelectedIndex(activeIndex)}
       />
 
       {selectedImage ? (
