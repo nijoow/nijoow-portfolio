@@ -6,12 +6,20 @@ export const WORK_FILTER_TAGS = [
   'Frontend',
   'Interactive',
   '3D',
-  'Business Project',
-  'Side Project',
+  'iOS',
 ] as const;
-
+export const WORK_TYPE_OPTIONS = [
+  { value: 'all', label: 'All Projects' },
+  { value: 'business', label: 'Business Projects' },
+  { value: 'side', label: 'Side Projects' },
+] as const;
 export const workFilterParser = parseAsStringLiteral(
   WORK_FILTER_TAGS,
-).withOptions({
-  history: 'replace',
-});
+).withOptions({ history: 'replace' });
+export const workTypeParser = parseAsStringLiteral([
+  'all',
+  'business',
+  'side',
+] as const)
+  .withDefault('all')
+  .withOptions({ history: 'replace' });

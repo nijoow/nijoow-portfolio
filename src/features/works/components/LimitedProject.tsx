@@ -1,28 +1,26 @@
 import { cn } from '@/lib/utils';
 
-export function ProjectDisclosureChip() {
-  return (
-    <span className="text-ink-secondary inline-flex rounded-full border border-white/15 bg-black/45 px-2.5 py-1 text-[10px] font-bold tracking-wide whitespace-nowrap backdrop-blur-sm">
-      화면 비공개
-    </span>
-  );
-}
-
 export function LimitedProjectCover({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
       className={cn(
-        'from-atmosphere-violet/75 via-surface-panel to-atmosphere-navy/70 relative overflow-hidden bg-linear-to-br',
+        'bg-surface-panel/30 relative grid min-h-36 place-items-center overflow-hidden',
         className,
       )}
     >
-      <div className="cosmic-stars absolute inset-0 opacity-80" />
-      <div className="cosmic-grid absolute inset-0 opacity-35" />
-      <div className="cosmic-orbit-map absolute inset-[-20%] rotate-[-12deg] opacity-80" />
-      <div className="bg-brand-violet/25 absolute top-[12%] left-[18%] size-36 rounded-full blur-3xl sm:size-52" />
-      <div className="bg-accent/15 absolute right-[14%] bottom-[8%] size-32 rounded-full blur-3xl sm:size-48" />
-      <div className="relative h-full min-h-36" />
+      <span className="text-ink-muted rounded-full border border-white/15 bg-white/[0.025] px-4 py-1.5 text-xs font-medium">
+        화면 비공개
+      </span>
     </div>
+  );
+}
+
+export function DisclosureNotice({ limited }: { limited: boolean }) {
+  if (!limited) return null;
+  return (
+    <p role="note" className="text-ink-secondary text-sm leading-relaxed">
+      보안상 화면과 내부 자료는 공개하지 않습니다.
+    </p>
   );
 }

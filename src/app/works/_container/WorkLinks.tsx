@@ -13,17 +13,25 @@ interface WorkLinksProps {
   pageName?: string;
   links?: readonly WorkLink[];
   liveLabel?: string;
+  includeLive?: boolean;
 }
 
 export function WorkLinks({
   pageName,
   links = [],
-  liveLabel = '사이트 바로가기',
+  liveLabel,
+  includeLive = false,
 }: WorkLinksProps) {
   const work = pageName ? getWork(pageName) : undefined;
   const resolvedLinks: WorkLink[] = [
-    ...(work?.liveUrl
-      ? [{ href: work.liveUrl, label: liveLabel, kind: 'site' as const }]
+    ...(includeLive && work?.liveUrl
+      ? [
+          {
+            href: work.liveUrl,
+            label: liveLabel ?? work.liveLabel ?? '사이트 바로가기',
+            kind: 'site' as const,
+          },
+        ]
       : []),
     ...(work?.repoUrl
       ? [{ href: work.repoUrl, label: 'GitHub', kind: 'github' as const }]

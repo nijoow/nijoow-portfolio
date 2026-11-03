@@ -1,23 +1,25 @@
 'use client';
 
 import GlassCard from '@/components/Motion/GlassCard';
-import {
-  LimitedProjectCover,
-  ProjectDisclosureChip,
-} from '@/features/works/components/LimitedProject';
+import { LimitedProjectCover } from '@/features/works/components/LimitedProject';
 import { ProjectTypeChip } from '@/features/works/components/ProjectTypeChip';
 import { publicWorks, type Work } from '@/features/works/data/worksData';
-import { filterWorksByTag } from '@/features/works/lib/filterWorks';
+import { filterWorks } from '@/features/works/lib/filterWorks';
 import {
   WORK_FILTER_TAGS,
+  WORK_TYPE_OPTIONS,
+  workTypeParser,
   workFilterParser,
 } from '@/features/works/lib/workFilters';
+import { FEATURED_WORK_PAGE_NAMES } from '@/features/works/data/featuredWorks';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, m, type Transition } from 'framer-motion';
-import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryState } from 'nuqs';
+import { useQueryStates } from 'nuqs';
+import { useEffect } from 'react';
+import { rememberWorksReturn, restoreWorksReturn } from '../lib/worksReturn';
 
 const newestFirstWorks = [...publicWorks].reverse();
 const CARD_INITIAL = { opacity: 0, y: 12, scale: 0.98 };
@@ -45,6 +47,7 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
 
   return (
     <m.article
+      data-work-card={work.pageName}
       layout
       initial={CARD_INITIAL}
       animate={CARD_ANIMATE}
@@ -54,7 +57,8 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
     >
       <GlassCard className="group/work h-full">
         <Link
-          href={`/works/${work.pageName}`}
+          href={`/works/${work.pageName}#work-overview`}
+          onNavigate={() => rememberWorksReturn(work.pageName)}
           aria-label={`${work.name} 작업 상세 보기${
             work.disclosure === 'limited' ? ', 보안상 화면 비공개' : ''
           }`}
@@ -62,17 +66,18 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
         >
           <div className="from-atmosphere-navy/20 relative aspect-video w-full overflow-hidden border-b border-white/10 bg-linear-to-br via-black/20 to-white/5">
             {previewContent}
-            <span className="absolute top-3 left-3">
+            <span className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5">
               <ProjectTypeChip
                 projectType={work.projectType}
                 isFreelance={work.isFreelance}
               />
+              {FEATURED_WORK_PAGE_NAMES.includes(work.pageName) ? (
+                <span className="border-brand-lavender/40 bg-brand-deep/85 text-brand-lavender inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wider backdrop-blur-sm">
+                  <Sparkles size={10} aria-hidden />
+                  홈에서 소개한 작업
+                </span>
+              ) : null}
             </span>
-            {work.disclosure === 'limited' ? (
-              <span className="absolute right-3 bottom-3">
-                <ProjectDisclosureChip />
-              </span>
-            ) : null}
           </div>
 
           <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
@@ -104,7 +109,7 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
                   {tag}
                 </span>
               ))}
-              {work.period ? (
+              {work.projectType === 'business' && work.period ? (
                 <span className="text-ink-muted ml-auto text-xs">
                   {work.period}
                 </span>
@@ -130,8 +135,14 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
 }
 
 export function WorksGallery() {
-  const [selectedTag, setSelectedTag] = useQueryState('tag', workFilterParser);
-  const filteredWorks = filterWorksByTag(newestFirstWorks, selectedTag);
+  const [filters, setFilters] = useQueryStates({
+    tag: workFilterParser,
+    type: workTypeParser,
+  });
+  const selectedTag = filters.tag;
+  const filteredWorks = filterWorks(newestFirstWorks, filters);
+  const clearFilters = () => setFilters({ tag: null, type: 'all' });
+  useEffect(() => restoreWorksReturn(), []);
   const firstImageIndex = filteredWorks.findIndex((work) => work.imgSrc);
 
   function getFilterClass(isActive: boolean): string {
@@ -145,32 +156,51 @@ export function WorksGallery() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <div
-        role="group"
-        aria-label="작업 태그 필터"
-        className="flex flex-wrap gap-1.5"
-      >
-        <button
-          type="button"
-          aria-pressed={selectedTag === null}
-          onClick={() => setSelectedTag(null)}
-          className={getFilterClass(selectedTag === null)}
+      <div className="works-filter-header">
+        <div
+          role="group"
+          aria-label="프로젝트 유형"
+          className="works-type-filter"
         >
-          All
-        </button>
-        {WORK_FILTER_TAGS.map((tag) => (
-          <button
-            key={tag}
-            type="button"
-            aria-pressed={selectedTag === tag}
-            onClick={() => setSelectedTag(tag)}
-            className={getFilterClass(selectedTag === tag)}
-          >
-            {tag}
-          </button>
-        ))}
+          {WORK_TYPE_OPTIONS.map(({ value, label }) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={filters.type === value}
+              onClick={() => setFilters({ type: value })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <details className="group sm:hidden">
+        <summary className="text-ink-secondary focus-visible:ring-brand-lavender min-h-11 cursor-pointer py-3 text-sm font-bold focus-visible:ring-2">
+          기술·분야 필터 {selectedTag ? `· ${selectedTag} 적용 중` : ''}{' '}
+          <span className="group-open:hidden">펼치기</span>
+          <span className="hidden group-open:inline">접기</span>
+        </summary>
+        <FilterTags
+          selectedTag={selectedTag}
+          setTag={(tag) => setFilters({ tag })}
+          getFilterClass={getFilterClass}
+        />
+      </details>
+      <div className="hidden sm:block">
+        <FilterTags
+          selectedTag={selectedTag}
+          setTag={(tag) => setFilters({ tag })}
+          getFilterClass={getFilterClass}
+        />
       </div>
 
+      <p
+        role="status"
+        aria-live="polite"
+        className="text-ink-secondary text-sm"
+      >
+        {filteredWorks.length}개 프로젝트 / 전체 {publicWorks.length}개
+      </p>
       {filteredWorks.length > 0 ? (
         <m.div layout className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <AnimatePresence initial={false} mode="popLayout">
@@ -193,13 +223,51 @@ export function WorksGallery() {
           </p>
           <button
             type="button"
-            onClick={() => setSelectedTag(null)}
+            onClick={clearFilters}
             className="focus-visible:ring-brand-lavender text-brand-lavender min-h-11 rounded-full border border-white/10 px-4 text-sm font-bold outline-none hover:bg-white/5 focus-visible:ring-2"
           >
             전체 작업 보기
           </button>
         </div>
       )}
+    </div>
+  );
+}
+
+function FilterTags({
+  selectedTag,
+  setTag,
+  getFilterClass,
+}: {
+  selectedTag: string | null;
+  setTag: (tag: (typeof WORK_FILTER_TAGS)[number] | null) => void;
+  getFilterClass: (active: boolean) => string;
+}) {
+  return (
+    <div
+      role="group"
+      aria-label="기술·분야 필터"
+      className="flex flex-wrap gap-1.5"
+    >
+      <button
+        type="button"
+        aria-pressed={selectedTag === null}
+        onClick={() => setTag(null)}
+        className={getFilterClass(selectedTag === null)}
+      >
+        전체 기술·분야
+      </button>
+      {WORK_FILTER_TAGS.map((tag) => (
+        <button
+          key={tag}
+          type="button"
+          aria-pressed={selectedTag === tag}
+          onClick={() => setTag(selectedTag === tag ? null : tag)}
+          className={getFilterClass(selectedTag === tag)}
+        >
+          {tag}
+        </button>
+      ))}
     </div>
   );
 }
