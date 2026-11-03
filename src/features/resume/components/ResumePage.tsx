@@ -1,5 +1,6 @@
+import { EmailCopyButton } from '@/components/Contact/EmailCopyButton';
 import Link from 'next/link';
-import { ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowUpRight, Download } from 'lucide-react';
 import {
   getResumeProjectHref,
   resumeContent,
@@ -113,22 +114,26 @@ export function ResumePage() {
             <p className={styles.role}>{profile.role}</p>
           </div>
           <div className={styles.profileLinks}>
-            {profile.contacts.map((contact) => (
-              <a
-                key={contact.label}
-                href={contact.href}
-                {...(contact.label === 'GitHub'
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
-              >
-                {contact.label}
-                {contact.label === 'GitHub' ? (
+            <EmailCopyButton />
+            <a
+              href="/files/lee-woojin-resume-public.pdf"
+              download="[이력서]이우진_프론트엔드.pdf"
+            >
+              PDF 다운로드 <Download size={15} aria-hidden />
+            </a>
+            {profile.contacts
+              .filter((contact) => contact.label === 'GitHub')
+              .map((contact) => (
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {contact.label}
                   <ArrowUpRight size={15} aria-hidden />
-                ) : (
-                  <Mail size={15} aria-hidden />
-                )}
-              </a>
-            ))}
+                </a>
+              ))}
           </div>
         </div>
         <div className={styles.introText}>
