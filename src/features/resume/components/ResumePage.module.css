@@ -1,0 +1,467 @@
+.page {
+  --resume-meta-width: 130px;
+  --resume-column-gap: 24px;
+  --resume-line: color-mix(
+    in srgb,
+    var(--color-brand-lavender) 20%,
+    transparent
+  );
+  --resume-text: color-mix(in srgb, var(--color-ink-primary) 82%, transparent);
+  --resume-muted: color-mix(in srgb, var(--color-ink-primary) 64%, transparent);
+  color: var(--resume-text);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.signature > section {
+  height: clamp(240px, 38vw, 350px);
+  margin-bottom: 0;
+}
+.signature button[aria-label='인트로 다시 보기'] {
+  display: none;
+}
+.introduction {
+  padding: 48px 28px 40px;
+  background: color-mix(in srgb, var(--color-surface-ink) 80%, transparent);
+  border-radius: 20px;
+  scroll-margin-top: 160px;
+}
+.introductionHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+}
+.kicker {
+  color: var(--color-brand-lavender);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  margin-bottom: 13px;
+}
+.introduction h1 {
+  color: var(--color-ink-heading);
+  font-size: clamp(32px, 5vw, 44px);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.role {
+  margin-top: 8px;
+  font-size: 17px;
+  color: var(--resume-muted);
+}
+.profileLinks {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.profileLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 13px;
+  font-size: 13px;
+  border: 1px solid var(--resume-line);
+  border-radius: 100px;
+}
+.introText {
+  margin-top: 30px;
+  max-width: 47rem;
+  font-size: 16px;
+  line-height: 1.9;
+}
+.introText p + p {
+  margin-top: 20px;
+}
+.page strong {
+  color: var(--color-ink-heading);
+  font-weight: 700;
+}
+.navigation {
+  position: sticky;
+  top: 84px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+  border: 1px solid var(--resume-line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-surface-ink) 94%, transparent);
+  backdrop-filter: blur(16px);
+}
+.navigation a {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 7px 5px;
+  border-radius: 9px;
+  font-size: 13px;
+  color: var(--resume-muted);
+  white-space: nowrap;
+}
+.navigation a[aria-current='location'] {
+  color: var(--color-brand-lavender);
+  background: color-mix(in srgb, var(--color-brand-violet) 15%, transparent);
+}
+.readingSurface {
+  margin-top: 30px;
+  padding: 34px 28px 24px;
+  background: color-mix(in srgb, var(--color-surface-ink) 95%, transparent);
+  border-radius: 20px;
+}
+.sectionHeading {
+  color: var(--color-brand-lavender);
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+.career {
+  scroll-margin-top: 162px;
+}
+.careerOverview,
+.project {
+  display: grid;
+  grid-template-columns: var(--resume-meta-width) minmax(0, 1fr);
+  gap: var(--resume-column-gap);
+}
+.careerOverview {
+  padding-bottom: 28px;
+}
+.career + .career {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--resume-line);
+}
+.careerPeriod {
+  position: sticky;
+  top: 165px;
+  height: fit-content;
+  padding-top: 5px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--resume-muted);
+}
+.careerPeriod span {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-brand-lavender);
+}
+.careerHeading h3 {
+  color: var(--color-brand-lavender);
+  font-size: 22px;
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.careerHeading p {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--resume-muted);
+  line-height: 1.7;
+}
+.achievements li::marker {
+  color: var(--color-brand-muted);
+}
+.project {
+  position: relative;
+  padding: 27px 0 30px;
+  scroll-margin-top: 164px;
+}
+.project::before {
+  position: absolute;
+  top: 0;
+  inset-inline-start: calc(var(--resume-meta-width) + var(--resume-column-gap));
+  inset-inline-end: 0;
+  border-top: 1px solid var(--resume-line);
+  content: '';
+  pointer-events: none;
+}
+.project:last-child {
+  padding-bottom: 0;
+}
+.projectHeading {
+  padding-right: 110px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 7px 14px;
+}
+.projectHeading h4 {
+  color: var(--color-ink-heading);
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 700;
+  flex: 1 1 220px;
+}
+.projectLink {
+  position: absolute;
+  top: 27px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 6px 0 6px 10px;
+  font-size: 12px;
+  color: var(--color-brand-lavender);
+  white-space: nowrap;
+}
+.projectMeta {
+  position: sticky;
+  top: 165px;
+  height: fit-content;
+  text-align: right;
+  padding-top: 5px;
+  font-size: 12px;
+  line-height: 1.85;
+  color: var(--resume-muted);
+}
+.projectMeta p + p {
+  margin-top: 4px;
+}
+.projectDescription {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 0;
+  margin-top: 12px;
+  color: var(--resume-muted);
+  list-style: none;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.skills li:not(:last-child)::after {
+  content: '·';
+  margin: 0 7px;
+  color: var(--color-brand-muted);
+}
+.achievements {
+  margin-top: 18px;
+  padding-left: 18px;
+  list-style: disc;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.achievements > li + li {
+  margin-top: 10px;
+}
+.education,
+.story {
+  margin-top: 60px;
+  padding-top: 34px;
+  border-top: 1px solid var(--resume-line);
+  scroll-margin-top: 160px;
+}
+.educationEntry {
+  display: grid;
+  grid-template-columns: var(--resume-meta-width) minmax(0, 1fr);
+  gap: var(--resume-column-gap);
+}
+.educationEntry > p {
+  text-align: right;
+  font-size: 12px;
+  color: var(--resume-muted);
+  line-height: 1.8;
+}
+.educationEntry > p span {
+  display: block;
+  margin-top: 5px;
+}
+.educationEntry h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-ink-heading);
+}
+.educationEntry div p {
+  font-size: 15px;
+  margin-top: 8px;
+}
+.storyDetails summary {
+  min-height: 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  font-size: 16px;
+}
+.storyDetails summary::-webkit-details-marker {
+  display: none;
+}
+.expandHint {
+  color: var(--color-brand-lavender);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.expandHint::after {
+  content: ' +';
+}
+.storyDetails[open] .expandHint {
+  font-size: 0;
+}
+.storyDetails[open] .expandHint::after {
+  content: '접기 −';
+  font-size: 12px;
+}
+.storyDetails > div {
+  padding-top: 30px;
+}
+.storyDetails section + section {
+  margin-top: 32px;
+}
+.storyDetails h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-ink-heading);
+  line-height: 1.6;
+}
+.storyDetails p {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+.nextSteps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid var(--resume-line);
+}
+.nextSteps a {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0;
+}
+.nextSteps a > span {
+  font-size: 12px;
+  color: var(--resume-muted);
+  line-height: 1.7;
+}
+.nextSteps strong {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+}
+.page a:hover {
+  color: var(--color-brand-lavender);
+}
+.page :is(a, summary):focus-visible {
+  outline: 2px solid var(--color-brand-lavender);
+  outline-offset: 4px;
+  border-radius: 5px;
+}
+@media (max-width: 640px) {
+  .introduction {
+    padding: 34px 15px 30px;
+  }
+  .introductionHeading {
+    align-items: start;
+  }
+  .profileLinks {
+    gap: 3px;
+    justify-content: end;
+    max-width: 94px;
+  }
+  .profileLinks a {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+  .introText {
+    font-size: 15px;
+    line-height: 1.9;
+    margin-top: 25px;
+  }
+  .navigation {
+    top: 82px;
+    gap: 0;
+    padding: 5px;
+  }
+  .navigation a {
+    font-size: 12px;
+    min-height: 44px;
+  }
+  .readingSurface {
+    padding: 27px 15px 20px;
+    margin-top: 22px;
+  }
+  .careerOverview,
+  .project,
+  .educationEntry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .careerPeriod {
+    position: static;
+    text-align: left;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+  }
+  .careerPeriod span {
+    margin: 0;
+  }
+  .careerHeading h3 {
+    font-size: 20px;
+  }
+  .project::before {
+    inset-inline-start: 0;
+  }
+  .projectHeading {
+    gap: 0;
+    padding-right: 0;
+  }
+  .projectHeading h4 {
+    font-size: 17px;
+    flex-basis: 100%;
+  }
+  .projectLink {
+    position: static;
+    margin-top: 12px;
+    padding: 5px 0;
+    font-size: 13px;
+  }
+  .projectMeta {
+    position: static;
+    padding: 0;
+    text-align: left;
+    font-size: 13px;
+  }
+  .skills {
+    font-size: 13px;
+  }
+  .achievements {
+    font-size: 15px;
+    padding-left: 16px;
+  }
+  .career + .career {
+    margin-top: 48px;
+    padding-top: 30px;
+  }
+  .educationEntry > p {
+    text-align: left;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .educationEntry > p span {
+    margin: 0;
+  }
+  .nextSteps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
