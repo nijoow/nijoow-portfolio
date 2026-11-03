@@ -1,5 +1,6 @@
 'use client';
 
+import { useIntroVisit } from '@/context/IntroVisitProvider';
 import Eyebrow from '@/components/ui/Eyebrow';
 import { Logo } from '@/components/Logo/Logo';
 import { COLOR_TOKENS } from '@/lib/designTokens';
@@ -24,7 +25,6 @@ import {
 import { ParticleLogo } from './ParticleLogo';
 import type { SignatureQuality } from './signatureQuality';
 
-const INTRO_SEEN_KEY = 'nijoow-intro-seen-v2';
 const ASSEMBLE_MS = 3200;
 const LANDING_MS = 1350;
 
@@ -68,20 +68,6 @@ function resolveFrameLoop(
 ): 'always' | 'demand' | 'never' {
   if (reduced) return 'demand';
   return isSceneVisible ? 'always' : 'never';
-}
-
-function hasSeenIntro() {
-  try {
-    return window.localStorage.getItem(INTRO_SEEN_KEY) === '1';
-  } catch {
-    return true;
-  }
-}
-
-function markIntroSeen() {
-  try {
-    window.localStorage.setItem(INTRO_SEEN_KEY, '1');
-  } catch {}
 }
 
 interface RouteCopy {
@@ -352,22 +338,28 @@ export default function SignatureExperience({
   quality: Exclude<SignatureQuality, 'fallback'>;
 }) {
   const reduced = useReducedMotion();
+  const { visited, markVisited } = useIntroVisit();
   const wrapRef = useRef<HTMLElement>(null);
   const orbitControlsRef = useRef<ComponentRef<typeof OrbitControls>>(null);
   const [phase, setPhase] = useState<StagePhase>(() => {
     const shouldPlay =
       quality !== 'low' &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-      !hasSeenIntro();
+      !visited;
     return shouldPlay ? 'intro' : 'hero';
   });
   const [introRun, setIntroRun] = useState(0);
   const [burstSignal, setBurstSignal] = useState(0);
   const [isInView, setIsInView] = useState(true);
 
-  const isIntro = phase === 'intro';
-  const isHero = phase === 'hero';
-  const isCinematic = phase !== 'hero';
+  const isIntro = !reduced && phase === 'intro';
+  const isHero = Boolean(reduced) || phase === 'hero';
+  const isCinematic = !isHero;
+
+  useEffect(() => {
+    // Consume on entry, including departures before the animation finishes.
+    markVisited();
+  }, [markVisited]);
   const config = QUALITY_CONFIG[quality];
   const heroInteractive = isHero && !reduced;
   const isSceneVisible = isInView || isCinematic;
@@ -399,7 +391,6 @@ export default function SignatureExperience({
   useEffect(() => {
     if (phase !== 'landing') return;
     const timer = window.setTimeout(() => {
-      markIntroSeen();
       setPhase('hero');
     }, LANDING_MS);
     return () => window.clearTimeout(timer);
@@ -433,6 +424,7 @@ export default function SignatureExperience({
         }}
         onContextMenu={handleContextMenu}
         aria-label="nijoow 시그니처 로고"
+        data-intro-state={reduced ? 'hero' : phase}
         className={cn(
           'overflow-hidden bg-black',
           isIntro

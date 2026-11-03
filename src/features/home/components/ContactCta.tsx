@@ -26,14 +26,25 @@ export function ContactCta() {
     <section className="w-full">
       <GlassCard lift={false} className="w-full">
         <div className="flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-lg">
+          <div className="w-full min-w-0 lg:max-w-lg">
             <Eyebrow>Contact</Eyebrow>
             <h2 className="mt-2 text-2xl font-bold break-keep sm:text-3xl">
               프로젝트나 협업에 관해 연락 주세요.
             </h2>
+            <Link
+              href="/contact"
+              className="bg-brand-lavender text-surface-ink hover:bg-brand-lavender/90 focus-visible:ring-brand-lavender focus-visible:ring-offset-surface-ink group mt-5 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-xl px-6 py-3 text-sm font-bold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-4 sm:w-auto"
+            >
+              문의 남기기
+              <ArrowRight
+                aria-hidden
+                size={18}
+                className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
+              />
+            </Link>
           </div>
 
-          <div className="flex w-full flex-col gap-2 lg:w-72">
+          <div className="flex w-full flex-col gap-2 lg:w-72 lg:shrink-0">
             {contactLinks.map(({ label, value, href, icon, external }) => (
               <a
                 key={label}
@@ -55,12 +66,6 @@ export function ContactCta() {
                 />
               </a>
             ))}
-            <Link
-              href="/contact"
-              className="focus-visible:ring-brand-lavender text-ink-muted mt-3 flex min-h-11 items-center justify-center rounded-lg text-center text-xs font-bold transition-colors outline-none hover:text-white focus-visible:ring-2"
-            >
-              문의 남기기
-            </Link>
           </div>
         </div>
       </GlassCard>

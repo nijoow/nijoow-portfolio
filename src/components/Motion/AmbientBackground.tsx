@@ -14,6 +14,7 @@ import {
   useMediaQuery,
 } from '@/hooks/useMediaQuery';
 import { useEffect } from 'react';
+import { useAppearance } from '@/context/AppearanceProvider';
 
 interface StarParticle {
   id: number;
@@ -36,7 +37,7 @@ function roundParticleValue(value: number): number {
 }
 
 const STAR_PARTICLES: StarParticle[] = Array.from(
-  { length: 30 },
+  { length: 24 },
   (_, index) => {
     const opacity = roundParticleValue(0.18 + seededValue(index, 3) * 0.48);
 
@@ -56,7 +57,9 @@ const STAR_PARTICLES: StarParticle[] = Array.from(
 const STATIC_TRANSITION = { duration: 0 } as const;
 
 export function AmbientBackground() {
-  const shouldReduceMotion = useMediaQuery(REDUCED_MOTION_MEDIA_QUERY);
+  const reduced = useMediaQuery(REDUCED_MOTION_MEDIA_QUERY);
+  const appearance = useAppearance();
+  const shouldReduceMotion = reduced || !appearance.motion;
   const pointerX = useMotionValue(0);
   const smoothPointerX = useSpring(pointerX, { stiffness: 45, damping: 24 });
   const blobX1 = useTransform(smoothPointerX, (value) => value * -0.75);
@@ -86,20 +89,23 @@ export function AmbientBackground() {
   }, [pointerX, shouldReduceMotion]);
 
   return (
-    <div className="bg-surface-ink pointer-events-none fixed inset-0 -z-20 overflow-hidden select-none">
-      <div className="cosmic-stars absolute inset-0 opacity-75" />
+    <div
+      className="ambient-background bg-surface-ink pointer-events-none fixed inset-0 -z-20 overflow-hidden select-none"
+      data-background={appearance.background}
+    >
+      <div className="cosmic-stars absolute inset-0 opacity-65" />
       <div className="cosmic-grid absolute inset-0 opacity-50" />
 
-      <div className="cosmic-orbit-map absolute top-[12%] -left-[18%] h-[34rem] w-[72rem] -rotate-12 opacity-75" />
-      <div className="cosmic-orbit-map absolute top-[58%] -right-[24%] h-[38rem] w-[78rem] rotate-8 opacity-65" />
+      <div className="cosmic-orbit-map absolute top-[12%] -left-[18%] h-[34rem] w-[72rem] -rotate-12 opacity-60" />
+      <div className="cosmic-orbit-map cosmic-sparse-detail absolute top-[58%] -right-[24%] h-[38rem] w-[78rem] rotate-8 opacity-50" />
       <div className="cosmic-aurora absolute top-[26%] -left-[12%] h-40 w-[124%] -rotate-8 opacity-85" />
-      <div className="cosmic-aurora absolute top-[72%] -left-[16%] h-44 w-[132%] rotate-6 opacity-70" />
+      <div className="cosmic-aurora cosmic-sparse-detail absolute top-[72%] -left-[16%] h-44 w-[132%] rotate-6 opacity-70" />
       <div className="cosmic-glass-light-brand absolute top-[14%] left-[18%] h-80 w-[34rem] -rotate-12 opacity-75" />
       <div className="cosmic-glass-light-accent absolute top-[54%] right-[12%] h-72 w-[30rem] rotate-12 opacity-70" />
       <div className="cosmic-glass-ribbon absolute top-[31%] -left-[14%] h-24 w-[128%] -rotate-8 opacity-90" />
-      <div className="cosmic-glass-ribbon absolute top-[68%] -left-[10%] h-20 w-[124%] rotate-6 opacity-70" />
+      <div className="cosmic-glass-ribbon cosmic-sparse-detail absolute top-[68%] -left-[10%] h-20 w-[124%] rotate-6 opacity-70" />
       <div className="cosmic-prism-line absolute top-[38%] -left-[10%] h-px w-[70%] -rotate-12 opacity-75" />
-      <div className="cosmic-prism-line absolute top-[81%] right-[-8%] h-px w-[64%] rotate-9 opacity-60" />
+      <div className="cosmic-prism-line cosmic-sparse-detail absolute top-[81%] right-[-8%] h-px w-[64%] rotate-9 opacity-60" />
 
       <m.div
         style={{ x: resolveParallax(blobX1), y: resolveParallax(y1) }}
@@ -151,7 +157,7 @@ export function AmbientBackground() {
           repeat: Infinity,
           ease: 'linear',
         })}
-        className="absolute top-[10%] left-[55%] size-96 -translate-x-1/2 rounded-full border border-white/7"
+        className="absolute top-[10%] left-[55%] size-96 -translate-x-1/2 rounded-full border border-white/6"
       >
         <span className="bg-brand-lavender absolute top-1/2 -left-1 size-2 rounded-full opacity-50" />
       </m.div>
@@ -162,12 +168,15 @@ export function AmbientBackground() {
           repeat: Infinity,
           ease: 'linear',
         })}
-        className="border-accent/10 absolute top-[48%] -left-28 size-[30rem] rounded-full border"
+        className="border-accent/8 absolute top-[48%] -left-28 size-[30rem] rounded-full border"
       >
         <span className="bg-accent absolute right-16 bottom-6 size-1.5 rounded-full opacity-40" />
       </m.div>
 
-      {STAR_PARTICLES.map((particle) => (
+      {STAR_PARTICLES.filter(
+        (particle) =>
+          appearance.background !== 'sparser' || particle.id % 3 !== 0,
+      ).map((particle) => (
         <m.span
           key={particle.id}
           initial={
@@ -202,7 +211,6 @@ export function AmbientBackground() {
       ))}
 
       <div className="cosmic-vignette absolute inset-0" />
-      <div className="from-surface-ink absolute inset-x-0 bottom-0 h-48 bg-linear-to-t to-transparent" />
     </div>
   );
 }

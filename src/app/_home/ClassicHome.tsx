@@ -3,7 +3,6 @@ import TransitionPageWrapper from '@/components/PageTransition/TransitionPageWra
 import Section from '@/components/Section/Section';
 import { GlassPopoverGroup } from '@/components/ui/GlassPopover';
 import { QueryProvider } from '@/context/QueryProvider';
-import { CapabilityGrid } from '@/features/home/components/CapabilityGrid';
 import { ContactCta } from '@/features/home/components/ContactCta';
 import { SelectedWorks } from '@/features/home/components/SelectedWorks';
 import { GithubActivity } from '@/features/home/components/GithubActivity';
@@ -23,11 +22,6 @@ export default function ClassicHome() {
         <div className="flex flex-col gap-20 sm:gap-24">
           <Section>
             <PositioningStatement />
-          </Section>
-          <Section>
-            <Reveal>
-              <CapabilityGrid />
-            </Reveal>
           </Section>
           <Section>
             <Reveal>

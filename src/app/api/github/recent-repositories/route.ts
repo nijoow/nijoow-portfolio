@@ -30,7 +30,7 @@ export async function GET() {
     if (!parsed.success) throw new Error('Invalid GitHub response');
 
     const repositories = parsed.data
-      .filter((repository) => !repository.fork)
+      .filter((repository) => !repository.fork && repository.name !== 'nijoow')
       .slice(0, 3)
       .map((repository) => ({
         id: repository.id,
