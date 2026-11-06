@@ -6,11 +6,13 @@ import { getWork, publicWorks } from '@/features/works/data/worksData';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useSyncExternalStore, type ReactNode } from 'react';
 import { getWorksReturn } from '@/features/works/lib/worksReturn';
 import WorksBreadCrumb from '../_container/WorksBreadCrumb';
 
 const orderedWorks = [...publicWorks].reverse();
+const subscribeToReturn = () => () => {};
+const getServerReturn = () => null;
 
 const getAdjacentWorks = (slug: string) => {
   const currentIndex = orderedWorks.findIndex((item) => item.pageName === slug);
@@ -118,10 +120,11 @@ export default function Template({ children }: { children: ReactNode }) {
   const pathName = usePathname();
   const slug = pathName.split('/works/')[1] ?? '';
   const work = getWork(slug);
-  const [returnHref, setReturnHref] = useState<string | null>(null);
-  useEffect(() => {
-    setReturnHref(getWorksReturn(slug));
-  }, [slug]);
+  const returnHref = useSyncExternalStore(
+    subscribeToReturn,
+    () => getWorksReturn(slug),
+    getServerReturn,
+  );
 
   return (
     <div>
