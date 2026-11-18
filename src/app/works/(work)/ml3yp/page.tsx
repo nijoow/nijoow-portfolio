@@ -35,6 +35,11 @@ const TelevisionPage = () => {
       />
 
       <PartSubTitle title="주요 작업" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        3D 공간 안의 TV로 YouTube 영상을 보는 사이트입니다. 공간의 분위기와
+        플레이어 조작 방식을 정하고, AI를 활용해 장면과 재생 기능을
+        구현했습니다.
+      </p>
       <CustomList>
         <CustomList.MainListItem>
           <strong className="font-bold">3D 공간과 카메라</strong>
@@ -64,13 +69,6 @@ const TelevisionPage = () => {
           패널에서 재생·볼륨·플레이리스트 관리
         </CustomList.SubListItem>
       </CustomList>
-
-      <PartSubTitle title="AI와 작업한 방식" />
-      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        영상을 감상할 공간의 분위기와 재생 제어 방식을 정하고 AI를 활용해 3D
-        장면과 플레이어를 구현했습니다. 생성된 코드와 화면 동작을 검토하며
-        카메라 조작, 영상 배치, 플레이리스트 흐름을 다듬었습니다.
-      </p>
 
       <div className="my-3" />
       <PartTitle title="관련 링크" />

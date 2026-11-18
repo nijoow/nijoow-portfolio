@@ -37,7 +37,7 @@ const IosKeyboardPage = () => {
       <PartSubTitle title="사용 기술" />
       <TechStack stacks={['Swift', 'UIKit', 'SwiftUI', 'App Groups']} />
 
-      <PartSubTitle title="직접 정한 입력 방식" />
+      <PartSubTitle title="추가한 기능" />
       <CustomList>
         <CustomList.MainListItem>
           한글·영문 키 위에 숫자 행을 두어 화면을 전환하지 않고 숫자를
@@ -53,11 +53,10 @@ const IosKeyboardPage = () => {
         </CustomList.MainListItem>
       </CustomList>
 
-      <PartSubTitle title="AI와 구현하고 사용하면서 다듬은 과정" />
+      <PartSubTitle title="입력하면서 고친 점" />
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        필요한 기능과 화면 배치, 입력 방식을 직접 정하고 AI를 중심으로 코드를
-        구현했습니다. 생성된 코드를 검토하고 실제 입력 동작을 확인하면서, 원하는
-        동작과 다른 부분을 다시 설명하고 수정하는 과정을 반복했습니다.
+        기능과 키 배치를 정하고 코드 구현에는 주로 AI를 사용했습니다. iPhone에
+        설치해 글을 쓰면서 한글 조합과 터치 영역에서 생기는 문제를 고쳤습니다.
       </p>
       <CustomList>
         <CustomList.MainListItem>
@@ -65,8 +64,8 @@ const IosKeyboardPage = () => {
           Groups로 설정을 공유하도록 구성했습니다.
         </CustomList.MainListItem>
         <CustomList.MainListItem>
-          한글을 연속 입력할 때 앞 글자를 덮어쓰는 문제를 다루며, 조합
-          문자열에서 달라진 뒷부분만 삭제·삽입하는 방식으로 정리했습니다.
+          한글을 연속 입력할 때 앞 글자를 덮어쓰는 문제가 있었습니다. 조합 중인
+          문자열에서 달라진 뒷부분만 삭제하고 삽입하도록 수정했습니다.
         </CustomList.MainListItem>
         <CustomList.MainListItem>
           키 사이와 가장자리의 터치 영역을 보정하고, 커서 이동을 시작할 때 한글
@@ -76,10 +75,9 @@ const IosKeyboardPage = () => {
 
       <PartSubTitle title="현재 사용" />
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        개인 iPhone에 설치해 혼자 사용하고 있습니다. 숫자 입력과 커서 이동을
-        자주 쓰는 위치에서 바로 할 수 있어, 지금은 제게 익숙하고 편한 키보드로
-        사용하고 있습니다. 직접 쓰며 느끼는 불편을 다음 수정의 기준으로 삼고
-        있습니다.
+        개인 iPhone에 설치해 사용하고 있습니다. 숫자를 입력하거나 커서를 옮길 때
+        화면을 덜 전환해도 되는 점이 편합니다. 쓰다가 불편한 점이 생기면 조금씩
+        고치고 있습니다.
       </p>
     </>
   );
