@@ -6,7 +6,7 @@ const capabilities = [
   {
     title: 'UX/UI 이해',
     description:
-      '디자인 전공 경험을 바탕으로 기획자·디자이너와 함께 고민하며, 디자인 의도와 사용 흐름에 맞는 화면을 구현합니다.',
+      '디자인과 프로그래밍이 결합된 전공 경험을 바탕으로 기획자·디자이너와 함께 고민하며, 디자인 의도와 사용 흐름에 맞는 화면을 구현합니다.',
     icon: 'design',
     preview: 'collaboration',
   },
