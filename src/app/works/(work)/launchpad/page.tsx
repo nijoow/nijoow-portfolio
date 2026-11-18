@@ -1,5 +1,5 @@
 import CustomList from '../../_container/CustomList';
-import WorkImage from '../../_container/WorkImage';
+import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkLinks } from '../../_container/WorkLinks';
 import { WorkStudy } from '@/features/works/components/WorkStudy';
 import {
@@ -52,17 +52,20 @@ export default function Page() {
           </>
         }
         media={
-          <>
-            <WorkImage
-              url="https://nijoow-launchpad.vercel.app/"
-              imgSrc="launchpad/01-launchpad-drum-mode.png"
-            />
-            <div className="my-3 grid grid-cols-1 gap-4 md:grid-cols-2">
-              <WorkImage imgSrc="launchpad/02-launchpad-piano-mode.png" />
-              <WorkImage imgSrc="launchpad/03-launchpad-drum-controls.png" />
-              <WorkImage imgSrc="launchpad/04-launchpad-piano-controls.png" />
-            </div>
-          </>
+          <WorkCarousel
+            imgSrcList={[
+              'launchpad/01-launchpad-drum-mode.png',
+              'launchpad/02-launchpad-piano-mode.png',
+              'launchpad/03-launchpad-drum-controls.png',
+              'launchpad/04-launchpad-piano-controls.png',
+            ]}
+            imageLabels={[
+              '드럼 모드',
+              '피아노 모드',
+              '드럼 설정',
+              '피아노 설정',
+            ]}
+          />
         }
         links={
           <>
