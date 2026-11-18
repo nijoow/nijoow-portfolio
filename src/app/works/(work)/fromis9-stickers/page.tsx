@@ -24,39 +24,54 @@ const Fromis9StickersPage = () => {
 
       <div className="my-3" />
 
-      <PartTitle title="프로젝트 개요" />
-
-      <CustomList>
-        <CustomList.MainListItem>
-          좋아하는 멤버의 사진을 다양한 스티커로 꾸미고 이미지로 저장할 수 있는
-          기능을 제공
-        </CustomList.MainListItem>
-      </CustomList>
-      <PartSubTitle title="기술 스택" />
-      <TechStack
-        stacks={['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion']}
-      />
-
+      <PartSubTitle title="만들게 된 계기" />
       <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
-        Google Antigravity·Claude·Codex를 기획·디자인·구현 검토에 활용했습니다.
-        UX/UI와 프론트엔드 개발은 직접 진행했습니다.
+        팬덤을 위한 인터랙티브 웹사이트를 만들어보고 싶었습니다. 사진과 문구를
+        자유롭게 배치하고, 완성한 화면을 이미지로 저장하는 스티커 꾸미기
+        경험으로 구성했습니다.
       </p>
 
-      <PartSubTitle title="주요 작업" />
+      <PartSubTitle title="사용 기술" />
+      <TechStack
+        stacks={[
+          'Next.js',
+          'TypeScript',
+          'Tailwind CSS',
+          'Framer Motion',
+          'Zustand',
+          '@use-gesture/react',
+          'modern-screenshot',
+        ]}
+      />
+
+      <PartSubTitle title="구현하며 정한 부분" />
       <CustomList>
         <CustomList.MainListItem>
-          스티커 커스텀: 스티커 추가·삭제, 회전, 크기 조절
+          사진 배치를 먼저 정한 뒤 문구를 꾸밀 수 있도록 멤버 사진 잠금과 뒤로
+          보내기를 추가했습니다. 선택한 요소는 앞으로 가져오고, 텍스트 스티커는
+          색상을 골라 추가할 수 있습니다.
         </CustomList.MainListItem>
         <CustomList.MainListItem>
-          레이어링 관리: 스티커와 멤버 사진의 레이어 순서 변경 및 잠금 기능
+          데스크톱에서는 크기·회전 핸들을, 모바일에서는 두 손가락 확대·축소와
+          회전 제스처를 사용합니다. 위치는 화면 크기에 대한 비율로 관리해 서로
+          다른 화면 크기에 대응했습니다.
         </CustomList.MainListItem>
         <CustomList.MainListItem>
-          테마 및 색상: 배경 테마 변경 및 스티커 색상 필터 적용
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          이미지 저장: 꾸민 캔버스를 로컬 이미지 파일로 내보내기
+          편집 메뉴와 꾸미기 영역을 분리해 결과 화면만 PNG로 저장하도록
+          구성했습니다.
         </CustomList.MainListItem>
       </CustomList>
+
+      <PartSubTitle title="AI와 작업한 방식" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        요구사항과 화면 흐름을 직접 정하고 AI를 활용해 구현했습니다. 생성된
+        코드와 실제 동작을 검토하며 배치·선택 상태·모바일 조작을 수정했습니다.
+      </p>
+
+      <PartSubTitle title="공개한 결과" />
+      <p className="text-ink-muted mt-3 text-sm leading-relaxed break-keep">
+        완성한 웹사이트를 공개하고 커뮤니티에 공유했습니다.
+      </p>
 
       <div className="my-3" />
 

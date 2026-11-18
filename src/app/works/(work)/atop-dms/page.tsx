@@ -35,6 +35,8 @@ const AtopDmsPage = () => {
           'Recoil',
           'React Query',
           'Material UI',
+          'Apache ECharts',
+          'React Hook Form',
         ]}
       />
 
@@ -44,8 +46,8 @@ const AtopDmsPage = () => {
         <CustomList.MainListItem>
           프로젝트에 중간 합류하여 비즈니스 로직과 라이브러리를 신속하게
           파악하고,{' '}
-          <strong className="font-bold">데모용 MVP의 출시 기한</strong>을
-          맞추는데 기여
+          <strong className="font-bold">데모용 MVP의 출시 기한</strong>을 맞추는
+          데 기여
         </CustomList.MainListItem>
         <CustomList.MainListItem>
           엑셀 라이브러리를 교체하고 가상화 렌더링을 적용해 대용량 파일 처리

@@ -6,6 +6,8 @@ export const WORK_FILTER_TAGS = [
   'Frontend',
   'Interactive',
   '3D',
+  'iOS',
+  'AI 활용 개발',
   'Business Project',
   'Side Project',
 ] as const;

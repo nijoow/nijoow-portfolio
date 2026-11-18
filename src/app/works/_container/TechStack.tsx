@@ -4,7 +4,7 @@ interface Props {
 
 function TechStack({ stacks }: Props) {
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="work-tech-stack flex flex-wrap gap-1.5">
       {stacks.map((stack) => (
         <span
           key={stack}
