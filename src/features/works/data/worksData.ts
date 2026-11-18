@@ -31,7 +31,6 @@ export const works: readonly Work[] = [
     role: '기획·인터랙티브 개발',
     liveUrl: 'https://www.youtube.com/watch?v=11Wplgnpt90',
     liveLabel: '졸업전시회 시연 영상',
-    repoUrl: 'https://github.com/nijoow/return-to-blank',
     status: 'published',
   },
   {
@@ -44,7 +43,6 @@ export const works: readonly Work[] = [
       '가로 스크롤과 인터랙티브 요소를 활용한 부산대학교 디자인앤테크놀로지 졸업전시회 아카이브 웹사이트',
     role: '기획·디자인·퍼블리싱',
     liveUrl: 'https://nijoow.github.io/PNUDT12/pages/about.html',
-    repoUrl: 'https://github.com/nijoow/PNUDT12',
     status: 'published',
   },
   {
@@ -58,7 +56,6 @@ export const works: readonly Work[] = [
     role: '기획·게임 개발',
     liveUrl: 'https://www.youtube.com/watch?v=vcJvQrc6k_w',
     liveLabel: '졸업전시회 시연 영상',
-    repoUrl: 'https://github.com/nijoow/CatchTheCandy_p5',
     status: 'published',
   },
   {

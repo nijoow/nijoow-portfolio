@@ -17,6 +17,13 @@ describe('worksData', () => {
     });
   });
 
+  it('졸업 작품에는 저장소 대신 시연 링크만 제공한다', () => {
+    for (const pageName of ['return-to-blank', 'memory', 'catch-the-candy']) {
+      expect(getWork(pageName)?.repoUrl).toBeUndefined();
+      expect(getWork(pageName)?.liveUrl).toBeTruthy();
+    }
+  });
+
   it('일반 공개 프로젝트에는 카드에 사용할 이미지가 있다', () => {
     const fullyDisclosedWorks = works.filter(
       (work) => work.status !== 'draft' && work.disclosure !== 'limited',

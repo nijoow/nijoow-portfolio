@@ -46,22 +46,14 @@ export default function Page() {
         media={
           <>
             <WorkImage
-              url="https://nijoow.github.io/CatchTheCandy_p5/"
+              url="https://www.youtube.com/watch?v=vcJvQrc6k_w"
               imgSrc="catchTheCandy.webp"
             />
           </>
         }
         links={
           <>
-            <WorkLinks
-              pageName={PAGE_NAME}
-              links={[
-                {
-                  href: 'https://nijoow.github.io/CatchTheCandy_p5/',
-                  label: '웹 버전 체험 (p5.js)',
-                },
-              ]}
-            />
+            <WorkLinks pageName={PAGE_NAME} />
           </>
         }
       />
