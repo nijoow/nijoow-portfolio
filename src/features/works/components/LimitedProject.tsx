@@ -19,7 +19,10 @@ export function LimitedProjectCover({ className }: { className?: string }) {
 export function DisclosureNotice({ limited }: { limited: boolean }) {
   if (!limited) return null;
   return (
-    <p role="note" className="text-ink-secondary text-sm leading-relaxed">
+    <p
+      role="note"
+      className="text-ink-secondary flex min-h-20 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.025] px-5 py-4 text-center text-sm leading-relaxed"
+    >
       보안상 화면과 내부 자료는 공개하지 않습니다.
     </p>
   );

@@ -1532,9 +1532,10 @@ textarea::placeholder {
   border-radius: 50%;
 }
 .work-carousel-portrait {
-  max-width: 20rem;
+  max-width: 100%;
   margin-inline: auto;
-  aspect-ratio: 390/844;
+  height: min(692px, calc((100vw - 4rem) * 2.164));
+  aspect-ratio: auto;
 }
 @media (max-width: 600px) {
   .diagram-pair {

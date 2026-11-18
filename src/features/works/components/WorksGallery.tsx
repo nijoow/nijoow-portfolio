@@ -14,14 +14,19 @@ import {
 import { FEATURED_WORK_PAGE_NAMES } from '@/features/works/data/featuredWorks';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, m, type Transition } from 'framer-motion';
-import { ArrowUpRight, ExternalLink, Sparkles } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { GithubIcon } from '@/components/Icons/GithubIcon';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryStates } from 'nuqs';
 import { useEffect } from 'react';
 import { rememberWorksReturn, restoreWorksReturn } from '../lib/worksReturn';
 
-const newestFirstWorks = [...publicWorks].reverse();
+const newestFirstWorks = [...publicWorks].reverse().sort((a, b) => {
+  const aIndex = FEATURED_WORK_PAGE_NAMES.indexOf(a.pageName);
+  const bIndex = FEATURED_WORK_PAGE_NAMES.indexOf(b.pageName);
+  return (aIndex < 0 ? Infinity : aIndex) - (bIndex < 0 ? Infinity : bIndex);
+});
 const CARD_INITIAL = { opacity: 0, y: 12, scale: 0.98 };
 const CARD_ANIMATE = { opacity: 1, y: 0, scale: 1 };
 const CARD_EXIT = { opacity: 0, scale: 0.96 };
@@ -71,12 +76,6 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
                 projectType={work.projectType}
                 isFreelance={work.isFreelance}
               />
-              {FEATURED_WORK_PAGE_NAMES.includes(work.pageName) ? (
-                <span className="border-brand-lavender/40 bg-brand-deep/85 text-brand-lavender inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wider backdrop-blur-sm">
-                  <Sparkles size={10} aria-hidden />
-                  홈에서 소개한 작업
-                </span>
-              ) : null}
             </span>
           </div>
 
@@ -118,16 +117,31 @@ function WorkCard({ work, eager }: { work: Work; eager: boolean }) {
           </div>
         </Link>
 
-        {work.liveUrl ? (
-          <a
-            href={work.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${work.name} 라이브 사이트 열기`}
-            className="focus-visible:ring-brand-lavender text-ink-secondary absolute top-3 right-3 z-20 flex size-11 items-center justify-center rounded-full border border-white/10 bg-black/55 opacity-100 backdrop-blur-sm transition-colors hover:text-white focus-visible:ring-2 focus-visible:outline-none sm:opacity-0 sm:group-focus-within/work:opacity-100 sm:group-hover/work:opacity-100"
-          >
-            <ExternalLink size={15} />
-          </a>
+        {work.projectType === 'side' && (work.liveUrl || work.repoUrl) ? (
+          <div className="absolute top-3 right-3 z-20 flex gap-1">
+            {work.liveUrl ? (
+              <a
+                href={work.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${work.name} ${work.liveLabel ?? '사이트'} 열기`}
+                className="focus-visible:ring-brand-lavender text-ink-secondary flex size-11 items-center justify-center rounded-full border border-white/10 bg-black/70 backdrop-blur-sm hover:text-white focus-visible:ring-2"
+              >
+                <ExternalLink size={16} aria-hidden />
+              </a>
+            ) : null}
+            {work.repoUrl ? (
+              <a
+                href={work.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${work.name} GitHub 열기`}
+                className="focus-visible:ring-brand-lavender text-ink-secondary flex size-11 items-center justify-center rounded-full border border-white/10 bg-black/70 backdrop-blur-sm hover:text-white focus-visible:ring-2"
+              >
+                <GithubIcon size={16} />
+              </a>
+            ) : null}
+          </div>
         ) : null}
       </GlassCard>
     </m.article>

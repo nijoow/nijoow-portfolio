@@ -46,10 +46,11 @@ export default function Page() {
                   일정에서 기록으로 이어지는 흐름
                 </h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-                  일정을 기록으로 전환할 때 일정 메모를 기록의 초기 내용으로
-                  복사하고, 전환 이후에는 각각 수정할 수 있도록 분리했습니다.
-                  데이터 조회와 갱신은 TanStack Query, 날짜·필터·상세 대상은
-                  URL, 저장 전 입력은 React Hook Form에서 관리합니다.
+                  일정 메모를 다시 입력하지 않도록 기록으로 전환할 때 초기
+                  내용으로 가져왔습니다. 전환 후에는 각각 수정할 수 있도록
+                  분리했습니다. 데이터 조회와 갱신은 TanStack Query,
+                  날짜·필터·상세 대상은 URL, 저장 전 입력은 React Hook Form에서
+                  관리합니다.
                 </p>
               </li>
               <li className="mt-3">
@@ -73,7 +74,7 @@ export default function Page() {
             <h3 className="case-subheading">실제 사용에서 시작한 개선</h3>
             <p className="text-ink-muted text-sm leading-relaxed break-keep">
               둘이 직접 사용하면서 편집 흐름을 정리했고, 받은 피드백을 바탕으로
-              댓글·반응과 홈 사진 기능을 추가했습니다.
+              댓글·반응과 알림 기능을 추가했습니다.
             </p>
             <CustomList>
               <li className="feedback-case">
@@ -81,11 +82,17 @@ export default function Page() {
                   편집 화면과 장소 조작 정리
                 </h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-                  일정·할 일·메모·기록·기념일은 입력 항목이 달라 추가와 수정
-                  흐름이 서로 달랐습니다. 기본 입력은 같은 편집 화면에 모으고
-                  날짜나 장소 같은 세부 설정은 필요할 때 열도록 정리했습니다.
-                  기념일도 같은 방식으로 추가·수정하고, 장소를 새로 찾는 과정과
-                  선택한 장소를 관리하는 과정을 분리했습니다.
+                  처음에는 시간·장소·메모 등 모든 입력 항목이 한 화면에 펼쳐져
+                  있었습니다. 입력란이 많아 화면이 복잡했고 아이폰 기본 입력
+                  컨트롤도 자주 나타났습니다. 기본 입력만 남기고 나머지는 칩을
+                  눌러 필요한 항목을 추가하도록 바꿨습니다.
+                  <span className={styles.flow}>
+                    <span>여러 입력란을 한 화면에</span>
+                    <span aria-hidden>→</span>
+                    <span>필요한 항목만 칩으로 추가</span>
+                  </span>
+                  일정과 기록의 편집 방식을 맞추고, 장소를 찾는 과정과 선택한
+                  장소를 관리하는 과정도 분리했습니다.
                 </p>
                 <figure className="feedback-evidence">
                   <Image
@@ -101,11 +108,17 @@ export default function Page() {
               <li className={`feedback-case ${styles.reversed}`}>
                 <h3 className="text-base font-bold">기록에 댓글과 반응 추가</h3>
                 <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-                  함께 보는 기록에 각자의 댓글을 남기고 상대방 댓글에 이모지로
-                  반응할 수 있도록 만들었습니다. 이후 댓글 영역을 기록 상세에
-                  모으고 수정·삭제는 작성자 메뉴로 정리했습니다. 댓글 본문과
-                  이모지 값도 암호화하면서 기존 댓글·반응과 백업의 호환성을
-                  유지했습니다.
+                  처음에는 두 사람이 하나의 메모를 함께 수정할 수 있었지만 서로
+                  주고받는 느낌은 부족했습니다. 각자의 댓글과 이모지 반응을
+                  추가하고, 새 댓글을 알 수 있도록 푸시 알림도 연결했습니다.
+                  <span className={styles.flow}>
+                    <span>함께 수정하는 메모</span>
+                    <span aria-hidden>→</span>
+                    <span>댓글 · 반응 · 알림</span>
+                  </span>
+                  댓글은 기록 상세에 모으고 수정·삭제는 작성자 메뉴로
+                  정리했습니다. 댓글과 반응도 암호화하면서 기존 데이터와 백업의
+                  호환성을 유지했습니다.
                 </p>
                 <figure className="feedback-evidence">
                   <Image
@@ -116,26 +129,6 @@ export default function Page() {
                     alt="기록 상세에서 댓글과 반응 확인"
                   />
                   <figcaption>기록 상세에서 댓글과 반응 확인</figcaption>
-                </figure>
-              </li>
-              <li className="feedback-case">
-                <h3 className="text-base font-bold">함께 고르는 홈 사진</h3>
-                <p className="text-ink-muted mt-2 text-sm leading-relaxed break-keep">
-                  홈에 사진 한 장을 표시하던 기능을 여러 장을 함께 등록하고
-                  각각의 구도를 조정할 수 있도록 확장했습니다. 사진 목록과
-                  구도는 공유하되, 홈에 들어올 때 보여 줄 사진은 각 기기에서
-                  무작위로 선택합니다. 홈용 사본을 따로 두어 사진첩 원본과 홈
-                  사진을 독립적으로 관리합니다.
-                </p>
-                <figure className="feedback-evidence">
-                  <Image
-                    src="/images/works/doodin-calendar/home-overview.png"
-                    width={390}
-                    height={844}
-                    sizes="(max-width: 600px) 240px, 220px"
-                    alt="함께 고른 사진이 표시되는 홈"
-                  />
-                  <figcaption>함께 고른 사진이 표시되는 홈</figcaption>
                 </figure>
               </li>
             </CustomList>

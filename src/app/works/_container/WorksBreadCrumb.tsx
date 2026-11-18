@@ -104,11 +104,24 @@ const WorkHeaderBadges = ({ work }: { work: Work | undefined }) => {
   );
 };
 
+const TEAM_MEMBERS: Record<string, string> = {
+  'digital-asset-management': '프론트엔드 2명 · 백엔드 1명',
+  quve: '프론트엔드 3명 · 백엔드 3명 · 디자이너 3명',
+  moimcity: '프론트엔드 1명 · 백엔드 1명',
+  'ev-charging-management': '프론트엔드 3명 · 백엔드 3명',
+  fromyou: '프론트엔드 1명 · 기자 협업',
+  'atop-dms': '프론트엔드 3명 · 백엔드 2명',
+  cusmetic: '프론트엔드 1명 · 백엔드 1명',
+  'process-safety-management': '프론트엔드 2명 · 백엔드 1명',
+  treenow: '프론트엔드 1명 · 백엔드 1명',
+};
+
 const WorkMetaGrid = ({ work }: { work: Work | undefined }) => {
   if (!work) return null;
   const period = work.projectType === 'business' ? work.period : undefined;
   const items = [
     { label: '담당 역할', value: work.role },
+    { label: '팀 구성', value: TEAM_MEMBERS[work.pageName] },
     { label: '소속 · 의뢰', value: work.organization },
     { label: '진행 기간', value: period },
   ].filter((item): item is { label: string; value: string } =>
@@ -118,7 +131,7 @@ const WorkMetaGrid = ({ work }: { work: Work | undefined }) => {
   if (items.length === 0) return null;
 
   return (
-    <dl className="grid grid-cols-1 gap-3 border-t border-white/10 pt-4 text-sm sm:grid-cols-3">
+    <dl className="grid grid-cols-1 gap-3 border-t border-white/10 pt-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
       {items.map((item) => (
         <div key={item.label} className="flex flex-col gap-0.5">
           <dt className="text-ink-faint text-xs font-medium">{item.label}</dt>
