@@ -226,7 +226,7 @@ export const works: readonly Work[] = [
   {
     pageName: 'launchpad',
     name: 'launchpad',
-    imgSrc: 'launchpad/01-launchpad-drum-mode.png',
+    imgSrc: 'launchpad/01-launchpad-drum-mode.webp',
     projectType: 'side',
     tags: ['Web', 'Interactive', 'Frontend', 'Design'],
     aiAssisted: true,
@@ -264,7 +264,7 @@ export const works: readonly Work[] = [
   },
   {
     pageName: 'doodin-calendar',
-    imgSrc: 'doodin-calendar/home-overview.png',
+    imgSrc: 'doodin-calendar/home-overview.webp',
     name: '두딘캘린더',
     projectType: 'side',
     tags: ['Web', 'Frontend', 'Design'],

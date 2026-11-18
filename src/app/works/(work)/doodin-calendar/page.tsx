@@ -96,7 +96,7 @@ export default function Page() {
                 </p>
                 <figure className="feedback-evidence">
                   <Image
-                    src="/images/works/doodin-calendar/record-editor.png"
+                    src="/images/works/doodin-calendar/record-editor.webp"
                     width={390}
                     height={844}
                     sizes="(max-width: 600px) 240px, 220px"
@@ -122,7 +122,7 @@ export default function Page() {
                 </p>
                 <figure className="feedback-evidence">
                   <Image
-                    src="/images/works/doodin-calendar/entry-comments.png"
+                    src="/images/works/doodin-calendar/entry-comments.webp"
                     width={390}
                     height={844}
                     sizes="(max-width: 600px) 240px, 220px"
@@ -138,15 +138,15 @@ export default function Page() {
           <>
             <WorkCarousel
               imgSrcList={[
-                'doodin-calendar/home-overview.png',
-                'doodin-calendar/month-calendar.png',
-                'doodin-calendar/record-editor.png',
-                'doodin-calendar/place-management.png',
-                'doodin-calendar/entry-comments.png',
-                'doodin-calendar/anniversary-detail.png',
-                'doodin-calendar/upcoming-plans.png',
-                'doodin-calendar/saved-notes.png',
-                'doodin-calendar/photo-library.png',
+                'doodin-calendar/home-overview.webp',
+                'doodin-calendar/month-calendar.webp',
+                'doodin-calendar/record-editor.webp',
+                'doodin-calendar/place-management.webp',
+                'doodin-calendar/entry-comments.webp',
+                'doodin-calendar/anniversary-detail.webp',
+                'doodin-calendar/upcoming-plans.webp',
+                'doodin-calendar/saved-notes.webp',
+                'doodin-calendar/photo-library.webp',
               ]}
               imageLabels={[
                 '홈',

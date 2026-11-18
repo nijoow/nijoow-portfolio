@@ -78,9 +78,9 @@ export default function Page() {
             eager={false}
             background="dark"
             imgSrcList={[
-              'fromyou/region.png',
-              'fromyou/age.png',
-              'fromyou/interests.png',
+              'fromyou/region.webp',
+              'fromyou/age.webp',
+              'fromyou/interests.webp',
             ]}
             imageLabels={[
               '지도에서 지역 선택',

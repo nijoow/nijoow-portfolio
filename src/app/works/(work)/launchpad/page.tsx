@@ -54,11 +54,12 @@ export default function Page() {
         media={
           <WorkCarousel
             imgSrcList={[
-              'launchpad/01-launchpad-drum-mode.png',
-              'launchpad/02-launchpad-piano-mode.png',
-              'launchpad/03-launchpad-drum-controls.png',
-              'launchpad/04-launchpad-piano-controls.png',
+              'launchpad/01-launchpad-drum-mode.webp',
+              'launchpad/02-launchpad-piano-mode.webp',
+              'launchpad/03-launchpad-drum-controls.webp',
+              'launchpad/04-launchpad-piano-controls.webp',
             ]}
+            background="dark"
             imageLabels={[
               '드럼 모드',
               '피아노 모드',
