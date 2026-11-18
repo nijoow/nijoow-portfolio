@@ -245,7 +245,7 @@ export function ContactForm() {
           id="subject"
           required
           maxLength={100}
-          placeholder="어떤 이야기인지 간단히 알려주세요"
+          placeholder="문의 제목을 입력해주세요"
           aria-invalid={Boolean(errors.subject)}
           aria-describedby={errors.subject ? 'subject-error' : undefined}
           className={fieldClass(Boolean(errors.subject))}

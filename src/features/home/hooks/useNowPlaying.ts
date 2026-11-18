@@ -21,5 +21,6 @@ export function useNowPlaying() {
     staleTime: 30 * 1000,
     refetchInterval: 30 * 1000,
     refetchOnWindowFocus: false,
+    retry: 1,
   });
 }

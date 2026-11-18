@@ -1,9 +1,6 @@
 import GlassCard from '@/components/Motion/GlassCard';
 import SubTitle from '@/components/SubTitle/SubTitle';
-import {
-  LimitedProjectCover,
-  ProjectDisclosureChip,
-} from '@/features/works/components/LimitedProject';
+import { LimitedProjectCover } from '@/features/works/components/LimitedProject';
 import { ProjectTypeChip } from '@/features/works/components/ProjectTypeChip';
 import type { Work } from '@/features/works/data/worksData';
 import { ArrowUpRight } from 'lucide-react';
@@ -43,7 +40,7 @@ function SelectedWorkCard({ work }: { work: Work }) {
   return (
     <GlassCard className="group/work h-full">
       <Link
-        href={`/works/${work.pageName}`}
+        href={`/works/${work.pageName}#work-overview`}
         aria-label={`${work.name} 작업 상세 보기${
           work.disclosure === 'limited' ? ', 보안상 화면 비공개' : ''
         }`}
@@ -57,11 +54,6 @@ function SelectedWorkCard({ work }: { work: Work }) {
               isFreelance={work.isFreelance}
             />
           </span>
-          {work.disclosure === 'limited' ? (
-            <span className="absolute right-3 bottom-3">
-              <ProjectDisclosureChip />
-            </span>
-          ) : null}
         </div>
 
         <div className="flex flex-1 flex-col gap-2 p-5">
@@ -107,6 +99,7 @@ export function SelectedWorks({ works }: SelectedWorksProps) {
     <section className="w-full">
       <SubTitle
         tone="primary"
+        eyebrow="Projects"
         title="프로젝트"
         trailing={
           <Link

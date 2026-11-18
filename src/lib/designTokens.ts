@@ -44,6 +44,16 @@ export const COLOR_TOKENS = {
     warning: '#ddb66d',
     danger: '#df7b7b',
   },
+  assetKind: {
+    folder: '#9da4b0',
+    class: '#598ed2',
+    instance: '#aa7cc5',
+  },
+  interests: {
+    coffee: '#c79064',
+    espresso: '#43291a',
+    basketball: '#e99a53',
+  },
 } as const;
 
 type PaletteVariable = `--palette-${string}`;
@@ -65,6 +75,9 @@ const paletteVariables = {
   '--palette-status-success': COLOR_TOKENS.status.success,
   '--palette-status-warning': COLOR_TOKENS.status.warning,
   '--palette-status-danger': COLOR_TOKENS.status.danger,
+  '--palette-asset-kind-folder': COLOR_TOKENS.assetKind.folder,
+  '--palette-asset-kind-class': COLOR_TOKENS.assetKind.class,
+  '--palette-asset-kind-instance': COLOR_TOKENS.assetKind.instance,
 } satisfies Record<PaletteVariable, string>;
 
 export const PALETTE_CSS_VARIABLES = paletteVariables as CSSProperties;

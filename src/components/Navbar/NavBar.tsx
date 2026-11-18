@@ -10,7 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import { NavListItem } from './NavListItem';
 
 const navList = [
-  { text: 'About', url: '/' },
+  { text: 'Home', url: '/' },
+  { text: 'Resume', url: '/resume' },
   { text: 'Works', url: '/works' },
   { text: 'Contact', url: '/contact' },
 ] as const;
