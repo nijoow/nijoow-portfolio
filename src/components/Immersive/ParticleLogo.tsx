@@ -182,6 +182,37 @@ const glintFragmentShader = `
   }
 `;
 
+function updateMaterialUniforms(
+  material: THREE.ShaderMaterial | null,
+  progress: number,
+  time: number,
+  pointer: THREE.Vector3 | null,
+) {
+  if (!material) return;
+  const { uProgress, uTime, uMouse } = material.uniforms;
+  if (!uProgress || !uTime || !uMouse) return;
+  uProgress.value = progress;
+  uTime.value = time;
+  if (pointer) uMouse.value.copy(pointer);
+}
+
+function updateFrameUniforms(
+  materials: (THREE.ShaderMaterial | null)[],
+  state: RootState,
+  frame: {
+    progress: number;
+    time: number;
+    interactive: boolean;
+    pointer: THREE.Vector3;
+  },
+) {
+  if (frame.interactive) projectPointerToWorld(state, frame.pointer);
+  const pointer = frame.interactive ? frame.pointer : null;
+  for (const material of materials) {
+    updateMaterialUniforms(material, frame.progress, frame.time, pointer);
+  }
+}
+
 export function ParticleLogo({
   interactive = true,
   count = 40000,
@@ -342,13 +373,16 @@ export function ParticleLogo({
       interactive ? pulseWave(t) : 0,
       burstEnvelope(t - burstRef.current),
     );
-    uniforms.uProgress.value = progress;
-    uniforms.uTime.value = t;
-
-    if (interactive) {
-      projectPointerToWorld(state, mouseWorldRef.current);
-      uniforms.uMouse.value.copy(mouseWorldRef.current);
-    }
+    updateFrameUniforms(
+      [bodyMaterialRef.current, glintMaterialRef.current],
+      state,
+      {
+        progress,
+        time: t,
+        interactive,
+        pointer: mouseWorldRef.current,
+      },
+    );
 
     if (!group.current) return;
     if (interactive) {
