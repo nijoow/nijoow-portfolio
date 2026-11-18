@@ -6,7 +6,7 @@ export function PositioningStatement() {
         <span className="text-brand-lavender">이우진</span>
         입니다.
       </h1>
-      <p className="text-ink-heading mt-5 max-w-2xl text-base leading-relaxed font-bold break-keep sm:text-lg">
+      <p className="text-ink-heading mt-5 w-full text-base leading-relaxed font-bold text-balance break-keep lg:text-[17px]">
         시각적 경험과 기술적 안정성의 조화를 통해 사용자에게 인상 깊은 경험을
         제공하고자 합니다.
       </p>

@@ -54,7 +54,8 @@
   gap: 7px;
   flex-wrap: wrap;
 }
-.profileLinks a {
+.profileLinks a,
+.profileLinks button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -369,14 +370,17 @@
     padding: 34px 15px 30px;
   }
   .introductionHeading {
+    flex-direction: column;
+    gap: 18px;
     align-items: start;
   }
   .profileLinks {
     gap: 3px;
-    justify-content: end;
-    max-width: 94px;
+    justify-content: start;
+    max-width: 100%;
   }
-  .profileLinks a {
+  .profileLinks a,
+  .profileLinks button {
     padding: 7px 10px;
     font-size: 12px;
   }
