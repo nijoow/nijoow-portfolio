@@ -2,7 +2,7 @@ import CustomList from '../../_container/CustomList';
 import PartSubTitle from '../../_container/PartSubTitle';
 import PartTitle from '../../_container/PartTitle';
 import TechStack from '../../_container/TechStack';
-import WorkImage from '../../_container/WorkImage';
+import WorkCarousel from '../../_container/WorkCarousel';
 import { WorkLinks } from '../../_container/WorkLinks';
 import {
   createWorkMetadata,
@@ -17,9 +17,21 @@ const LaunchpadPage = () => {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-      <WorkImage
-        url="https://nijoow-launchpad.vercel.app/"
-        imgSrc="nijoow-launchpad.webp"
+      <WorkCarousel
+        imgSrcList={[
+          'launchpad/01-launchpad-drum-mode.webp',
+          'launchpad/02-launchpad-piano-mode.webp',
+          'launchpad/03-launchpad-drum-controls.webp',
+          'launchpad/04-launchpad-piano-controls.webp',
+        ]}
+        imageLabels={[
+          '드럼 모드',
+          '피아노 모드',
+          '드럼 컨트롤',
+          '피아노 컨트롤',
+        ]}
+        background="dark"
+        aspectRatio="video"
       />
 
       <div className="my-3" />
