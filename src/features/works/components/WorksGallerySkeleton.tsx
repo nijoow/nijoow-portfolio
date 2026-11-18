@@ -5,9 +5,7 @@ const FILTER_SKELETONS = [
   { id: 'frontend', width: 'w-20' },
   { id: 'interactive', width: 'w-22' },
   { id: '3d', width: 'w-12' },
-  { id: 'backend', width: 'w-18' },
-  { id: 'business', width: 'w-28' },
-  { id: 'side', width: 'w-24' },
+  { id: 'ios', width: 'w-12' },
 ] as const;
 
 const CARD_SKELETONS = ['first', 'second', 'third', 'fourth'] as const;
@@ -46,6 +44,15 @@ export function WorksGallerySkeleton() {
     <div role="status" className="flex w-full flex-col gap-4">
       <span className="sr-only">작업 목록을 불러오는 중입니다.</span>
       <div aria-hidden="true" className="contents">
+        <div className="flex min-h-12 flex-wrap gap-5 border-b border-white/15">
+          {['all', 'business', 'side'].map((id) => (
+            <span
+              key={id}
+              className="h-10 w-28 animate-pulse rounded bg-white/5"
+            />
+          ))}
+        </div>
+        <span className="h-4 w-56 animate-pulse rounded bg-white/5" />
         <div className="flex min-h-11 flex-wrap gap-1.5">
           {FILTER_SKELETONS.map(({ id, width }) => (
             <span

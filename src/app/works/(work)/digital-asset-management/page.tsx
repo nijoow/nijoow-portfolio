@@ -1,54 +1,35 @@
-import CustomList from '../../_container/CustomList';
-import PartSubTitle from '../../_container/PartSubTitle';
-import TechStack from '../../_container/TechStack';
+import { WorkStudy } from '@/features/works/components/WorkStudy';
 import {
   createWorkMetadata,
   WorkStructuredData,
 } from '../../_container/workMetadata';
-
 const PAGE_NAME = 'digital-asset-management';
-
 export const metadata = createWorkMetadata(PAGE_NAME);
-
-export default function DigitalAssetManagementPage() {
+export default function Page() {
   return (
     <>
       <WorkStructuredData pageName={PAGE_NAME} />
-
-      <PartSubTitle title="기술 스택" />
-      <TechStack
-        stacks={[
-          'Next.js',
-          'TypeScript',
-          'TanStack Query',
-          'Zustand',
-          'React Hook Form',
-          'Zod',
-        ]}
+      <WorkStudy
+        pageName={PAGE_NAME}
+        context={
+          <>
+            <h2 className="case-subheading">프로젝트 개요</h2>
+            <p>
+              기존 디지털 자산 관리 솔루션을 신규 환경으로 이관하고, 변경된 업무
+              규칙에 맞춰 기능을 개발·개선하는 프로젝트입니다. 프론트엔드 개발자
+              2명이 기능 개발과 리팩토링을 분담했습니다.
+            </p>
+          </>
+        }
+        features={
+          <p>
+            상태 관리와 API 요청 구조를 전환하고, 공용 테이블과 목록 액션을
+            정리했습니다. 자산 유형·상속 관계를 보여주는 목록과
+            워크스페이스·사용자 권한을 함께 관리하는 화면을 설계하고
+            구현했습니다.
+          </p>
+        }
       />
-
-      <PartSubTitle title="주요 작업" />
-
-      <CustomList>
-        <CustomList.MainListItem>
-          기존 솔루션을 신규 환경으로 이관하고 자산
-          목록·검색·카테고리·메타데이터 등 주요 기능을 요구사항에 맞게 변경·개발
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          새로운 자산 분류 개념 추가에 따른 기존 처리 흐름 및 제약 로직 변경
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          Redux·Redux-Saga 기반 서버 상태를 TanStack Query로 단계적으로 이관하고
-          화면 상태를 Zustand로 분리
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          React Hook Form·Zod 기반으로 폼 상태와 검증 구조 정리
-        </CustomList.MainListItem>
-        <CustomList.MainListItem>
-          목록 UI와 반복 로직을 공통화하고 미사용 기능·의존성을 정리해 전체 코드
-          규모를 약 20% 축소
-        </CustomList.MainListItem>
-      </CustomList>
     </>
   );
 }

@@ -1,0 +1,232 @@
+.diagram {
+  --asset-indent: 24px;
+  color: var(--color-ink-body);
+}
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.controls button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 30%, transparent);
+  border-radius: 10px;
+  font-size: 13px;
+}
+.controls button[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--color-brand-violet) 67%, transparent);
+  background: color-mix(in srgb, var(--color-brand-violet) 14%, transparent);
+  color: var(--color-ink-primary);
+}
+.controls button:focus-visible {
+  outline: 2px solid var(--color-brand-lavender);
+  outline-offset: 3px;
+}
+.comparison {
+  display: grid;
+  gap: 12px;
+}
+.panel {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid
+    color-mix(in srgb, var(--color-brand-lavender) 15%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-ink-primary) 3%, transparent);
+}
+.panel h4 {
+  margin: 0 0 10px;
+  color: var(--color-ink-heading);
+  font-size: 13px;
+  font-weight: 700;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding-left: 0;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.row[data-depth='1'] {
+  padding-left: var(--asset-indent);
+}
+.row[data-depth='2'] {
+  padding-left: calc(var(--asset-indent) * 2);
+}
+.folderIcon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 15px;
+  margin-top: 3px;
+  border-radius: 2px;
+  background: var(--palette-asset-kind-folder);
+  color: var(--color-ink-primary);
+  font: 700 10px/1 sans-serif;
+}
+.folderIcon::before {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 9px;
+  height: 3px;
+  border-radius: 2px 2px 0 0;
+  background: inherit;
+  content: '';
+}
+.class {
+  background: var(--palette-asset-kind-class);
+}
+.instance {
+  background: var(--palette-asset-kind-instance);
+}
+.fileIcon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex: none;
+  align-items: end;
+  justify-content: center;
+  width: 20px;
+  height: 23px;
+  padding-bottom: 2px;
+  border: 1px solid var(--color-accent);
+  border-radius: 2px;
+  background: var(--color-accent-light);
+  color: var(--color-surface-elevated);
+  font: 700 6px/1 sans-serif;
+  clip-path: polygon(0 0, 70% 0, 100% 26%, 100% 100%, 0 100%);
+}
+.fileIcon::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent-deep);
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  content: '';
+}
+.connector {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.connector::before,
+.connector::after,
+.connector i {
+  position: absolute;
+  content: '';
+  color: var(--color-brand-muted);
+  opacity: 0.7;
+}
+.root::before {
+  left: 10px;
+  top: 50%;
+  bottom: 0;
+  border-left: 1px solid;
+}
+.parent::before,
+.nested::before {
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid;
+}
+.last::before {
+  left: 10px;
+  top: 0;
+  height: 50%;
+  border-left: 1px solid;
+}
+.parent::after,
+.last::after {
+  left: 10px;
+  top: 50%;
+  width: calc(var(--asset-indent) - 10px);
+  border-top: 1px solid;
+}
+.parent i {
+  left: calc(var(--asset-indent) + 10px);
+  top: 50%;
+  bottom: 0;
+  border-left: 1px solid;
+}
+.nested::after {
+  left: calc(var(--asset-indent) + 10px);
+  top: 0;
+  height: 50%;
+  border-left: 1px solid;
+}
+.nested i {
+  left: calc(var(--asset-indent) + 10px);
+  top: 50%;
+  width: calc(var(--asset-indent) - 10px);
+  border-top: 1px solid;
+}
+.arrow {
+  display: none;
+}
+.diagram[data-view='hierarchy'] .flat,
+.diagram[data-view='flat'] .hierarchy {
+  display: none;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (min-width: 768px) {
+  .controls {
+    display: none;
+  }
+  .comparison {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .diagram[data-view] .panel {
+    display: block;
+  }
+  .arrow {
+    display: flex;
+    align-items: center;
+    color: var(--color-ink-muted);
+  }
+}
+
+@media (max-width: 480px) {
+  .diagram {
+    --asset-indent: 20px;
+  }
+  .controls button {
+    padding-inline: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .panel {
+    padding: 11px;
+  }
+  .row {
+    font-size: 12px;
+  }
+}
